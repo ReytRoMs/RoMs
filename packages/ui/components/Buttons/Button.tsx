@@ -14,8 +14,6 @@ interface IButton {
 }
 
 export const Button = ({ buttonText, isDisabled = false, variant, onPress }: IButton) => {
-	console.log("buttonText", buttonText);
-
 	return (
 		// @ts-ignore
 		<GSButton isDisabled={isDisabled} variant={variant} onPress={onPress}>

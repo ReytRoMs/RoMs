@@ -1,3 +1,4 @@
+/* eslint-disable no-redeclare */
 import { View, Text } from "@gluestack-ui/themed";
 // import { Warning } from "../Icons";
 

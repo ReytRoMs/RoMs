@@ -37,6 +37,11 @@ export const gluestackUIConfig = createConfig({
 			dark: "#111C20",
 			green: "#36CC60",
 
+			// text
+			textHeader: "#FFFFFF",
+			textBody: "#CED1D5",
+			textWhite: "#FFFFFF",
+
 			// validation
 			validError: "#E91212",
 			validSuccess: "#36CC60"

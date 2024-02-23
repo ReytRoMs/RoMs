@@ -27,15 +27,13 @@ export const gluestackUIConfig = createConfig({
 	} as const,
 	tokens: {
 		colors: {
+			// *** SHARED NAMES ***
 			// background
 			background: "#162B32",
 
 			// general
 			primary: "#E91212",
 			secondary: "#999999",
-			white: "#FFFFFF",
-			dark: "#111C20",
-			green: "#36CC60",
 
 			// text
 			textHeader: "#FFFFFF",
@@ -44,7 +42,12 @@ export const gluestackUIConfig = createConfig({
 
 			// validation
 			validError: "#E91212",
-			validSuccess: "#36CC60"
+			validSuccess: "#36CC60",
+
+			// *** PROJECT-SPECIFIC NAMES ***
+			white: "#FFFFFF",
+			dark: "#111C20",
+			green: "#36CC60"
 		},
 		space: {
 			px: "1px",

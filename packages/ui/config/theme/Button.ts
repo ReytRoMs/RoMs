@@ -1,15 +1,53 @@
 import { createStyle } from "@gluestack-style/react";
 
 export const Button = createStyle({
-	borderRadius: "$sm",
-	backgroundColor: "$primary",
+	borderRadius: 8,
+	paddingVertical: 18,
+	marginBottom: 16,
+	display: "flex",
 	flexDirection: "row",
-	justifyContent: "center",
 	alignItems: "center",
-	bg: "$primary",
+	justifyContent: "center",
+	alignContent: "center",
+	gap: 8,
+	_text: {
+		color: "$white"
+	},
+	":disabled": {
+		opacity: 0.2,
+		cursor: "not-allowed"
+	},
 	variants: {
 		variant: {
-			large: {}
+			primary: {
+				backgroundColor: "$primary",
+				_text: {
+					color: "$white"
+				},
+				width: "$full",
+				"@lg": {
+					width: 272
+				}
+			},
+			secondary: {
+				backgroundColor: "$secondary",
+				_text: {
+					color: "$white"
+				},
+				width: "$full",
+				"@lg": {
+					width: 272
+				}
+			},
+			large: {
+				backgroundColor: "$primary",
+				_text: {
+					color: "$white"
+				},
+				width: 192,
+				height: 192,
+				borderRadius: 1000
+			}
 		}
 	}
 });

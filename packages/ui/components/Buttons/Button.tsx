@@ -1,7 +1,7 @@
 import { Button as GSButton, ButtonText as GSButtonText } from "@gluestack-ui/themed";
 import { Clipboard } from "../Icons";
 
-type ButtonVariant = "solid" | "outline" | "link";
+type ButtonVariant = "large" | "primary" | "secondary";
 
 interface IButton {
 	variant: ButtonVariant;
@@ -14,7 +14,7 @@ export const Button = ({ buttonText, isDisabled = false, variant, onPress }: IBu
 	return (
 		// @ts-ignore
 		<GSButton isDisabled={isDisabled} variant={variant} onPress={onPress}>
-			<Clipboard />
+			{variant === "large" && <Clipboard />}
 			<GSButtonText>{buttonText}</GSButtonText>
 		</GSButton>
 	);

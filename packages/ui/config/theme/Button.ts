@@ -6,5 +6,10 @@ export const Button = createStyle({
 	flexDirection: "row",
 	justifyContent: "center",
 	alignItems: "center",
-	bg: "$primary"
+	bg: "$primary",
+	variants: {
+		variant: {
+			large: {}
+		}
+	}
 });

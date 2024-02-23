@@ -28,31 +28,18 @@ export const gluestackUIConfig = createConfig({
 	tokens: {
 		colors: {
 			// background
-			backgroundTop: "#102338",
-			backgroundBottom: "#060C13",
+			background: "#162B32",
 
 			// general
-			primary: "#F68B2D",
-			secondary: "#148BA5",
-			tertiary: "#102338",
-			darken: "#0D1A29",
-			lighten: "#1A2A3C",
-
-			// hold
-			holdDefault: "#8C898F",
-			holdStart: "#83D735",
-			holdMiddle: "#49C3CF",
-			holdFoot: "#F68B2D",
-			holdFinish: "#DE1FB4",
-
-			// text
-			textHeader: "#FFFFFF",
-			textBody: "#CED1D5",
-			textWhite: "#FFFFFF",
+			primary: "#E91212",
+			secondary: "#999999",
+			white: '#FFFFFF',
+			dark: '#111C20',
+			green: "#36CC60",
 
 			// validation
-			validError: "#F62D2D",
-			validSuccess: "#83D735"
+			validError: "#E91212",
+			validSuccess: "#36CC60"
 		},
 		space: {
 			px: "1px",

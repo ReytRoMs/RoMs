@@ -1,4 +1,4 @@
-import { XCircle } from "../../Icons";
+// import { XCircle } from "../../Icons";
 import { MustContain } from "../MustContain";
 import { BaseInput } from "./BaseInput";
 import { ITextInputProps } from "./types";
@@ -10,7 +10,7 @@ export const TextInput = ({ ...props }: ITextInputProps) => {
 			renderIcon={(props) => {
 				// When in error mode show the XCircle to indicate an error
 				if (props?.isError) {
-					return <XCircle colour={"$validError"} />;
+					// return <XCircle colour={"$validError"} />;
 				}
 
 				return null;

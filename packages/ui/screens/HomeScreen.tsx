@@ -1,9 +1,7 @@
 "use client";
 
-import { Text } from '@gluestack-ui/themed'
+import { Text } from "@gluestack-ui/themed";
 
 export const HomeScreen = () => {
-	return (
-		<Text>Home Screen</Text>
-	);
+	return <Text>Home Screen</Text>;
 };

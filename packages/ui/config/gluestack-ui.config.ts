@@ -33,8 +33,8 @@ export const gluestackUIConfig = createConfig({
 			// general
 			primary: "#E91212",
 			secondary: "#999999",
-			white: '#FFFFFF',
-			dark: '#111C20',
+			white: "#FFFFFF",
+			dark: "#111C20",
 			green: "#36CC60",
 
 			// validation

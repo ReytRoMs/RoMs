@@ -107,7 +107,11 @@ export const BaseInput = React.memo(
 								flex={1}
 							/>
 
-							{renderIcon !== null && renderIcon({ isFocussed, isError: baseInputErrors?.length > 0 })}
+							{renderIcon !== null &&
+								renderIcon({
+									isFocussed,
+									isError: baseInputErrors?.length > 0
+								})}
 						</View>
 					</Input>
 				</FormControl>

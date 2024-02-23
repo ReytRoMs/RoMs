@@ -1,7 +1,12 @@
+/* eslint-disable no-unused-vars */
 import { Button as GSButton, ButtonText as GSButtonText } from "@gluestack-ui/themed";
 import { Clipboard } from "../Icons";
 
-type ButtonVariant = "large" | "primary" | "secondary";
+export enum ButtonVariant {
+	LARGE = "large",
+	PRIMARY = "primary",
+	SECONDARY = "secondary"
+}
 
 interface IButton {
 	variant: ButtonVariant;
@@ -14,7 +19,7 @@ export const Button = ({ buttonText, isDisabled = false, variant, onPress }: IBu
 	return (
 		// @ts-ignore
 		<GSButton isDisabled={isDisabled} variant={variant} onPress={onPress}>
-			{variant === "large" && <Clipboard />}
+			{variant === ButtonVariant.LARGE && <Clipboard />}
 			<GSButtonText>{buttonText}</GSButtonText>
 		</GSButton>
 	);

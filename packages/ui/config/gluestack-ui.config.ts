@@ -27,23 +27,13 @@ export const gluestackUIConfig = createConfig({
 	} as const,
 	tokens: {
 		colors: {
+			// *** SHARED NAMES ***
 			// background
-			backgroundTop: "#102338",
-			backgroundBottom: "#060C13",
+			background: "#162B32",
 
 			// general
-			primary: "#F68B2D",
-			secondary: "#148BA5",
-			tertiary: "#102338",
-			darken: "#0D1A29",
-			lighten: "#1A2A3C",
-
-			// hold
-			holdDefault: "#8C898F",
-			holdStart: "#83D735",
-			holdMiddle: "#49C3CF",
-			holdFoot: "#F68B2D",
-			holdFinish: "#DE1FB4",
+			primary: "#E91212",
+			secondary: "#999999",
 
 			// text
 			textHeader: "#FFFFFF",
@@ -51,8 +41,13 @@ export const gluestackUIConfig = createConfig({
 			textWhite: "#FFFFFF",
 
 			// validation
-			validError: "#F62D2D",
-			validSuccess: "#83D735"
+			validError: "#E91212",
+			validSuccess: "#36CC60",
+
+			// *** PROJECT-SPECIFIC NAMES ***
+			white: "#FFFFFF",
+			dark: "#111C20",
+			green: "#36CC60"
 		},
 		space: {
 			px: "1px",
@@ -170,9 +165,8 @@ export const gluestackUIConfig = createConfig({
 			extraBlack: "950"
 		},
 		fonts: {
-			heading: undefined,
-			body: undefined,
-			mono: undefined
+			heading: "montserrat",
+			body: "montserrat"
 		},
 		fontSizes: {
 			"2xs": 10,

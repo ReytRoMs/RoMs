@@ -27,6 +27,7 @@
 		"typescript": "^5.3.3"
 	},
 	"dependencies": {
-		"formik": "^2.4.5"
+		"formik": "^2.4.5",
+		"react-native-svg": "^14.1.0"
 	}
 }

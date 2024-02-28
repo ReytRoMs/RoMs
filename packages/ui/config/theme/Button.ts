@@ -17,6 +17,12 @@ export const Button = createStyle({
 		opacity: 0.2,
 		cursor: "not-allowed"
 	},
+	":hover": {
+		boxShadow: "0 0 16px #FFFFFF33"
+	},
+	":active": {
+		boxShadow: "inset 0 0 8px #00000066"
+	},
 	variants: {
 		variant: {
 			primary: {

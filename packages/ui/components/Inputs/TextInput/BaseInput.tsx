@@ -15,7 +15,6 @@ export const BaseInput = React.memo(
 		renderIcon = null,
 		name,
 		disabled = false,
-		userHints = [],
 		errorMessage = "",
 		renderErrorMessage,
 		...props

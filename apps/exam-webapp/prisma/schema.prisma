@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+enum UsersPrimaryRole {
+  FARMER
+  VET
+  SPECIALIST_SCORER
+  AUDITOR
+  RESEARCHER
+  HOOF_TRIMMER
+  CONSULTANT_OR_NUTRITIONIST
+  OTHER
+}
+
+model SessionUser {
+  id                  String           @id @default(uuid()) @db.Uuid
+  current_roms_member Boolean
+  UsersPrimaryRole    UsersPrimaryRole
+}

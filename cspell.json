@@ -3,7 +3,7 @@
 	"ignorePaths": [],
 	"dictionaryDefinitions": [],
 	"dictionaries": ["en-gb"],
-	"words": ["reyt"],
-	"ignoreWords": [],
+	"words": ["reyt", "dotfiles"],
+	"ignoreWords": ["gluestack", "Formik"],
 	"import": []
 }

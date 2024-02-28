@@ -4,6 +4,6 @@
 	"dictionaryDefinitions": [],
 	"dictionaries": ["en-gb"],
 	"words": ["reyt"],
-	"ignoreWords": [],
+	"ignoreWords": ["gluestack"],
 	"import": []
 }

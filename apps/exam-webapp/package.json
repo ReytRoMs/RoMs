@@ -15,6 +15,9 @@
 		"validate-typescript": "tsc",
 		"format": "prettier --write app"
 	},
+	"prisma": {
+		"seed": "node prisma/seed.js"
+	},
 	"dependencies": {
 		"@expo/html-elements": "latest",
 		"@gluestack-style/react": "latest",
@@ -22,7 +25,9 @@
 		"@gluestack-ui/themed": "latest",
 		"@gluestack/ui-next-adapter": "latest",
 		"@legendapp/motion": "latest",
+		"@prisma/client": "5.10.2",
 		"next": "^14.1.0",
+		"prisma": "^5.10.2",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-native-svg": "^14.1.0",

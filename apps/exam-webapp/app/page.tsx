@@ -1,7 +1,9 @@
 "use client";
 
-import { Box } from "@gluestack-ui/themed";
+import { Box, Text } from "@gluestack-ui/themed";
 import { Button, ButtonVariant } from "../../../packages/ui/components";
+import { useEffect, useState } from "react";
+import { SessionUser } from "@prisma/client";
 
 export default function Home() {
 	return (
@@ -12,10 +14,22 @@ export default function Home() {
 }
 
 const Container = () => {
+	const [user, setUser] = useState<SessionUser | null>(null);
+
+	useEffect(() => {
+		fetch(`http://localhost:3000/api/user`)
+			.then((res) => res.json())
+			.then((data) => {
+				setUser(data);
+			});
+	}, []);
+
 	return (
 		// @ts-ignore
 		<Box flex={1} backgroundColor='$background' $web-h={"100vh"}>
 			<Box flex={1} $base-my={"$16"} $base-mx={"$5"} $lg-my={"$24"} $lg-mx={"$32"} alignItems='center'>
+				<Text mb='$16'>{`Hello ${user?.UsersPrimaryRole ? user?.UsersPrimaryRole : "you"}!`}</Text>
+
 				<Button buttonText='Primary' variant={ButtonVariant.PRIMARY}></Button>
 				<Button buttonText='Primary' variant={ButtonVariant.PRIMARY} isDisabled></Button>
 

@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
-import prismaClient from "@/prismaClient";
-import { UsersPrimaryRole } from "@prisma/client";
+import { PrismaClient, UsersPrimaryRole } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export async function GET() {
-	const user = await prismaClient.sessionUser.findFirst({
+	const user = await prisma.sessionUser.findFirst({
 		where: {
 			UsersPrimaryRole: UsersPrimaryRole.FARMER
 		}

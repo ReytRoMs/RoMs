@@ -19,8 +19,10 @@ const Container = () => {
 	const { data } = useSWR("/api/user", fetcher);
 
 	return (
-		<Box>
-			<Box alignItems='center' backgroundColor='$background'>
+		// @ts-expect-error web-h doesn't seem to exists in BoxProps
+		<Box flex={1} backgroundColor='$background' $web-h={"100vh"}>
+			{/* @ts-expect-error web-h doesn't seem to exists in BoxProps */}
+			<Box flex={1} alignItems='center' $web-h={"100vh"}>
 				<Text mb='$16'>{`Hello ${data?.UsersPrimaryRole ? data?.UsersPrimaryRole : "you"}!`}</Text>
 
 				<Button buttonText='Primary' variant={ButtonVariant.PRIMARY}></Button>

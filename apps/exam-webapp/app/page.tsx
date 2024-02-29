@@ -1,11 +1,12 @@
 "use client";
 
 import { Box, Text } from "@gluestack-ui/themed";
-import { Button, ButtonVariant, RadioButtons, Textarea } from "../../../packages/ui/components";
+import { Button, RadioButtons, Textarea } from "../../../packages/ui/components";
 import useSWR from "swr";
 import { fetcher } from "ui";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import { ButtonVariant } from "@repo/types";
 
 export default function Home() {
 	return (

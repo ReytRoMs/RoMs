@@ -5,13 +5,7 @@ import { RadioButton } from "./RadioButton";
 import { View } from "@gluestack-ui/themed";
 import { MustContain, UseFieldPropsWithEnhancedErrorMessaging, getErrorMessages } from "../shared";
 import { useMemo } from "react";
-
-interface IRadioButtons {
-	options: Pick<IRadioButton, "label" | "value" | "isDisabled">[];
-	name: string;
-	isDisabled?: boolean;
-	errorMessage?: string;
-}
+import { IRadioButtons } from "./types";
 
 export const RadioButtons = ({ options, name, isDisabled, errorMessage = "" }: IRadioButtons) => {
 	// Reads the data from the closest Formik provider, this hook manages and reads any data from that

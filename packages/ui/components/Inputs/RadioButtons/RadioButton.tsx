@@ -2,15 +2,7 @@
 
 import { Button } from "../../Buttons/Button";
 import { ButtonVariant } from "@repo/types";
-
-interface IRadioButton {
-	label: string;
-	value: string;
-	onChange: (value: string) => void;
-	isChecked: boolean;
-	isErrored: boolean;
-	isDisabled?: boolean;
-}
+import { IRadioButton } from "./types";
 
 export const RadioButton = ({ label, value, onChange, isChecked, isErrored, isDisabled }: IRadioButton) => {
 	let backgroundColour = undefined;

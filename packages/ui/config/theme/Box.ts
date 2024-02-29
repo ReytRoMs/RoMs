@@ -1,5 +1,5 @@
 import { createStyle } from "@gluestack-style/react";
 
 export const Box = createStyle({
-	backgroundColor: "$background"
+	// backgroundColor: "$background"
 });

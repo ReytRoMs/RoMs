@@ -53,6 +53,25 @@ export const Button = createStyle({
 				width: 192,
 				height: 192,
 				borderRadius: 1000
+			},
+			radio: {
+				padding: 32,
+				gap: 8,
+				borderRadius: "$full",
+				borderWidth: 1,
+				borderColor: "$white",
+				borderStyle: "solid",
+				":hover": {
+					backgroundColor: "$dark"
+				},
+
+				":active": {
+					backgroundColor: "$green"
+				},
+
+				":focus": {
+					backgroundColor: "$dark"
+				}
 			}
 		}
 	}

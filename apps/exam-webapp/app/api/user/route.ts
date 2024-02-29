@@ -1,50 +1,59 @@
 import { NextResponse } from "next/server";
 import { PrismaClient, UsersPrimaryRole } from "@prisma/client";
 import { sendErrorResponse } from "../errorResponse";
-import { handleNewUserErrors } from "./errorHandler";
+import { ZodError, boolean, object, z } from "zod";
 
 const prisma = new PrismaClient();
-
-export async function GET() {
-	try {
-		const user = await prisma.sessionUser.findFirst({
-			where: {
-				UsersPrimaryRole: UsersPrimaryRole.FARMER
-			}
-		});
-		return NextResponse.json(user);
-	} catch (err) {
-		const errorMessage = `Error getting user`;
-		return sendErrorResponse({ errorMessage, statusCode: 500 });
-	}
-}
 
 export type NewSessionUserRequest = {
 	isCurrentRomsMember: boolean;
 	usersPrimaryRole: UsersPrimaryRole;
 };
 
+const newUserSchema = object({
+	isCurrentRomsMember: boolean({
+		required_error: "RoMS membership status is required",
+		invalid_type_error: "RoMS membership status should be a boolean"
+	}),
+	usersPrimaryRole: z.nativeEnum(UsersPrimaryRole, {
+		errorMap: (issue) => {
+			// @ts-expect-error - Zod gives us this issue.received but apparently doesn't know about it!
+			if (issue.received === "undefined") {
+				return { message: "User primary role is required" };
+			}
+
+			return { message: "Invalid user primary role" };
+		}
+	})
+});
+
 export async function POST(request: Request) {
 	try {
-		const user = (await request.json()) as NewSessionUserRequest;
-		const errors = await handleNewUserErrors(user);
-		if (errors) {
-			return sendErrorResponse(errors);
-		}
+		const data = await request.json();
+		const validatedUser = newUserSchema.parse(data);
 
-		const isCurrentRomsMember = user?.isCurrentRomsMember;
-		const usersPrimaryRole = user?.usersPrimaryRole;
+		const isCurrentRomsMember = validatedUser?.isCurrentRomsMember;
+		const usersPrimaryRole = validatedUser?.usersPrimaryRole;
 
-		const newUser = await prisma.sessionUser.create({
+		const createdUser = await prisma.sessionUser.create({
 			data: {
 				is_current_roms_member: isCurrentRomsMember,
 				UsersPrimaryRole: usersPrimaryRole
 			}
 		});
 
-		return NextResponse.json(newUser);
+		const { id, is_current_roms_member, UsersPrimaryRole } = createdUser;
+		const formattedUser = {
+			id: id,
+			isCurrentRomsMember: is_current_roms_member,
+			usersPrimaryRole: UsersPrimaryRole
+		};
+
+		return NextResponse.json(formattedUser);
 	} catch (err) {
-		const errorMessage = `Error creating user`;
-		return sendErrorResponse({ errorMessage, statusCode: 500 });
+		const errorMessage = "Error creating user";
+		const errorReasons = JSON.parse(err)?.map((err: ZodError) => err.message);
+
+		return sendErrorResponse({ errorMessage, errorReasons, statusCode: errorReasons.length ? 403 : 500 });
 	}
 }

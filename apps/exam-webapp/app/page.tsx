@@ -14,13 +14,15 @@ export default function Home() {
 }
 
 const Container = () => {
-	const { data } = useSWR("/api/user", fetcher);
+	const { data: user } = useSWR("/api/user", fetcher);
+	const { data: videos } = useSWR("/api/videos", fetcher);
 
 	return (
 		// @ts-expect-error web-h doesn't seem to exists in BoxProps
 		<Box flex={1} backgroundColor='$background' $web-h={"100vh"}>
 			<Box flex={1} $base-my={"$16"} $base-mx={"$5"} $lg-my={"$24"} $lg-mx={"$32"} alignItems='center'>
-				<Text mb='$16'>{`Hello ${data?.UsersPrimaryRole ? data?.UsersPrimaryRole : "you"}!`}</Text>
+				<Text>{`Hello ${user?.UsersPrimaryRole ?? "you"}!`}</Text>
+				<Text mb='$16'>{`First video ID: ${videos?.[0]?.youtube_id ?? "loading..."}`}</Text>
 
 				<Button buttonText='Primary' variant={ButtonVariant.PRIMARY}></Button>
 				<Button buttonText='Primary' variant={ButtonVariant.PRIMARY} isDisabled></Button>

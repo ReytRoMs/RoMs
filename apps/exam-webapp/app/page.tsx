@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Text } from "@gluestack-ui/themed";
-import { Button, ButtonVariant, RadioButtons } from "../../../packages/ui/components";
+import { Button, ButtonVariant, RadioButtons, Textarea } from "../../../packages/ui/components";
 import useSWR from "swr";
 import { fetcher } from "ui";
 import { Form, Formik } from "formik";
@@ -20,49 +20,58 @@ const Container = () => {
 
 	return (
 		<Box>
-			<Box flex={1} alignItems='center' backgroundColor='$background'>
-				<Text mb='$16'>{`Hello ${data?.UsersPrimaryRole ? data?.UsersPrimaryRole : "you"}!`}</Text>
+			<Box flex={1} backgroundColor='$background'>
+				<Box alignItems='center'>
+					<Text mb='$16'>{`Hello ${data?.UsersPrimaryRole ? data?.UsersPrimaryRole : "you"}!`}</Text>
 
-				<Button buttonText='Primary' variant={ButtonVariant.PRIMARY}></Button>
-				<Button buttonText='Primary' variant={ButtonVariant.PRIMARY} isDisabled></Button>
+					<Button buttonText='Primary' variant={ButtonVariant.PRIMARY}></Button>
+					<Button buttonText='Primary' variant={ButtonVariant.PRIMARY} isDisabled></Button>
 
-				<Button buttonText='Secondary' variant={ButtonVariant.SECONDARY}></Button>
-				<Button buttonText='Secondary' variant={ButtonVariant.SECONDARY} isDisabled></Button>
+					<Button buttonText='Secondary' variant={ButtonVariant.SECONDARY}></Button>
+					<Button buttonText='Secondary' variant={ButtonVariant.SECONDARY} isDisabled></Button>
 
-				<Button buttonText='Large' variant={ButtonVariant.LARGE}></Button>
+					<Button buttonText='Large' variant={ButtonVariant.LARGE}></Button>
+				</Box>
 
 				<Formik
 					initialValues={{
-						answer: ""
+						answer: "",
+						details: ""
 					}}
 					onSubmit={(values) => {
 						console.log("Handle submit of values", values);
 					}}
 					enableReinitialize
 					validationSchema={Yup.object().shape({
-						answer: Yup.string().required("At least one option is required")
+						answer: Yup.string().required("Please complete"),
+						details: Yup.string().required("Please complete")
 					})}
+					validateOnBlur={true}
+					validateOnChange={false}
 				>
 					{({ handleSubmit }) => (
 						<>
-							<Form>
+							<Form style={{ width: "100%", marginLeft: "auto", marginRight: "auto", maxWidth: 900 }}>
 								<RadioButtons
 									options={[
 										{ label: "1. Acceptable Mobility", value: "1", isDisabled: false },
 										{ label: "2. Lame", value: "2", isDisabled: false },
-										{ label: "3. Very Lame", value: "3", isDisabled: true }
+										{ label: "3. Very Lame", value: "3", isDisabled: false }
 									]}
 									name='answer'
 								/>
-							</Form>
 
-							<Button
-								buttonText='Submit'
-								variant={ButtonVariant.PRIMARY}
-								onPress={() => {
-									handleSubmit();
-								}}
-							/>
+								<Textarea name='details' placeholder='Provide Details' />
+
+								<Button
+									buttonText='Submit'
+									variant={ButtonVariant.PRIMARY}
+									onPress={() => {
+										handleSubmit();
+									}}
+									width={"$full"}
+								/>
+							</Form>
 						</>
 					)}
 				</Formik>

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { PrismaClient, UsersPrimaryRole } from "@prisma/client";
+import { get } from "@vercel/edge-config";
 import { sendErrorResponse } from "../errorResponse";
 import { ZodError, boolean, object, z } from "zod";
 
@@ -8,6 +9,10 @@ const prisma = new PrismaClient();
 export type NewSessionUserRequest = {
 	isCurrentRomsMember: boolean;
 	usersPrimaryRole: UsersPrimaryRole;
+};
+
+type Video = {
+	youtube_id: string;
 };
 
 const newUserSchema = object({
@@ -35,10 +40,29 @@ export async function POST(request: Request) {
 		const isCurrentRomsMember = validatedUser?.isCurrentRomsMember;
 		const usersPrimaryRole = validatedUser?.usersPrimaryRole;
 
+		const videoData = (await get("videos")) as Video[];
+
+		// TODO: handle no video data
+
+		const numberOfVideosToTake = 20;
+		const randomVideos = videoData
+			.map((video) => ({ youtube_id: video.youtube_id, sortOrder: Math.random() }))
+			.sort((a, b) => a.sortOrder - b.sortOrder)
+			.slice(0, numberOfVideosToTake)
+			.map((video, index) => ({
+				order: index,
+				youtube_id: video.youtube_id
+			}));
+
 		const createdUser = await prisma.sessionUser.create({
 			data: {
 				is_current_roms_member: isCurrentRomsMember,
-				UsersPrimaryRole: usersPrimaryRole
+				UsersPrimaryRole: usersPrimaryRole,
+				Questions: {
+					createMany: {
+						data: randomVideos
+					}
+				}
 			}
 		});
 
@@ -52,7 +76,8 @@ export async function POST(request: Request) {
 		return NextResponse.json(formattedUser);
 	} catch (err) {
 		const errorMessage = "Error creating user";
-		const errorReasons = JSON.parse(err)?.map((err: ZodError) => err.message);
+		// TODO: handle parsing Prisma error which is not JSON
+		const errorReasons = JSON.parse(err) ? JSON.parse(err)?.map((err: ZodError) => err.message) : "";
 
 		return sendErrorResponse({ errorMessage, errorReasons, statusCode: errorReasons.length ? 403 : 500 });
 	}

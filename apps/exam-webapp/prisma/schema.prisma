@@ -36,7 +36,7 @@ enum AnswerOption {
 model Question {
   id          String        @id @default(uuid()) @db.Uuid
   order       Int
-  youtube_id  String        @db.Uuid
+  youtube_id  String        @db.String(11)
   UsersAnswer AnswerOption?
 
   SessionUser     SessionUser @relation(fields: [session_user_id], references: [id])

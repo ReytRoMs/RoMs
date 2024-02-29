@@ -22,4 +22,25 @@ model SessionUser {
   id                  String           @id @default(uuid()) @db.Uuid
   current_roms_member Boolean
   UsersPrimaryRole    UsersPrimaryRole
+  Questions           Question[]
+
+  created_at DateTime @default(now())
+}
+
+enum AnswerOption {
+  ACCEPTABLE
+  LAME
+  VERY_LAME
+}
+
+model Question {
+  id          String        @id @default(uuid()) @db.Uuid
+  order       Int
+  youtube_id  String        @db.Uuid
+  UsersAnswer AnswerOption?
+
+  SessionUser     SessionUser @relation(fields: [session_user_id], references: [id])
+  session_user_id String      @db.Uuid
+
+  created_at DateTime @default(now())
 }

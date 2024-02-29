@@ -6,7 +6,7 @@ const seedData = async () => {
 	await prisma.sessionUser.create({
 		data: {
 			id: crypto.randomUUID(),
-			current_roms_member: true,
+			is_current_roms_member: true,
 			UsersPrimaryRole: UsersPrimaryRole.FARMER
 		}
 	});

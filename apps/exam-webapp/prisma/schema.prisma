@@ -19,10 +19,10 @@ enum UsersPrimaryRole {
 }
 
 model SessionUser {
-  id                  String           @id @default(uuid()) @db.Uuid
-  current_roms_member Boolean
-  UsersPrimaryRole    UsersPrimaryRole
-  Questions           Question[]
+  id                     String           @id @default(uuid()) @db.Uuid
+  is_current_roms_member Boolean          @default(false)
+  UsersPrimaryRole       UsersPrimaryRole
+  Questions              Question[]
 
   created_at DateTime @default(now())
 }

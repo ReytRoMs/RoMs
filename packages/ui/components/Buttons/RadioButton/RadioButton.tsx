@@ -2,17 +2,17 @@
 
 import { IRadioButton } from "./types";
 import { Button } from "../Button";
-import { ButtonState, ButtonVariant } from "../types";
+import { ButtonMode, ButtonVariant } from "../types";
 
 export const RadioButton = ({ label, value, onChange, isChecked, isErrored, isDisabled }: IRadioButton) => {
-	let state = ButtonState.DEFAULT;
+	let mode = ButtonMode.DEFAULT;
 
 	if (isChecked === true) {
-		state = ButtonState.CHECKED;
+		mode = ButtonMode.CHECKED;
 	} else if (isErrored === true) {
-		state = ButtonState.ERROR;
+		mode = ButtonMode.ERROR;
 	} else {
-		state = ButtonState.DEFAULT;
+		mode = ButtonMode.DEFAULT;
 	}
 
 	return (
@@ -22,7 +22,7 @@ export const RadioButton = ({ label, value, onChange, isChecked, isErrored, isDi
 			onPress={() => {
 				onChange(value);
 			}}
-			modes={state}
+			modes={mode}
 			isDisabled={isDisabled}
 		/>
 	);

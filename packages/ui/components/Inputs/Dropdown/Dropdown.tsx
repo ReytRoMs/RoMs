@@ -15,7 +15,7 @@ import {
 } from "@gluestack-ui/themed";
 import { CaretDown } from "../../Icons";
 import { BaseInputProps, FieldOption, UseFieldPropsWithEnhancedErrorMessaging } from "../shared/types";
-import { useField } from "formik";
+import { useField, useFormikContext } from "formik";
 import * as React from "react";
 import { getErrorMessages, MustContain } from "../shared";
 import { DropdownMenu } from "./DropdownMenu";
@@ -36,6 +36,9 @@ export const Dropdown = ({
 	const [field, meta, helpers] = useField<string>({
 		name
 	}) as UseFieldPropsWithEnhancedErrorMessaging<string>;
+
+	// Access properties that were passed to the form itself used for performing additional checks below
+	const { validateOnBlur } = useFormikContext();
 
 	// Combine all field level errors and any external api errors
 	const errorMessages = React.useMemo(() => {
@@ -64,7 +67,8 @@ export const Dropdown = ({
 			</FormControlLabel>
 			<Select
 				onValueChange={(value) => {
-					helpers.setValue(value);
+					// Set the value and if the form is validating on blur validate the value now to get it out of the error state
+					helpers.setValue(value, validateOnBlur);
 				}}
 				selectedValue={field.value}
 			>

@@ -87,6 +87,7 @@ export const Textarea = React.memo(
 						/>
 					</GSTextarea>
 				</FormControl>
+
 				{errorMessages?.length > 0 && (
 					<View marginBottom={20}>{errorMessages?.map((error) => <MustContain message={error} />) ?? null}</View>
 				)}

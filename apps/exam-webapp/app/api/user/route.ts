@@ -79,15 +79,11 @@ export const POST = async (request: Request) => {
 			}
 		});
 
-		const { id, is_current_roms_member, UsersPrimaryRole } = createdUser;
-
 		const formattedUser = {
-			id: id,
-			isCurrentRomsMember: is_current_roms_member,
-			usersPrimaryRole: UsersPrimaryRole
+			sessionUserId: createdUser.id
 		};
 
-		return NextResponse.json(formattedUser);
+		return NextResponse.json(formattedUser, { status: 201 });
 	} catch (err) {
 		const errorReasons = [err.message];
 

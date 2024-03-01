@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { PrismaClient, UsersPrimaryRole } from "@prisma/client";
 import { get } from "@vercel/edge-config";
 import { sendErrorResponse } from "../errorResponse";
-import { ZodError, boolean, object, z } from "zod";
+import { boolean, object, z } from "zod";
 
 const prisma = new PrismaClient();
 
@@ -35,19 +35,32 @@ const newUserSchema = object({
 export async function POST(request: Request) {
 	try {
 		const data = await request.json();
-		const validatedUser = newUserSchema.parse(data);
+		const validationResult = newUserSchema.safeParse(data);
+
+		if (!validationResult.success) {
+			const errorMessage = "Error creating user";
+			const errorReasons = validationResult.error.issues.map((err) => err.message);
+
+			return sendErrorResponse({ errorMessage, errorReasons, statusCode: 403 });
+		}
+
+		const { data: validatedUser } = validationResult;
 
 		const isCurrentRomsMember = validatedUser?.isCurrentRomsMember;
 		const usersPrimaryRole = validatedUser?.usersPrimaryRole;
 
-		const videoData = (await get("videos")) as Video[];
+		const videoData = await get<Video[]>("videos");
 
-		// TODO: handle no video data
+		if (!videoData?.length) {
+			const errorMessage = "Error creating user";
+			const errorReasons = ["Error fetching video data"];
+			return sendErrorResponse({ errorMessage, errorReasons, statusCode: 503 });
+		}
 
 		const numberOfVideosToTake = 20;
 		const randomVideos = videoData
-			.map((video) => ({ youtube_id: video.youtube_id, sortOrder: Math.random() }))
-			.sort((a, b) => a.sortOrder - b.sortOrder)
+			.map((video) => ({ youtube_id: video.youtube_id, randomSortOrder: Math.random() }))
+			.sort((a, b) => a.randomSortOrder - b.randomSortOrder)
 			.slice(0, numberOfVideosToTake)
 			.map((video, index) => ({
 				order: index,
@@ -76,9 +89,8 @@ export async function POST(request: Request) {
 		return NextResponse.json(formattedUser);
 	} catch (err) {
 		const errorMessage = "Error creating user";
-		// TODO: handle parsing Prisma error which is not JSON
-		const errorReasons = JSON.parse(err) ? JSON.parse(err)?.map((err: ZodError) => err.message) : "";
+		const errorReasons = [err.message];
 
-		return sendErrorResponse({ errorMessage, errorReasons, statusCode: errorReasons.length ? 403 : 500 });
+		return sendErrorResponse({ errorMessage, errorReasons, statusCode: 500 });
 	}
 }

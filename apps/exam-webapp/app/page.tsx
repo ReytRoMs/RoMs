@@ -5,8 +5,9 @@ import { Button, Dropdown, RadioButtons, Textarea } from "../../../packages/ui/c
 import useSWR from "swr";
 import { fetcher } from "ui";
 import { Form, Formik } from "formik";
-import * as Yup from "yup";
 import { ButtonVariant } from "@repo/types";
+import * as Zod from "zod";
+import { useState } from "react";
 
 export default function Home() {
 	return (
@@ -18,6 +19,12 @@ export default function Home() {
 
 const Container = () => {
 	const { data } = useSWR("/api/user", fetcher);
+
+	const [initialValues] = useState({
+		answer: "",
+		details: "",
+		primaryRole: ""
+	});
 
 	return (
 		<Box>
@@ -44,12 +51,33 @@ const Container = () => {
 						console.log("Handle submit of values", values);
 					}}
 					enableReinitialize
-					validationSchema={Yup.object().shape({
-						answer: Yup.string().required("Please complete"),
-						details: Yup.string().required("Please complete")
-					})}
 					validateOnBlur={true}
 					validateOnChange={false}
+					validate={(values) => {
+						const schema = Zod.object({
+							answer: Zod.string({ required_error: "Please complete" }).min(1, { message: "Please complete" }),
+							details: Zod.string({ required_error: "Please complete" }).min(1, { message: "Please complete" }),
+							primaryRole: Zod.string({ required_error: "Please complete" }).min(1, { message: "Please complete" })
+						});
+
+						// Parse the schema with the form values
+						const response = schema.safeParse(values);
+
+						// Check to see if there is any errors with the form
+						if (response.success === false) {
+							let errors: Partial<typeof initialValues> = {};
+
+							// Map the Zod errors to Formik errors shape
+							response.error.errors.map((value) => {
+								errors = {
+									...errors,
+									[value.path[0]]: value.message
+								};
+							});
+
+							return errors;
+						}
+					}}
 				>
 					{({ handleSubmit }) => (
 						<>

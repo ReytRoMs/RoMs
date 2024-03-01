@@ -59,7 +59,7 @@ export const GET = async (request: Request) => {
 
 		const formattedNextQuestion = {
 			questionId: foundNextQuestion?.id,
-			youtube_id: foundNextQuestion?.youtube_id,
+			youtubeId: foundNextQuestion?.youtube_id,
 			allQuestionsAreAnswered: false,
 			order: foundNextQuestion?.order,
 			total: totalQuestionsCount

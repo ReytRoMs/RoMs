@@ -6,13 +6,16 @@ import { boolean, object, nativeEnum } from "zod";
 
 const prisma = new PrismaClient();
 
+// move these to the types package
+// when I've figured out how to import the Prisma enum types there
 export type NewSessionUserRequest = {
 	isCurrentRomsMember: boolean;
 	usersPrimaryRole: UsersPrimaryRole;
 };
 
-type Video = {
+export type VideoData = {
 	youtube_id: string;
+	correct_answer?: string;
 };
 
 const newUserSchema = object({
@@ -50,7 +53,7 @@ export const POST = async (request: Request) => {
 		const isCurrentRomsMember = validatedUser?.isCurrentRomsMember;
 		const usersPrimaryRole = validatedUser?.usersPrimaryRole;
 
-		const videoData = await get<Video[]>("videos");
+		const videoData = await get<VideoData[]>("videos");
 
 		if (!videoData?.length) {
 			const errorReasons = ["Error fetching video data"];

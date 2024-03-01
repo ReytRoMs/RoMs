@@ -15,7 +15,7 @@ export const SelectTrigger = createStyle({
 	borderStyle: "solid",
 	borderColor: "$textBody",
 	rounded: 8,
-	marginBottom: 10,
+	// marginBottom: 10,
 	fontFamily: "$body",
 
 	":hover": {

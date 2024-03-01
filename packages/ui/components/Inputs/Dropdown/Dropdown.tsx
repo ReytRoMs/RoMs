@@ -10,7 +10,8 @@ import {
 	Select,
 	SelectInput,
 	SelectTrigger,
-	Text
+	Text,
+	View
 } from "@gluestack-ui/themed";
 import { CaretDown } from "../../Icons";
 import { BaseInputProps, FieldOption, UseFieldPropsWithEnhancedErrorMessaging } from "../shared/types";
@@ -61,7 +62,6 @@ export const Dropdown = ({
 					</Text>
 				</FormControlLabelText>
 			</FormControlLabel>
-
 			<Select
 				onValueChange={(value) => {
 					helpers.setValue(value);
@@ -79,7 +79,9 @@ export const Dropdown = ({
 				</SelectPortal>
 			</Select>
 
-			{errorMessages?.map((error) => <MustContain message={error} />) ?? null}
+			{errorMessages?.length > 0 && (
+				<View marginBottom={20}>{errorMessages?.map((error) => <MustContain message={error} />) ?? null}</View>
+			)}
 		</FormControl>
 	);
 };

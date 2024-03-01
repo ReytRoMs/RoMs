@@ -104,6 +104,7 @@ const Container = () => {
 								/>
 
 								<Button
+									marginTop={20}
 									buttonText='Submit'
 									variant={ButtonVariant.PRIMARY}
 									onPress={() => {

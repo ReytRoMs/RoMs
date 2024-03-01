@@ -7,6 +7,6 @@ type ErrorData = {
 };
 
 export const sendErrorResponse = ({ errorMessage, errorReasons, statusCode }: ErrorData) => {
-	console.error({ errorMessage, errorReasons, statusCode });
+	console.error({ message: errorMessage, reasons: errorReasons, status: statusCode });
 	return NextResponse.json({ message: errorMessage, reasons: errorReasons }, { status: statusCode });
 };

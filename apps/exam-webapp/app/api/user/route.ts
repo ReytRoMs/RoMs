@@ -33,15 +33,16 @@ const newUserSchema = object({
 });
 
 export async function POST(request: Request) {
+	const ERROR_MESSAGE = "Error creating user";
+
 	try {
 		const data = await request.json();
 		const validationResult = newUserSchema.safeParse(data);
 
 		if (!validationResult.success) {
-			const errorMessage = "Error creating user";
 			const errorReasons = validationResult.error.issues.map((err) => err.message);
 
-			return sendErrorResponse({ errorMessage, errorReasons, statusCode: 403 });
+			return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 403 });
 		}
 
 		const { data: validatedUser } = validationResult;
@@ -52,9 +53,8 @@ export async function POST(request: Request) {
 		const videoData = await get<Video[]>("videos");
 
 		if (!videoData?.length) {
-			const errorMessage = "Error creating user";
 			const errorReasons = ["Error fetching video data"];
-			return sendErrorResponse({ errorMessage, errorReasons, statusCode: 503 });
+			return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 503 });
 		}
 
 		const numberOfVideosToTake = 20;
@@ -80,6 +80,7 @@ export async function POST(request: Request) {
 		});
 
 		const { id, is_current_roms_member, UsersPrimaryRole } = createdUser;
+
 		const formattedUser = {
 			id: id,
 			isCurrentRomsMember: is_current_roms_member,
@@ -88,9 +89,8 @@ export async function POST(request: Request) {
 
 		return NextResponse.json(formattedUser);
 	} catch (err) {
-		const errorMessage = "Error creating user";
 		const errorReasons = [err.message];
 
-		return sendErrorResponse({ errorMessage, errorReasons, statusCode: 500 });
+		return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 500 });
 	}
 }

@@ -17,13 +17,15 @@ export default function Home() {
 }
 
 const Container = () => {
-	const { data } = useSWR("/api/user", fetcher);
+	const { data: user } = useSWR("/api/user", fetcher);
+	const { data: videos } = useSWR("/api/videos", fetcher);
 
 	return (
 		<Box>
 			<Box flex={1} backgroundColor='$background'>
 				<Box alignItems='center'>
-					<Text mb='$16'>{`Hello ${data?.UsersPrimaryRole ? data?.UsersPrimaryRole : "you"}!`}</Text>
+					<Text>{`Hello ${user?.UsersPrimaryRole ?? "you"}!`}</Text>
+					<Text mb='$16'>{`First video ID: ${videos?.[0]?.youtube_id ?? "loading..."}`}</Text>
 
 					<Button buttonText='Primary' variant={ButtonVariant.PRIMARY}></Button>
 					<Button buttonText='Primary' variant={ButtonVariant.PRIMARY} isDisabled></Button>

@@ -43,7 +43,9 @@ export const RadioButtons = ({ options, name, isDisabled, errorMessage = "" }: I
 				})}
 			</View>
 
-			{errorMessages?.map((error) => <MustContain message={error} />) ?? null}
+			{errorMessages?.length > 0 && (
+				<View marginBottom={20}>{errorMessages?.map((error) => <MustContain message={error} />) ?? null}</View>
+			)}
 		</View>
 	);
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Text } from "@gluestack-ui/themed";
-import { Button, RadioButtons, Textarea } from "../../../packages/ui/components";
+import { Button, Dropdown, RadioButtons, Textarea } from "../../../packages/ui/components";
 import useSWR from "swr";
 import { fetcher } from "ui";
 import { Form, Formik } from "formik";
@@ -22,7 +22,7 @@ const Container = () => {
 	return (
 		<Box>
 			<Box flex={1} backgroundColor='$background'>
-				<Box alignItems='center'>
+				<Box alignItems='center' flex={1}>
 					<Text mb='$16'>{`Hello ${data?.UsersPrimaryRole ? data?.UsersPrimaryRole : "you"}!`}</Text>
 
 					<Button buttonText='Primary' variant={ButtonVariant.PRIMARY}></Button>
@@ -37,7 +37,8 @@ const Container = () => {
 				<Formik
 					initialValues={{
 						answer: "",
-						details: ""
+						details: "",
+						primaryRole: ""
 					}}
 					onSubmit={(values) => {
 						console.log("Handle submit of values", values);
@@ -52,7 +53,7 @@ const Container = () => {
 				>
 					{({ handleSubmit }) => (
 						<>
-							<Form style={{ width: "100%", marginLeft: "auto", marginRight: "auto", maxWidth: 900 }}>
+							<Form style={{ width: "100%", marginLeft: "auto", marginRight: "auto", maxWidth: 900, flex: 1 }}>
 								<RadioButtons
 									options={[
 										{ label: "1. Acceptable Mobility", value: "1", isDisabled: false },
@@ -63,6 +64,16 @@ const Container = () => {
 								/>
 
 								<Textarea name='details' placeholder='Provide Details' />
+
+								<Dropdown
+									name='primaryRole'
+									options={[
+										{ id: "1", label: "Vet", value: "12", disabled: false },
+										{ id: "2", label: "Farmer", value: "13", disabled: false }
+									]}
+									label={"What is your primary role?"}
+									placeholder='Please Select'
+								/>
 
 								<Button
 									buttonText='Submit'

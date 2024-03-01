@@ -1,6 +1,6 @@
 "use client";
 
-import { useField } from "formik";
+import { useField, useFormikContext } from "formik";
 import { IRadioButtons } from "./types";
 import { RadioButton } from "./RadioButton";
 import { Text, View } from "@gluestack-ui/themed";
@@ -11,27 +11,26 @@ export const RadioButtons = ({ options, name, isDisabled }: IRadioButtons) => {
 		name
 	});
 
+	// Access properties that were passed to the form itself used for performing additional checks below
+	const { validateOnBlur } = useFormikContext();
+
 	return (
 		<View>
-			<View>
-				{options?.map((option) => {
-					return (
-						<RadioButton
-							key={`${option.label}.${option.value}`}
-							label={option.label}
-							onChange={() => {
-								helpers.setValue(option.value);
-
-								helpers.setTouched(true);
-							}}
-							value={option.value}
-							isChecked={option.value === field.value}
-							isErrored={(meta?.error?.length ?? 0) > 0}
-							isDisabled={isDisabled ?? option.isDisabled}
-						/>
-					);
-				})}
-			</View>
+			{options?.map((option, optionIndex) => {
+				return (
+					<RadioButton
+						key={optionIndex}
+						label={option.label}
+						onChange={(value) => {
+							helpers.setValue(value, validateOnBlur);
+						}}
+						value={option.value}
+						isChecked={option.value === field.value}
+						isErrored={meta.touched === true && (meta.error?.length ?? 0) > 0}
+						isDisabled={isDisabled ?? option.isDisabled}
+					/>
+				);
+			})}
 
 			{meta.touched === true && (meta.error?.length ?? 0) > 0 && (
 				<Text color='$validError' fontWeight='500' variant='body' marginBottom={20}>

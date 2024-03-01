@@ -6,6 +6,7 @@ import useSWR from "swr";
 import { fetcher } from "ui";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import { useState } from "react";
 
 export default function Home() {
 	return (
@@ -17,6 +18,10 @@ export default function Home() {
 
 const Container = () => {
 	const { data } = useSWR("/api/user", fetcher);
+
+	const [formValues] = useState({
+		answer: ""
+	});
 
 	return (
 		<Box>
@@ -32,9 +37,7 @@ const Container = () => {
 				<Button buttonText='Large' variant={ButtonVariant.LARGE}></Button>
 
 				<Formik
-					initialValues={{
-						answer: ""
-					}}
+					initialValues={formValues}
 					onSubmit={(values) => {
 						console.log("Handle submit of values", values);
 					}}
@@ -42,6 +45,8 @@ const Container = () => {
 					validationSchema={Yup.object().shape({
 						answer: Yup.string().required("At least one option is required")
 					})}
+					validateOnBlur={true}
+					validateOnChange={false}
 				>
 					{({ handleSubmit }) => (
 						<>

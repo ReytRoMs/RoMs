@@ -4,3 +4,9 @@ export enum ButtonVariant {
 	SECONDARY = "secondary",
 	RADIO = "radio"
 }
+
+export enum ButtonState {
+	DEFAULT = "default",
+	CHECKED = "checked",
+	ERROR = "error"
+}

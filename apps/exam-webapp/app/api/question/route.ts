@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import { sendErrorResponse } from "../errorResponse";
 import { PrismaClient } from "@prisma/client";
+import { string } from "zod";
 
 const prisma = new PrismaClient();
+
+const sessionUserIdSchema = string().uuid({ message: "Invalid session user ID" });
 
 export const GET = async (request: Request) => {
 	const ERROR_MESSAGE = "Error getting question";
@@ -14,9 +17,16 @@ export const GET = async (request: Request) => {
 
 		if (!sessionUserId) {
 			const errorReasons = ["No session user ID"];
-
 			return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 403 });
 		}
+
+		const validationResult = sessionUserIdSchema.safeParse(sessionUserId);
+		if (!validationResult.success) {
+			const errorReasons = validationResult.error.issues.map((err) => err.message);
+			return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 403 });
+		}
+
+		await prisma.sessionUser.findUniqueOrThrow({ where: { id: sessionUserId } });
 
 		const totalQuestionsCount = await prisma.question.count({
 			where: {

@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function GET(request: Request) {
+export const GET = async (request: Request) => {
 	const ERROR_MESSAGE = "Error getting question";
 
 	try {
@@ -58,10 +58,11 @@ export async function GET(request: Request) {
 		}
 
 		const formattedNextQuestion = {
-			order: foundNextQuestion?.order,
-			total: totalQuestionsCount,
+			questionId: foundNextQuestion?.id,
 			youtube_id: foundNextQuestion?.youtube_id,
-			allQuestionsAreAnswered: false
+			allQuestionsAreAnswered: false,
+			order: foundNextQuestion?.order,
+			total: totalQuestionsCount
 		};
 
 		return NextResponse.json(formattedNextQuestion);
@@ -70,4 +71,4 @@ export async function GET(request: Request) {
 
 		return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 500 });
 	}
-}
+};

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { PrismaClient, UsersPrimaryRole } from "@prisma/client";
 import { get } from "@vercel/edge-config";
 import { sendErrorResponse } from "../errorResponse";
-import { boolean, object, z } from "zod";
+import { boolean, object, nativeEnum } from "zod";
 
 const prisma = new PrismaClient();
 
@@ -20,7 +20,7 @@ const newUserSchema = object({
 		required_error: "RoMS membership status is required",
 		invalid_type_error: "RoMS membership status should be a boolean"
 	}),
-	usersPrimaryRole: z.nativeEnum(UsersPrimaryRole, {
+	usersPrimaryRole: nativeEnum(UsersPrimaryRole, {
 		errorMap: (issue) => {
 			// @ts-expect-error - Zod gives us this issue.received but apparently doesn't know about it!
 			if (issue.received === "undefined") {
@@ -32,7 +32,7 @@ const newUserSchema = object({
 	})
 });
 
-export async function POST(request: Request) {
+export const POST = async (request: Request) => {
 	const ERROR_MESSAGE = "Error creating user";
 
 	try {
@@ -93,4 +93,4 @@ export async function POST(request: Request) {
 
 		return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 500 });
 	}
-}
+};

@@ -28,9 +28,10 @@ model SessionUser {
 }
 
 enum AnswerOption {
-  ACCEPTABLE
-  LAME
-  VERY_LAME
+  GOOD
+  IMPERFECT
+  IMPAIRED
+  SEVERELY_IMPAIRED
 }
 
 model Question {

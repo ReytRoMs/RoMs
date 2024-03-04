@@ -29,7 +29,6 @@ export const DropdownMenu = ({
 							disabled={option?.disabled ?? false}
 							isDisabled={option?.disabled ?? false}
 							key={option.id}
-							// TODO: When we can style this correctly via the GlueStack states remove this code
 							backgroundColor={value === option.value ? "$textBody" : "white"}
 						/>
 					);

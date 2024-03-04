@@ -56,23 +56,30 @@ export const Button = createStyle({
 			},
 			radio: {
 				padding: 32,
-				gap: 8,
+				gap: "$2",
 				borderRadius: "$full",
 				borderWidth: 1,
 				borderColor: "$white",
 				borderStyle: "solid",
+				width: "$full",
 				":hover": {
 					backgroundColor: "$dark"
 				},
 
 				":active": {
 					backgroundColor: "$green"
-				},
-
-				":focus": {
-					backgroundColor: "$dark"
 				}
 			}
+		},
+
+		modes: {
+			error: {
+				borderColor: "$validError"
+			},
+			checked: {
+				backgroundColor: "$green"
+			},
+			default: {}
 		}
 	}
 });

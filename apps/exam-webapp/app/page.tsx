@@ -6,19 +6,20 @@ import useSWR from "swr";
 import { fetcher } from "ui";
 import { Form, Formik } from "formik";
 import { ButtonVariant } from "@repo/types";
-import * as Zod from "zod";
+import { z } from "zod";
 import { useState } from "react";
 
 export default function Home() {
 	return (
-		<main>
+		<main style={{ height: "100vh" }}>
 			<Container />
 		</main>
 	);
 }
 
 const Container = () => {
-	const { data } = useSWR("/api/user", fetcher);
+	const { data: user } = useSWR("/api/user", fetcher);
+	const { data: videos } = useSWR("/api/videos", fetcher);
 
 	const [initialValues] = useState({
 		answer: "",
@@ -29,8 +30,9 @@ const Container = () => {
 	return (
 		<Box>
 			<Box flex={1} backgroundColor='$background'>
-				<Box alignItems='center' flex={1}>
-					<Text mb='$16'>{`Hello ${data?.UsersPrimaryRole ? data?.UsersPrimaryRole : "you"}!`}</Text>
+				<Box alignItems='center'>
+					<Text>{`Hello ${user?.UsersPrimaryRole ?? "you"}!`}</Text>
+					<Text mb='$16'>{`First video ID: ${videos?.[0]?.youtube_id ?? "loading..."}`}</Text>
 
 					<Button buttonText='Primary' variant={ButtonVariant.PRIMARY}></Button>
 					<Button buttonText='Primary' variant={ButtonVariant.PRIMARY} isDisabled></Button>
@@ -54,10 +56,10 @@ const Container = () => {
 					validateOnBlur={true}
 					validateOnChange={false}
 					validate={(values) => {
-						const schema = Zod.object({
-							answer: Zod.string({ required_error: "Please complete" }).min(1, { message: "Please complete" }),
-							details: Zod.string({ required_error: "Please complete" }).min(1, { message: "Please complete" }),
-							primaryRole: Zod.string({ required_error: "Please complete" }).min(1, { message: "Please complete" })
+						const schema = z.object({
+							answer: z.string({ required_error: "Please complete" }).min(1, { message: "Please complete" }),
+							details: z.string({ required_error: "Please complete" }).min(1, { message: "Please complete" }),
+							primaryRole: z.string({ required_error: "Please complete" }).min(1, { message: "Please complete" })
 						});
 
 						// Parse the schema with the form values

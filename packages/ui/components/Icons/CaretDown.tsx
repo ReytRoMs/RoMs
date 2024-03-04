@@ -19,6 +19,6 @@ const CaretDownIcon = createIcon({
 	)
 });
 
-export const CaretDown = ({ colour = "$backgroundBottom" }: IconProps) => {
+export const CaretDown = ({ colour = "$white" }: IconProps) => {
 	return <Icon as={CaretDownIcon} color={colour} fill='none' width={24} height={24} />;
 };

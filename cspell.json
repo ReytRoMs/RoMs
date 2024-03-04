@@ -2,8 +2,17 @@
 	"version": "0.2",
 	"ignorePaths": [],
 	"dictionaryDefinitions": [],
-	"dictionaries": ["en-gb"],
-	"words": ["reyt", "dotfiles"],
-	"ignoreWords": ["gluestack", "Formik"],
+	"dictionaries": [
+		"en-gb"
+	],
+	"words": [
+		"dotfiles",
+		"Pressable",
+		"reyt"
+	],
+	"ignoreWords": [
+		"gluestack",
+		"Formik"
+	],
 	"import": []
 }

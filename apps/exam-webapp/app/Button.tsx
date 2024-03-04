@@ -1,9 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { Button as GSButton, ButtonText as GSButtonText, Text } from "@gluestack-ui/themed";
-import { Clipboard } from "../Icons";
+import { Clipboard } from "ui/components/Icons";
 import { PressableProps } from "react-native";
 import { ComponentProps } from "react";
-import { ButtonVariant } from "./types";
+
+export enum ButtonVariant {
+	LARGE = "large",
+	PRIMARY = "primary",
+	SECONDARY = "secondary"
+}
 
 interface IButton extends PressableProps, ComponentProps<typeof GSButton> {
 	variant: ButtonVariant;

@@ -45,11 +45,6 @@ const Container = () => {
 
 				<Box
 					style={{
-						width: "100%",
-						marginLeft: "auto",
-						marginRight: "auto",
-						maxWidth: 900,
-						flex: 1,
 						padding: 16
 					}}
 				>
@@ -57,24 +52,35 @@ const Container = () => {
 						results={[
 							{
 								correctAnswer: "1. Acceptable Mobility",
-								yourAnswer: "2. Lame",
+								yourAnswer: "1. Acceptable Mobility",
 								videoId: "Yo5Ix32Rc2o"
 							},
 							{
-								correctAnswer: "1. Acceptable Mobility",
-								yourAnswer: "1. Acceptable Mobility",
+								correctAnswer: "2. Good Mobility",
+								yourAnswer: "2. Acceptable Mobility",
 								videoId: "h7k6P12gfic"
+							},
+							{
+								correctAnswer: "3. Imperfect Mobility",
+								yourAnswer: "3. Imperfect Mobility",
+								videoId: "FavUpD_IjVY"
+							},
+							{
+								correctAnswer: "4. Impaired Mobility",
+								yourAnswer: "4. Acceptable Mobility",
+								videoId: "jQQTmuOEPLU"
+							},
+							{
+								correctAnswer: "5. Severely impaired mobility",
+								yourAnswer: "5. Severely impaired mobility",
+								videoId: "huT5__BqY_U"
 							}
 						]}
 					/>
 				</Box>
 
 				<Formik
-					initialValues={{
-						answer: "",
-						details: "",
-						primaryRole: ""
-					}}
+					initialValues={initialValues}
 					onSubmit={(values) => {
 						console.log("Handle submit of values", values);
 					}}

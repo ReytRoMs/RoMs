@@ -1,8 +1,8 @@
 "use client";
 
+import { Button } from "../../Buttons/Button";
+import { ButtonMode, ButtonVariant } from "@repo/types";
 import { IRadioButton } from "./types";
-import { Button } from "../Button";
-import { ButtonMode, ButtonVariant } from "../types";
 
 export const RadioButton = ({ label, value, onChange, isChecked, isErrored, isDisabled }: IRadioButton) => {
 	let mode = ButtonMode.DEFAULT;

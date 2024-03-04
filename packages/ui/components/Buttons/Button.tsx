@@ -3,7 +3,7 @@ import { Button as GSButton, ButtonText as GSButtonText, Text } from "@gluestack
 import { Clipboard } from "../Icons";
 import { PressableProps } from "react-native";
 import { ComponentProps } from "react";
-import { ButtonVariant } from "./types";
+import { ButtonVariant } from "@repo/types";
 
 interface IButton extends PressableProps, ComponentProps<typeof GSButton> {
 	variant: ButtonVariant;

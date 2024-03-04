@@ -7,8 +7,5 @@ export const SelectActionsheetSectionHeaderText = createStyle({
 	fontWeight: "$bold",
 	lineHeight: "$xs",
 	textTransform: "uppercase",
-	p: "$3",
-	_dark: {
-		color: "$textDark400"
-	}
+	p: "$3"
 });

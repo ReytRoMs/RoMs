@@ -4,11 +4,5 @@ export const SelectActionsheetIcon = createStyle({
 	w: "$4",
 	h: "$4",
 	mr: "$2",
-	color: "$backgroundLight500",
-	_dark: {
-		color: "$backgroundDark400"
-	},
-	props: {
-		size: "md"
-	}
+	color: "$textBody"
 });

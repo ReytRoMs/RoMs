@@ -15,7 +15,7 @@ export const SelectActionsheetBackdrop = createStyle({
 	top: 0,
 	right: 0,
 	bottom: 0,
-	bg: "$background",
+	backgroundColor: "$background",
 	_web: {
 		cursor: "default"
 	},

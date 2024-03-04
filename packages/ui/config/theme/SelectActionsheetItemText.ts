@@ -7,8 +7,5 @@ export const SelectActionsheetItemText = createStyle({
 	fontWeight: "$normal",
 	lineHeight: "$md",
 	color: "$backgroundBottom",
-	":disabled": {
-		color: "$validError"
-	},
 	marginHorizontal: 0
 });

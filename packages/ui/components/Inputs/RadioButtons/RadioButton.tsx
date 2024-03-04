@@ -1,20 +1,18 @@
 "use client";
 
 import { Button } from "../../Buttons/Button";
-import { ButtonVariant } from "@repo/types";
+import { ButtonMode, ButtonVariant } from "@repo/types";
 import { IRadioButton } from "./types";
 
 export const RadioButton = ({ label, value, onChange, isChecked, isErrored, isDisabled }: IRadioButton) => {
-	let backgroundColour = undefined;
-
-	let borderColour = "$white";
+	let mode = ButtonMode.DEFAULT;
 
 	if (isChecked === true) {
-		backgroundColour = "$green";
-	}
-
-	if (isErrored === true) {
-		borderColour = "$validError";
+		mode = ButtonMode.CHECKED;
+	} else if (isErrored === true) {
+		mode = ButtonMode.ERROR;
+	} else {
+		mode = ButtonMode.DEFAULT;
 	}
 
 	return (
@@ -24,15 +22,7 @@ export const RadioButton = ({ label, value, onChange, isChecked, isErrored, isDi
 			onPress={() => {
 				onChange(value);
 			}}
-			width={"$full"}
-			backgroundColor={backgroundColour}
-			borderColor={borderColour}
-			sx={{
-				// Can't be applied via the createStyle util
-				":hover": {
-					backgroundColor: "$dark"
-				}
-			}}
+			modes={mode}
 			isDisabled={isDisabled}
 		/>
 	);

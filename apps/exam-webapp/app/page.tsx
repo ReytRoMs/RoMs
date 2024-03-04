@@ -10,7 +10,7 @@ import { ButtonVariant } from "@repo/types";
 
 export default function Home() {
 	return (
-		<main>
+		<main style={{ height: "100vh" }}>
 			<Container />
 		</main>
 	);

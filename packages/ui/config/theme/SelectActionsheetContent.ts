@@ -6,8 +6,8 @@ export const SelectActionsheetContent = createStyle({
 	borderTopRightRadius: "$3xl",
 	maxHeight: "50%",
 	p: "$2",
-	bg: "white",
+	bg: "$white",
 	_sectionHeaderBackground: {
-		bg: "white"
+		bg: "$white"
 	}
 });

@@ -29,7 +29,7 @@ export const SelectTrigger = createStyle({
 	":disabled": {
 		opacity: 0.4,
 		":hover": {
-			borderColor: "$backgroundLight300"
+			borderColor: "$background"
 		}
 	},
 

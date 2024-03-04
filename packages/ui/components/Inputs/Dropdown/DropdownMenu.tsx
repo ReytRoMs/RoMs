@@ -20,7 +20,7 @@ export const DropdownMenu = ({
 			<SelectDragIndicatorWrapper bgColor='$textBody' rounded={"$full"} width={"$1/4"} height={4} marginBottom={5}>
 				<SelectDragIndicator />
 			</SelectDragIndicatorWrapper>
-			<SelectScrollView backgroundColor='white'>
+			<SelectScrollView backgroundColor='$white'>
 				{options?.map((option) => {
 					return (
 						<SelectItem
@@ -29,7 +29,7 @@ export const DropdownMenu = ({
 							disabled={option?.disabled ?? false}
 							isDisabled={option?.disabled ?? false}
 							key={option.id}
-							backgroundColor={value === option.value ? "$textBody" : "white"}
+							backgroundColor={value === option.value ? "$textBody" : "$white"}
 						/>
 					);
 				})}

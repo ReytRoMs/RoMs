@@ -1,7 +1,12 @@
 "use client";
 
-import { Box } from "@gluestack-ui/themed";
-import { Button, ButtonVariant } from "../../../packages/ui/components";
+import { Box, Text } from "@gluestack-ui/themed";
+import { Button, ButtonVariant, RadioButtons } from "../../../packages/ui/components";
+import useSWR from "swr";
+import { fetcher } from "ui";
+import { Form, Formik } from "formik";
+import { useState } from "react";
+import { z } from "zod";
 
 export default function Home() {
 	return (
@@ -12,10 +17,19 @@ export default function Home() {
 }
 
 const Container = () => {
+	const { data: user } = useSWR("/api/user", fetcher);
+	const { data: videos } = useSWR("/api/videos", fetcher);
+
+	const [formValues] = useState({
+		answer: ""
+	});
+
 	return (
-		// @ts-expect-error web-h doesn't seem to exists in BoxProps
-		<Box flex={1} backgroundColor='$background' $web-h={"100vh"}>
-			<Box flex={1} $base-my={"$16"} $base-mx={"$5"} $lg-my={"$24"} $lg-mx={"$32"} alignItems='center'>
+		<Box>
+			<Box flex={1} alignItems='center' backgroundColor='$background'>
+				<Text>{`Hello ${user?.UsersPrimaryRole ?? "you"}!`}</Text>
+				<Text mb='$16'>{`First video ID: ${videos?.[0]?.youtube_id ?? "loading..."}`}</Text>
+
 				<Button buttonText='Primary' variant={ButtonVariant.PRIMARY}></Button>
 				<Button buttonText='Primary' variant={ButtonVariant.PRIMARY} isDisabled></Button>
 
@@ -23,6 +37,42 @@ const Container = () => {
 				<Button buttonText='Secondary' variant={ButtonVariant.SECONDARY} isDisabled></Button>
 
 				<Button buttonText='Large' variant={ButtonVariant.LARGE}></Button>
+
+				<Formik
+					initialValues={formValues}
+					onSubmit={(values) => {
+						console.log("Handle submit of values", values);
+					}}
+					enableReinitialize
+					validationSchema={z.object({
+						answer: z.string().min(1, "At least one option is required")
+					})}
+					validateOnBlur={true}
+					validateOnChange={false}
+				>
+					{({ handleSubmit }) => (
+						<>
+							<Form>
+								<RadioButtons
+									options={[
+										{ label: "1. Acceptable Mobility", value: "1", isDisabled: false },
+										{ label: "2. Lame", value: "2", isDisabled: false },
+										{ label: "3. Very Lame", value: "3", isDisabled: true }
+									]}
+									name='answer'
+								/>
+							</Form>
+
+							<Button
+								buttonText='Submit'
+								variant={ButtonVariant.PRIMARY}
+								onPress={() => {
+									handleSubmit();
+								}}
+							/>
+						</>
+					)}
+				</Formik>
 			</Box>
 		</Box>
 	);

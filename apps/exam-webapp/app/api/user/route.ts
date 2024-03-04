@@ -3,20 +3,9 @@ import { PrismaClient, UsersPrimaryRole } from "@prisma/client";
 import { get } from "@vercel/edge-config";
 import { sendErrorResponse } from "../errorResponse";
 import { boolean, object, nativeEnum } from "zod";
+import { VideoData } from "@/types";
 
 const prisma = new PrismaClient();
-
-// move these to the types package
-// when I've figured out how to import the Prisma enum types there
-export type NewSessionUserRequest = {
-	isCurrentRomsMember: boolean;
-	usersPrimaryRole: UsersPrimaryRole;
-};
-
-export type VideoData = {
-	youtube_id: string;
-	correct_answer?: string;
-};
 
 const newUserSchema = object({
 	isCurrentRomsMember: boolean({

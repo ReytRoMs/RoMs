@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Text } from "@gluestack-ui/themed";
-import { Button, Dropdown, RadioButtons, Textarea } from "../../../packages/ui/components";
+import { Button, Dropdown, RadioButtons, ResultsTable, Textarea } from "../../../packages/ui/components";
 import useSWR from "swr";
 import { fetcher } from "ui";
 import { Form, Formik } from "formik";
@@ -41,6 +41,32 @@ const Container = () => {
 					<Button buttonText='Secondary' variant={ButtonVariant.SECONDARY} isDisabled></Button>
 
 					<Button buttonText='Large' variant={ButtonVariant.LARGE}></Button>
+				</Box>
+
+				<Box
+					style={{
+						width: "100%",
+						marginLeft: "auto",
+						marginRight: "auto",
+						maxWidth: 900,
+						flex: 1,
+						padding: 16
+					}}
+				>
+					<ResultsTable
+						results={[
+							{
+								correctAnswer: "1. Acceptable Mobility",
+								yourAnswer: "2. Lame",
+								videoId: "Yo5Ix32Rc2o"
+							},
+							{
+								correctAnswer: "1. Acceptable Mobility",
+								yourAnswer: "1. Acceptable Mobility",
+								videoId: "h7k6P12gfic"
+							}
+						]}
+					/>
 				</Box>
 
 				<Formik

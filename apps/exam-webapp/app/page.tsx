@@ -1,9 +1,7 @@
 "use client";
 
-import { Box, Text } from "@gluestack-ui/themed";
+import { Box } from "@gluestack-ui/themed";
 import { Button, Dropdown, RadioButtons, Textarea } from "../../../packages/ui/components";
-import useSWR from "swr";
-import { fetcher } from "ui";
 import { Form, Formik } from "formik";
 import { ButtonVariant } from "@repo/types";
 import { z } from "zod";
@@ -18,9 +16,6 @@ export default function Home() {
 }
 
 const Container = () => {
-	const { data: user } = useSWR("/api/user", fetcher);
-	const { data: videos } = useSWR("/api/videos", fetcher);
-
 	const [initialValues] = useState({
 		answer: "",
 		details: "",
@@ -30,10 +25,7 @@ const Container = () => {
 	return (
 		<Box>
 			<Box flex={1} backgroundColor='$background'>
-				<Box alignItems='center'>
-					<Text>{`Hello ${user?.UsersPrimaryRole ?? "you"}!`}</Text>
-					<Text mb='$16'>{`First video ID: ${videos?.[0]?.youtube_id ?? "loading..."}`}</Text>
-
+				<Box alignItems='center' mt='$16'>
 					<Button buttonText='Primary' variant={ButtonVariant.PRIMARY}></Button>
 					<Button buttonText='Primary' variant={ButtonVariant.PRIMARY} isDisabled></Button>
 

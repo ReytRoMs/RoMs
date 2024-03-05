@@ -1,5 +1,7 @@
 "use client";
 
+import "./PageLayout.css";
+
 import { Box } from "@gluestack-ui/themed";
 
 export const PageLayout = ({ children }: { children: React.ReactNode }) => {
@@ -11,7 +13,7 @@ export const PageLayout = ({ children }: { children: React.ReactNode }) => {
 					{children}
 				</Box>
 
-				<div className='footer' />
+				<footer />
 			</Box>
 		</main>
 	);

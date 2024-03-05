@@ -1,0 +1,14 @@
+footer {
+	background-image: url("/mobile-footer.png");
+	height: 175px;
+
+	background-repeat: round;
+	margin-top: auto;
+}
+
+@media screen and (min-width: 768px) {
+	footer {
+		background-image: url("/desktop-footer.png");
+		height: 294px;
+	}
+}

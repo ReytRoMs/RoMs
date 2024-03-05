@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Text } from "@gluestack-ui/themed";
-import { Button, Dropdown, RadioButtons, Textarea } from "../../../packages/ui/components";
+import { Button, Dropdown, RadioButtons, ResultsTable, Textarea } from "../../../packages/ui/components";
 import useSWR from "swr";
 import { fetcher } from "ui";
 import { Form, Formik } from "formik";
@@ -43,12 +43,44 @@ const Container = () => {
 					<Button buttonText='Large' variant={ButtonVariant.LARGE}></Button>
 				</Box>
 
-				<Formik
-					initialValues={{
-						answer: "",
-						details: "",
-						primaryRole: ""
+				<Box
+					style={{
+						padding: 16
 					}}
+				>
+					<ResultsTable
+						results={[
+							{
+								correctAnswer: "0. Good Mobility",
+								yourAnswer: "0. Good Mobility",
+								videoId: "Yo5Ix32Rc2o"
+							},
+							{
+								correctAnswer: "0. Good Mobility",
+								yourAnswer: "3. Severely impaired mobility",
+								videoId: "h7k6P12gfic"
+							},
+							{
+								correctAnswer: "1. Imperfect Mobility",
+								yourAnswer: "1. Imperfect Mobility",
+								videoId: "FavUpD_IjVY"
+							},
+							{
+								correctAnswer: "2. Impaired Mobility",
+								yourAnswer: "0. Good Mobility",
+								videoId: "jQQTmuOEPLU"
+							},
+							{
+								correctAnswer: "3. Severely impaired mobility",
+								yourAnswer: "3. Severely impaired mobility",
+								videoId: "huT5__BqY_U"
+							}
+						]}
+					/>
+				</Box>
+
+				<Formik
+					initialValues={initialValues}
 					onSubmit={(values) => {
 						console.log("Handle submit of values", values);
 					}}

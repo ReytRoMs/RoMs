@@ -1,1 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+.footer {
+	background-image: url("/mobile-footer.png");
+	height: 175px;
+	background-repeat: round;
+	margin-top: auto;
+}
+
+@media screen and (min-width: 768px) {
+	.footer {
+		background-image: url("/desktop-footer.png");
+		height: 294px;
+		background-repeat: round;
+	}
+}

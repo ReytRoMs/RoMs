@@ -11,4 +11,5 @@ export interface IRadioButtons {
 	options: Pick<IRadioButton, "label" | "value" | "isDisabled">[];
 	name: string;
 	isDisabled?: boolean;
+	errorMessage?: string;
 }

@@ -206,7 +206,7 @@ export const gluestackUIConfig = createConfig({
 		variants: {
 			hardShadow: {
 				"1": {
-					shadowColor: "$backgroundLight900",
+					shadowColor: "$background",
 					shadowOffset: {
 						width: -2,
 						height: 2
@@ -216,7 +216,7 @@ export const gluestackUIConfig = createConfig({
 					elevation: 10
 				},
 				"2": {
-					shadowColor: "$backgroundLight900",
+					shadowColor: "$background",
 					shadowOffset: {
 						width: 0,
 						height: 3
@@ -226,7 +226,7 @@ export const gluestackUIConfig = createConfig({
 					elevation: 10
 				},
 				"3": {
-					shadowColor: "$backgroundLight900",
+					shadowColor: "$background",
 					shadowOffset: {
 						width: 2,
 						height: 2
@@ -236,7 +236,7 @@ export const gluestackUIConfig = createConfig({
 					elevation: 10
 				},
 				"4": {
-					shadowColor: "$backgroundLight900",
+					shadowColor: "$background",
 					shadowOffset: {
 						width: 0,
 						height: -3
@@ -248,7 +248,7 @@ export const gluestackUIConfig = createConfig({
 				// this 5th version is only for toast shadow
 				// temporary
 				"5": {
-					shadowColor: "$backgroundLight900",
+					shadowColor: "$background",
 					shadowOffset: {
 						width: 0,
 						height: 3
@@ -260,7 +260,7 @@ export const gluestackUIConfig = createConfig({
 			},
 			softShadow: {
 				"1": {
-					shadowColor: "$backgroundLight900",
+					shadowColor: "$background",
 					shadowOffset: {
 						width: 0,
 						height: 0
@@ -268,13 +268,13 @@ export const gluestackUIConfig = createConfig({
 					shadowRadius: 10,
 					shadowOpacity: 0.1,
 					_android: {
-						shadowColor: "$backgroundLight500",
+						shadowColor: "$background",
 						elevation: 5,
 						shadowOpacity: 0.05
 					}
 				},
 				"2": {
-					shadowColor: "$backgroundLight900",
+					shadowColor: "$background",
 					shadowOffset: {
 						width: 0,
 						height: 0
@@ -283,13 +283,13 @@ export const gluestackUIConfig = createConfig({
 					elevation: 3,
 					shadowOpacity: 0.1,
 					_android: {
-						shadowColor: "$backgroundLight500",
+						shadowColor: "$background",
 						elevation: 10,
 						shadowOpacity: 0.1
 					}
 				},
 				"3": {
-					shadowColor: "$backgroundLight900",
+					shadowColor: "$background",
 					shadowOffset: {
 						width: 0,
 						height: 0
@@ -298,13 +298,13 @@ export const gluestackUIConfig = createConfig({
 					shadowOpacity: 0.1,
 					elevation: 4,
 					_android: {
-						shadowColor: "$backgroundLight500",
+						shadowColor: "$background",
 						elevation: 15,
 						shadowOpacity: 0.15
 					}
 				},
 				"4": {
-					shadowColor: "$backgroundLight900",
+					shadowColor: "$background",
 					shadowOffset: {
 						width: 0,
 						height: 0
@@ -313,7 +313,7 @@ export const gluestackUIConfig = createConfig({
 					shadowOpacity: 0.1,
 					elevation: 10,
 					_android: {
-						shadowColor: "$backgroundLight500",
+						shadowColor: "$background",
 						elevation: 20,
 						shadowOpacity: 0.2
 					}

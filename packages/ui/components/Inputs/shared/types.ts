@@ -1,4 +1,7 @@
+/* eslint-disable no-unused-vars */
+import { ComponentProps } from "react";
 import { FieldHelperProps, FieldInputProps, FieldMetaProps } from "formik";
+import { InputField } from "@gluestack-ui/themed";
 
 // We can expect either multiple or single messages, it's no limited to a single string value. This is so you can see multiple messages at once if applicable
 export type FieldErrorMessage = string | string[];
@@ -17,3 +20,17 @@ export type UseFieldPropsWithEnhancedErrorMessaging<InputType> = [
 	MetaProps<InputType>,
 	HelperProps<InputType>
 ];
+
+export type FieldOption = { id: string; label: string; disabled?: boolean; value: string };
+
+export type BaseInputProps = {
+	label?: string | null;
+	placeholder?: string;
+	name: string;
+	disabled?: boolean;
+	errorMessage?: FieldErrorMessage;
+	onBlur?: null | (() => void);
+	onFocus?: null | (() => void);
+	onChange?: null | ((value: string) => void);
+	fontFamily?: ComponentProps<typeof InputField>["fontFamily"];
+};

@@ -5,10 +5,13 @@ import { Button, PageLayout } from "ui";
 
 import { SolitoImage } from "solito/image";
 import { TextLink } from "solito/link";
+import { useRouter } from "next/navigation";
 import { config } from "ui/config/gluestack-ui.config";
 import { ButtonVariant } from "@repo/types";
 
 export default function Home() {
+	const router = useRouter();
+
 	return (
 		<PageLayout>
 			<Box justifyContent='center' alignItems='center'>
@@ -88,7 +91,13 @@ export default function Home() {
 				</Box>
 
 				<Box justifyContent='center' alignItems='center'>
-					<Button buttonText='Start' variant={ButtonVariant.LARGE} />
+					<Button
+						buttonText='Start'
+						variant={ButtonVariant.LARGE}
+						onPress={() => {
+							router.push("/form");
+						}}
+					/>
 				</Box>
 			</Box>
 		</PageLayout>

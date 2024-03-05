@@ -6,7 +6,6 @@ import { Check } from "../Icons";
 import { X } from "../Icons/X";
 
 import "./index.css";
-import { useBreakpointValue } from "@gluestack-style/react";
 
 interface IResultsTable {
 	results: {
@@ -17,20 +16,6 @@ interface IResultsTable {
 }
 
 export const ResultsTable = ({ results }: IResultsTable) => {
-	// useBreakpointValue() hook is used to save duplicating the mediaQueries defined in the gluestack config, the media query values aren't available via css variables sadly.
-
-	// Defines the "max-width" a row can take up (Reactive inline styles based on gluestack breakpoints)
-	const tableCellMaxWidth = useBreakpointValue({
-		base: "unset",
-		md: "150px"
-	});
-
-	// Defines the "display" property for the correct answer column (Reactive inline styles based on gluestack breakpoints)
-	const correctAnswerColumnDisplay = useBreakpointValue({
-		base: "none",
-		md: "table-cell"
-	});
-
 	return (
 		<table>
 			<thead>
@@ -41,7 +26,7 @@ export const ResultsTable = ({ results }: IResultsTable) => {
 					<th id='your-answer-column' scope='col'>
 						Your Answer
 					</th>
-					<th id='correct-answer-column' style={{ display: correctAnswerColumnDisplay }} scope='col'>
+					<th id='correct-answer-column' scope='col'>
 						Correct Answer
 					</th>
 					<th id='your-answer-icon-column' scope='col' />
@@ -65,13 +50,9 @@ export const ResultsTable = ({ results }: IResultsTable) => {
 								onLayout={() => {}}
 							/>
 						</td>
-						<td id='your-answer-column' style={{ maxWidth: tableCellMaxWidth }}>
-							{result.yourAnswer}
-						</td>
-						<td id='correct-answer-column' style={{ maxWidth: tableCellMaxWidth, display: correctAnswerColumnDisplay }}>
-							{result.correctAnswer}
-						</td>
-						<td id='your-answer-icon-column' style={{ maxWidth: tableCellMaxWidth }}>
+						<td id='your-answer-column'>{result.yourAnswer}</td>
+						<td id='correct-answer-column'>{result.correctAnswer}</td>
+						<td id='your-answer-icon-column'>
 							{result.yourAnswer === result.correctAnswer ? <Check colour='$green' /> : <X colour='$validError' />}
 						</td>
 					</tr>

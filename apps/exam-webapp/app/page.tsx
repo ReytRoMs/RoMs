@@ -51,28 +51,28 @@ const Container = () => {
 					<ResultsTable
 						results={[
 							{
-								correctAnswer: "1. Acceptable Mobility",
-								yourAnswer: "1. Acceptable Mobility",
+								correctAnswer: "0. Good Mobility",
+								yourAnswer: "0. Good Mobility",
 								videoId: "Yo5Ix32Rc2o"
 							},
 							{
-								correctAnswer: "2. Good Mobility",
-								yourAnswer: "2. Acceptable Mobility",
+								correctAnswer: "0. Good Mobility",
+								yourAnswer: "3. Severely impaired mobility",
 								videoId: "h7k6P12gfic"
 							},
 							{
-								correctAnswer: "3. Imperfect Mobility",
-								yourAnswer: "3. Imperfect Mobility",
+								correctAnswer: "1. Imperfect Mobility",
+								yourAnswer: "1. Imperfect Mobility",
 								videoId: "FavUpD_IjVY"
 							},
 							{
-								correctAnswer: "4. Impaired Mobility",
-								yourAnswer: "4. Acceptable Mobility",
+								correctAnswer: "2. Impaired Mobility",
+								yourAnswer: "0. Good Mobility",
 								videoId: "jQQTmuOEPLU"
 							},
 							{
-								correctAnswer: "5. Severely impaired mobility",
-								yourAnswer: "5. Severely impaired mobility",
+								correctAnswer: "3. Severely impaired mobility",
+								yourAnswer: "3. Severely impaired mobility",
 								videoId: "huT5__BqY_U"
 							}
 						]}

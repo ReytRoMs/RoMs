@@ -37,3 +37,18 @@ table tbody tr td {
 	line-height: 24px;
 	font-weight: 500;
 }
+
+#correct-answer-column {
+	display: none;
+}
+
+/* useBreakPointValue hook isn't working reliably enough on larger screens, plain old vanilla css work's perfectly */
+@media screen and (min-width: 768px) {
+	#correct-answer-column {
+		display: table-cell;
+	}
+
+	table tbody tr td {
+		max-width: 150px;
+	}
+}

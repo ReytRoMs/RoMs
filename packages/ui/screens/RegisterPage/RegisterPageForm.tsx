@@ -65,7 +65,7 @@ export const RegisterPageForm = () => {
 							name='areYouACurrentRoMsMember'
 							width={100}
 							direction='row'
-							label='Are you current ROMs member?'
+							label='Are you current RoMS member?'
 						/>
 
 						<Dropdown name='role' options={roles} label={"What is your primary role?"} />

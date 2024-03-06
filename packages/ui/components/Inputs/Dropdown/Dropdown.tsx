@@ -57,6 +57,7 @@ export const Dropdown = ({
 			paddingLeft={0}
 			paddingRight={0}
 			gap={16}
+			justifyContent='center'
 		>
 			<FormControlLabel flexDirection='row' gap={5} alignItems='center' justifyContent='center'>
 				<FormControlLabelText>
@@ -65,6 +66,7 @@ export const Dropdown = ({
 					</Text>
 				</FormControlLabelText>
 			</FormControlLabel>
+
 			<Select
 				onValueChange={(value) => {
 					// Set the value and if the form is validating on blur validate the value now to get it out of the error state
@@ -84,7 +86,9 @@ export const Dropdown = ({
 			</Select>
 
 			{errorMessages?.length > 0 && (
-				<View marginBottom={20}>{errorMessages?.map((error) => <MustContain message={error} />) ?? null}</View>
+				<View marginBottom={20} alignItems='center'>
+					{errorMessages?.map((error) => <MustContain message={error} />) ?? null}
+				</View>
 			)}
 		</FormControl>
 	);

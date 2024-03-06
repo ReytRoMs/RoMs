@@ -783,7 +783,7 @@
   resolved "https://registry.npmmirror.com/@gluestack-style/legend-motion-animation-driver/-/legend-motion-animation-driver-1.0.3.tgz#e2408ff8515ced92cb75f096f5eeff1f9636a0da"
   integrity sha512-sD6aFS6Tq5XpyjrboFEIc8LrRY4TA4kodFYHzk6mDchvbkdLODijtjnaDQB1UqihOkMRg49e7ANRAOzc7eymaQ==
 
-"@gluestack-style/react@^1.0.47", "@gluestack-style/react@latest":
+"@gluestack-style/react@latest":
   version "1.0.48"
   resolved "https://registry.npmmirror.com/@gluestack-style/react/-/react-1.0.48.tgz#3addb3f3fa6226b86fd1bc6ed5bdc8fb3d08f289"
   integrity sha512-fZUZQjOMFgRRXpWWcLQH3PNSB0OaWt0H28mCHH8g3aqx2GYITgzYARQhYdNfB7QFVrao/Mnu62oewnY2hnikHQ==
@@ -861,7 +861,7 @@
     "@react-native-aria/utils" "^0.2.10"
     "@react-stately/checkbox" "^3.4.2"
 
-"@gluestack-ui/config@^1.1.2", "@gluestack-ui/config@latest":
+"@gluestack-ui/config@latest":
   version "1.1.8"
   resolved "https://registry.npmmirror.com/@gluestack-ui/config/-/config-1.1.8.tgz#46e6f0f5e1e3db360523c7a6b299ef071a5cc369"
   integrity sha512-HJbJzIVOxR5S7Vy58glvGv2ElxMBO0bfN6VYN89OnI8wp6TU/4aa/1XLGAkBD5Xa/6jYI1G/bxopJXQMOGRO6Q==
@@ -1083,7 +1083,7 @@
     "@gluestack-ui/utils" "^0.1.12"
     "@react-native-aria/focus" "^0.2.9"
 
-"@gluestack-ui/themed@^1.1.4", "@gluestack-ui/themed@latest":
+"@gluestack-ui/themed@latest":
   version "1.1.8"
   resolved "https://registry.npmmirror.com/@gluestack-ui/themed/-/themed-1.1.8.tgz#253b843300836168c4e7c1751e5020dcc8cd9e96"
   integrity sha512-ucyUIW8XfK0zja73BA2BFB6UpyA7cNzUaIKI5HPvQgvSqCNeUvwzi/5GrrTAdt70OL6LGPy8bdmaYyzTwEfE9g==

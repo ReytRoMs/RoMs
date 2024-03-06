@@ -9,9 +9,9 @@
 		"validate-typescript": "tsc"
 	},
 	"devDependencies": {
-		"@gluestack-style/react": "^1.0.47",
-		"@gluestack-ui/config": "^1.1.2",
-		"@gluestack-ui/themed": "^1.1.4",
+		"@gluestack-style/react": "latest",
+		"@gluestack-ui/config": "latest",
+		"@gluestack-ui/themed": "latest",
 		"@repo/eslint-config": "*",
 		"@repo/types": "*",
 		"@repo/typescript-config": "*",

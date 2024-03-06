@@ -24,6 +24,7 @@ export const RadioButton = ({ label, value, onChange, isChecked, isErrored, isDi
 			}}
 			modes={mode}
 			isDisabled={isDisabled}
+			$hover-backgroundColor={isChecked === true ? "$green" : "$dark"}
 			{...props}
 		/>
 	);

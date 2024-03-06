@@ -7,7 +7,7 @@ table {
 
 /* Table heading */
 table thead {
-	border-bottom-width: 1px;
+	border-bottom-width: var(--borderWidths-1);
 	border-bottom-style: solid;
 	border-bottom-color: var(--colors-textBody);
 }
@@ -18,20 +18,20 @@ table thead tr th {
 	font-family: var(--fonts-heading);
 	font-weight: var(--fontWeights-bold);
 	font-size: var(--fontSizes-md);
-	line-height: 19.5px;
+	line-height: var(--space-5);
 	text-align: left;
 }
 
 /* The first-child element is excluded   */
 table tbody tr:not(:first-child) {
-	border-width: 1px 0 1px 0;
+	border-width: var(--borderWidths-1) var(--borderWidths-0) var(--borderWidths-1) var(--borderWidths-0);
 	border-style: solid;
 	border-color: var(--colors-secondary);
 }
 
 /* Table body row individual cells, padding can't be applied directly to the row  */
 table tbody tr td {
-	padding: var(--space-2) var(--space) var(--space-2) 0px;
+	padding: var(--space-2) var(--space) var(--space-2) var(--borderWidths-0);
 	word-break: break-all;
 	font-size: var(--fontSizes-md);
 	line-height: var(--lineHeights-lg);

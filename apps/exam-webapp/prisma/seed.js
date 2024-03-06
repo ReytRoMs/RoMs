@@ -1,11 +1,12 @@
-const prismaClient = require("../prismaClient");
-const { UsersPrimaryRole } = require("@prisma/client");
+const { PrismaClient, UsersPrimaryRole } = require("@prisma/client");
+
+const prisma = new PrismaClient();
 
 const seedData = async () => {
-	await prismaClient.sessionUser.create({
+	await prisma.sessionUser.create({
 		data: {
 			id: crypto.randomUUID(),
-			current_roms_member: true,
+			is_current_roms_member: true,
 			UsersPrimaryRole: UsersPrimaryRole.FARMER
 		}
 	});
@@ -17,5 +18,5 @@ seedData()
 		process.exit();
 	})
 	.finally(async () => {
-		await prismaClient.$disconnect();
+		await prisma.$disconnect();
 	});

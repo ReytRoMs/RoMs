@@ -14,6 +14,7 @@
 		"isolatedModules": true,
 		"jsx": "preserve",
 		"incremental": true,
+		"useUnknownInCatchVariables": false,
 		"plugins": [
 			{
 				"name": "next"
@@ -30,8 +31,7 @@
 		".next/types/**/*.ts",
 		"node_modules/@gluestack-ui/**/*.ts",
 		"../../packages/ui/config/providers.tsx",
-		"prisma/seed.js",
-		"prismaClient.js"
+		"prisma/seed.js"
 	],
 	"exclude": ["node_modules"]
 }

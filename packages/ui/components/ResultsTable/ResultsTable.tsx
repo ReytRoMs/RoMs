@@ -1,6 +1,7 @@
 "use client";
 
 import { SolitoImage } from "solito/image";
+import { Link } from "solito/link";
 
 import { Check } from "../Icons";
 import { X } from "../Icons/X";
@@ -37,18 +38,20 @@ export const ResultsTable = ({ results }: IResultsTable) => {
 				{results?.map((result) => (
 					<tr key={result.videoId}>
 						<td id='video-column'>
-							<SolitoImage
-								alt={`Video placeholder for video ${result.videoId}`}
-								src={{
-									src: `https://img.youtube.com/vi/${result.videoId}/hqdefault.jpg`,
-									width: 72,
-									height: 40
-								}}
-								resizeMode={"cover"}
-								// Required properties which aren't specified in the Solito Image documentation
-								contentFit={""}
-								onLayout={() => {}}
-							/>
+							<Link href={`https://www.youtube.com/watch?v=${result.videoId}`} target='_blank'>
+								<SolitoImage
+									alt={`Video placeholder for video ${result.videoId}`}
+									src={{
+										src: `https://img.youtube.com/vi/${result.videoId}/hqdefault.jpg`,
+										width: 72,
+										height: 40
+									}}
+									resizeMode={"cover"}
+									// Required properties which aren't specified in the Solito Image documentation
+									contentFit={""}
+									onLayout={() => {}}
+								/>
+							</Link>
 						</td>
 						<td id='your-answer-column'>{result.yourAnswer}</td>
 						<td id='correct-answer-column'>{result.correctAnswer}</td>

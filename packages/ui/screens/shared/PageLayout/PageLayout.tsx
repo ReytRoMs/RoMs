@@ -9,10 +9,9 @@ export const PageLayout = ({ children }: { children: React.ReactNode }) => {
 		<main>
 			{/* @ts-ignore */}
 			<Box backgroundColor='$background' $web-minHeight={"100vh"}>
-				<Box padding={32} marginTop={"auto"} marginBottom={"auto"}>
+				<Box padding={"$8"} marginTop={"auto"} marginBottom={"auto"}>
 					{children}
 				</Box>
-
 				<footer />
 			</Box>
 		</main>

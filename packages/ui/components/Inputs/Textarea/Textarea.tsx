@@ -48,7 +48,7 @@ export const Textarea = React.memo(
 				<FormControl
 					backgroundColor={isFocussed === true ? "$white" : "transparent"}
 					padding={24}
-					borderRadius={4}
+					borderRadius={"$sm"}
 					borderWidth={1}
 					borderStyle='solid'
 					borderColor={errorMessages?.length > 0 ? "$validError" : "$white"}
@@ -56,7 +56,8 @@ export const Textarea = React.memo(
 					isDisabled={disabled}
 					isInvalid={(errorMessages?.length ?? 0) > 0}
 					marginBottom={10}
-					gap={8}
+					gap={"$2"}
+					justifyContent='center'
 				>
 					<GSTextarea>
 						{label && (
@@ -89,7 +90,9 @@ export const Textarea = React.memo(
 				</FormControl>
 
 				{errorMessages?.length > 0 && (
-					<View marginBottom={20}>{errorMessages?.map((error) => <MustContain message={error} />) ?? null}</View>
+					<View marginBottom={"$5"} alignItems='center'>
+						{errorMessages?.map((error) => <MustContain message={error} />) ?? null}
+					</View>
 				)}
 			</View>
 		);

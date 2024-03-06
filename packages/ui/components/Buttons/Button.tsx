@@ -16,7 +16,7 @@ export const Button = ({ buttonText, isDisabled = false, variant, onPress, ...pr
 		<GSButton isDisabled={isDisabled} variant={variant} onPress={onPress} {...props}>
 			{variant === ButtonVariant.LARGE && <Clipboard />}
 			<GSButtonText>
-				<Text variant='header' fontWeight='700'>
+				<Text variant='header' fontWeight='$bold'>
 					{buttonText}
 				</Text>
 			</GSButtonText>

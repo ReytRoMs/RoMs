@@ -30,20 +30,14 @@ export const Button = createStyle({
 				_text: {
 					color: "$white"
 				},
-				width: "$full",
-				"@lg": {
-					width: 272
-				}
+				width: "$full"
 			},
 			secondary: {
 				backgroundColor: "$secondary",
 				_text: {
 					color: "$white"
 				},
-				width: "$full",
-				"@lg": {
-					width: 272
-				}
+				width: "$full"
 			},
 			large: {
 				backgroundColor: "$primary",
@@ -61,7 +55,7 @@ export const Button = createStyle({
 				borderWidth: 1,
 				borderColor: "$white",
 				borderStyle: "solid",
-				width: "$full",
+				// width: "$full",
 				":hover": {
 					backgroundColor: "$dark"
 				},
@@ -77,7 +71,11 @@ export const Button = createStyle({
 				borderColor: "$validError"
 			},
 			checked: {
-				backgroundColor: "$green"
+				backgroundColor: "$green",
+
+				":hover": {
+					backgroundColor: "$green"
+				}
 			},
 			default: {}
 		}

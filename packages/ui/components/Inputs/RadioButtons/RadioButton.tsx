@@ -4,7 +4,7 @@ import { Button } from "../../Buttons/Button";
 import { ButtonMode, ButtonVariant } from "@repo/types";
 import { IRadioButton } from "./types";
 
-export const RadioButton = ({ label, value, onChange, isChecked, isErrored, isDisabled }: IRadioButton) => {
+export const RadioButton = ({ label, value, onChange, isChecked, isErrored, isDisabled, ...props }: IRadioButton) => {
 	let mode = ButtonMode.DEFAULT;
 
 	if (isChecked === true) {
@@ -24,6 +24,7 @@ export const RadioButton = ({ label, value, onChange, isChecked, isErrored, isDi
 			}}
 			modes={mode}
 			isDisabled={isDisabled}
+			{...props}
 		/>
 	);
 };

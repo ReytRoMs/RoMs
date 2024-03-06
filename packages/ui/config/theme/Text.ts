@@ -6,6 +6,12 @@ export const Text = createStyle({
 	fontFamily: "$heading",
 	variants: {
 		variant: {
+			largeHeader: {
+				fontFamily: "$heading",
+				color: "$textHeader",
+				fontSize: 48,
+				lineHeight: 48
+			},
 			header: {
 				fontFamily: "$heading",
 				color: "$textHeader",

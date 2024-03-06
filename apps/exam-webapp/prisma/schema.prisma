@@ -19,7 +19,29 @@ enum UsersPrimaryRole {
 }
 
 model SessionUser {
-  id                  String           @id @default(uuid()) @db.Uuid
-  current_roms_member Boolean
-  UsersPrimaryRole    UsersPrimaryRole
+  id                     String           @id @default(uuid()) @db.Uuid
+  is_current_roms_member Boolean          @default(false)
+  UsersPrimaryRole       UsersPrimaryRole
+  Questions              Question[]
+
+  created_at DateTime @default(now())
+}
+
+enum AnswerOption {
+  GOOD
+  IMPERFECT
+  IMPAIRED
+  SEVERELY_IMPAIRED
+}
+
+model Question {
+  id          String        @id @default(uuid()) @db.Uuid
+  order       Int
+  youtube_id  String        @db.String(11)
+  UsersAnswer AnswerOption?
+
+  SessionUser     SessionUser @relation(fields: [session_user_id], references: [id])
+  session_user_id String      @db.Uuid
+
+  created_at DateTime @default(now())
 }

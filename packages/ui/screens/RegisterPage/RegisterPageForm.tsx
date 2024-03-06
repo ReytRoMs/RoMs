@@ -29,16 +29,14 @@ export const RegisterPageForm = () => {
 		<Form>
 			<Box
 				backgroundColor='transparent'
-				borderRadius={8}
-				padding={32}
+				borderRadius={"$2"}
+				padding={"$8"}
+				height={"$full"}
+				gap={"$6"}
 				sx={{
-					"@base": {
-						height: "$full",
-						gap: 24
-					},
 					"@md": {
 						flexDirection: "row",
-						gap: 32,
+						gap: "$8",
 						justifyContent: "center",
 						width: 750,
 						margin: "0 auto"
@@ -46,11 +44,9 @@ export const RegisterPageForm = () => {
 				}}
 			>
 				<Box
-					gap={24}
+					gap={"$6"}
+					width={"$full"}
 					sx={{
-						"@base": {
-							width: "$full"
-						},
 						"@md": {
 							width: 500
 						}

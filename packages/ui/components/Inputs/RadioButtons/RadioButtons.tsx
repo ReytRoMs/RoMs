@@ -37,13 +37,13 @@ export const RadioButtons = ({
 			<View gap={16}>
 				{label && (
 					<Box flexDirection='row' alignItems='center' justifyContent='center'>
-						<Text variant='header' fontWeight='700'>
+						<Text variant='header' fontWeight='$bold'>
 							{label}
 						</Text>
 					</Box>
 				)}
 
-				<View flexDirection={direction} justifyContent={direction === "row" ? "center" : "flex-start"} gap={16}>
+				<View flexDirection={direction} justifyContent={direction === "row" ? "center" : "flex-start"} gap={"$4"}>
 					{options?.map((option, optionIndex) => {
 						return (
 							<RadioButton
@@ -64,7 +64,7 @@ export const RadioButtons = ({
 			</View>
 
 			{errorMessages?.length > 0 && (
-				<View marginBottom={20} alignItems='center'>
+				<View marginBottom={"$5"} alignItems='center'>
 					{errorMessages?.map((error) => <MustContain message={error} />) ?? null}
 				</View>
 			)}

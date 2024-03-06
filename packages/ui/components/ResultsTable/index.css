@@ -14,10 +14,10 @@ table thead {
 
 /* Table heading row */
 table thead tr th {
-	padding: 8px 0px 8px 0px;
+	padding: var(--space-2) var(--space-0) var(--space-2) var(--space-0);
 	font-family: var(--fonts-heading);
-	font-weight: 700;
-	font-size: 16px;
+	font-weight: var(--fontWeights-bold);
+	font-size: var(--fontSizes-md);
 	line-height: 19.5px;
 	text-align: left;
 }
@@ -31,11 +31,11 @@ table tbody tr:not(:first-child) {
 
 /* Table body row individual cells, padding can't be applied directly to the row  */
 table tbody tr td {
-	padding: 8px 15px 8px 0px;
+	padding: var(--space-2) var(--space) var(--space-2) 0px;
 	word-break: break-all;
-	font-size: 16px;
-	line-height: 24px;
-	font-weight: 500;
+	font-size: var(--fontSizes-md);
+	line-height: var(--lineHeights-lg);
+	font-weight: var(--fontWeights-medium);
 }
 
 #correct-answer-column {

@@ -13,17 +13,15 @@ export const StartPage = () => {
 
 			<Box
 				backgroundColor='$dark'
-				borderRadius={8}
+				borderRadius={"$lg"}
 				padding={32}
+				height={"$full"}
+				gap={20}
 				sx={{
-					"@base": {
-						height: "$full",
-						gap: 24
-					},
 					"@md": {
 						height: 376,
 						flexDirection: "row",
-						gap: 32,
+						gap: "$8",
 						justifyContent: "center",
 						width: 750,
 						margin: "0 auto"

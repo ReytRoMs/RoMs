@@ -8,7 +8,7 @@ import { config } from "ui/config/gluestack-ui.config";
 export const WelcomeText = () => {
 	return (
 		<Box
-			gap={24}
+			gap={"$6"}
 			sx={{
 				"@base": {
 					width: "$full"

@@ -56,10 +56,10 @@ export const Dropdown = ({
 			borderWidth={0}
 			paddingLeft={0}
 			paddingRight={0}
-			gap={16}
+			gap={"$4"}
 			justifyContent='center'
 		>
-			<FormControlLabel flexDirection='row' gap={5} alignItems='center' justifyContent='center'>
+			<FormControlLabel flexDirection='row' gap={"$1.5"} alignItems='center' justifyContent='center'>
 				<FormControlLabelText>
 					<Text variant='header' fontWeight='700'>
 						{label}
@@ -86,7 +86,7 @@ export const Dropdown = ({
 			</Select>
 
 			{errorMessages?.length > 0 && (
-				<View marginBottom={20} alignItems='center'>
+				<View marginBottom={"$5"} alignItems='center'>
 					{errorMessages?.map((error) => <MustContain message={error} />) ?? null}
 				</View>
 			)}

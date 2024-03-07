@@ -2,6 +2,7 @@
 
 import { Form, useFormikContext } from "formik";
 import { Box, View } from "@gluestack-ui/themed";
+import { Box, View } from "@gluestack-ui/themed";
 import { useRouter } from "next/navigation";
 
 import { Button, Dropdown, RadioButtons } from "../../components";
@@ -86,6 +87,7 @@ export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) =
 			)}
 
 			<Box
+				flexDirection='column'
 				flexDirection='column'
 				sx={{
 					"@md": {

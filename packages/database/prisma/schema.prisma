@@ -40,10 +40,11 @@ enum AnswerOption {
 }
 
 model Question {
-  id          String        @id @default(uuid()) @db.Uuid
-  order       Int
-  youtube_id  String        @db.String(11)
-  UsersAnswer AnswerOption?
+  id            String        @id @default(uuid()) @db.Uuid
+  order         Int
+  youtube_id    String        @db.String(11)
+  UsersAnswer   AnswerOption?
+  CorrectAnswer AnswerOption
 
   SessionUser     SessionUser @relation(fields: [session_user_id], references: [id])
   session_user_id String      @db.Uuid

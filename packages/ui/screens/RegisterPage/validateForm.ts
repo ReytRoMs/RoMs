@@ -1,6 +1,5 @@
 import { z } from "zod";
-
-export type SignUpFormData = { areYouACurrentRoMsMember?: "yes" | "no"; role?: string };
+import { SignUpFormData } from "./types";
 
 export const validateSignUpFormData = (formData: SignUpFormData) => {
 	const schema = z.object({
@@ -17,10 +16,12 @@ export const validateSignUpFormData = (formData: SignUpFormData) => {
 
 		// Map the Zod errors to Formik errors shape
 		response.error.errors.map((value) => {
-			errors = {
-				...errors,
-				[value.path[0]]: value.message
-			};
+			if (value?.path?.length > 0) {
+				errors = {
+					...errors,
+					[value.path[0]]: value.message
+				};
+			}
 		});
 
 		return errors;

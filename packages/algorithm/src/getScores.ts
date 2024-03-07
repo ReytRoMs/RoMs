@@ -1,4 +1,4 @@
-type ClassificationsRecordedCounts = {
+export type ClassificationsRecordedCounts = {
 	truePositiveCount: number;
 	trueNegativeCount: number;
 	falsePositiveCount: number;

@@ -2,7 +2,6 @@
 
 import { Form, useFormikContext } from "formik";
 import { Box, View } from "@gluestack-ui/themed";
-import { Box, View } from "@gluestack-ui/themed";
 import { useRouter } from "next/navigation";
 
 import { Button, Dropdown, RadioButtons } from "../../components";

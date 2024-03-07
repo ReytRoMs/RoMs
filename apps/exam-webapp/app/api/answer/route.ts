@@ -59,7 +59,6 @@ export async function POST(request: Request) {
 			usersAnswer: validatedAnswer.usersAnswer,
 			correctAnswer: existingQuestion.CorrectAnswer
 		});
-		// console.log("scoreToIncrement", scoreToIncrement);
 
 		await prisma.sessionUser.update({
 			where: { id: createdAnswer.session_user_id },

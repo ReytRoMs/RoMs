@@ -17,4 +17,5 @@ export interface IRadioButtons extends Pick<ComponentProps<typeof Pressable>, "w
 	errorMessage?: string;
 	direction?: "row" | "column";
 	label?: string;
+	onChange?: null | ((value: string) => void);
 }

@@ -32,7 +32,7 @@ export const RegisterPage = () => {
 	});
 
 	return (
-		<PageLayout>
+		<PageLayout flipLayout={false}>
 			<CompanyLogo />
 
 			<Formik

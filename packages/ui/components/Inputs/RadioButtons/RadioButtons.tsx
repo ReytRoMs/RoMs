@@ -14,6 +14,7 @@ export const RadioButtons = ({
 	errorMessage = "",
 	direction = "column",
 	label = undefined,
+	onChange = null,
 	...props
 }: IRadioButtons) => {
 	// Reads the data from the closest Formik provider, this hook manages and reads any data from that
@@ -50,6 +51,10 @@ export const RadioButtons = ({
 								key={optionIndex}
 								label={option.label}
 								onChange={(value) => {
+									if (onChange) {
+										onChange(value);
+									}
+
 									helpers.setValue(value, validateOnBlur);
 								}}
 								value={option.value}

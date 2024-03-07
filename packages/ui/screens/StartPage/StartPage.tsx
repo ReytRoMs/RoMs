@@ -8,7 +8,7 @@ import { StartButton } from "./StartButton";
 
 export const StartPage = () => {
 	return (
-		<PageLayout>
+		<PageLayout flipLayout={false}>
 			<CompanyLogo />
 
 			<Box

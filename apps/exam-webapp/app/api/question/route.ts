@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendErrorResponse } from "../errorResponse";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "database";
 import { string } from "zod";
 
 const prisma = new PrismaClient();

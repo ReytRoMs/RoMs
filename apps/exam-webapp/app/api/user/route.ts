@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { PrismaClient, UsersPrimaryRole } from "@prisma/client";
+import { PrismaClient, UsersPrimaryRole } from "database";
 import { get } from "@vercel/edge-config";
 import { sendErrorResponse } from "../errorResponse";
 import { boolean, object, nativeEnum } from "zod";

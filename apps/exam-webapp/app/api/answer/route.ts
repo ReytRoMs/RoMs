@@ -55,14 +55,14 @@ export async function POST(request: Request) {
 			return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 500 });
 		}
 
-		const scoreToIncrement = getClassificationToBeIncremented({
+		const keyForClassificationToIncrement = getClassificationToBeIncremented({
 			usersAnswer: validatedAnswer.usersAnswer,
 			correctAnswer: existingQuestion.CorrectAnswer
 		});
 
 		await prisma.sessionUser.update({
 			where: { id: createdAnswer.session_user_id },
-			data: { [scoreToIncrement]: { increment: 1 } }
+			data: { [keyForClassificationToIncrement]: { increment: 1 } }
 		});
 
 		// 204 not implemented yet for NextResponse

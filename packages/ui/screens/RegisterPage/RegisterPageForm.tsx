@@ -1,26 +1,31 @@
 "use client";
 
 import { Form, useFormikContext } from "formik";
-
-import { Box } from "@gluestack-ui/themed";
-import React from "react";
+import { Box, View } from "@gluestack-ui/themed";
 import { useRouter } from "next/navigation";
 
 import { Button, Dropdown, RadioButtons } from "../../components";
 import { ButtonVariant } from "@repo/types";
+import { MustContain } from "../../components/Inputs/shared";
+import { IErrorResponse } from "../shared/types";
 
-// TODO: Set the "value" property to the correct api va
+// TODO: Swap out values to read from the prisma client
 const roles = [
-	{ id: "1", label: "Farmer", value: "1", disabled: false },
-	{ id: "2", label: "Specialist scorer", value: "2", disabled: false },
-	{ id: "3", label: "Auditor", value: "3", disabled: false },
-	{ id: "4", label: "Researcher", value: "4", disabled: false },
-	{ id: "5", label: "Hoof trimmer", value: "5", disabled: false },
-	{ id: "6", label: "Consultant/nutritionist", value: "5", disabled: false },
-	{ id: "7", label: "Other", value: "6", disabled: false }
+	{ id: "FARMER", label: "Farmer", value: "FARMER", disabled: false },
+	{ id: "SPECIALIST_SCORER", label: "Specialist scorer", value: "SPECIALIST_SCORER", disabled: false },
+	{ id: "AUDITOR", label: "Auditor", value: "AUDITOR", disabled: false },
+	{ id: "RESEARCHER", label: "Researcher", value: "RESEARCHER", disabled: false },
+	{ id: "HOOF_TRIMMER", label: "Hoof trimmer", value: "HOOF_TRIMMER", disabled: false },
+	{
+		id: "CONSULTANT_OR_NUTRITIONIST",
+		label: "Consultant/nutritionist",
+		value: "CONSULTANT_OR_NUTRITIONIST",
+		disabled: false
+	},
+	{ id: "OTHER", label: "Other", value: "OTHER", disabled: false }
 ];
 
-export const RegisterPageForm = () => {
+export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) => {
 	const { handleSubmit } = useFormikContext();
 
 	const router = useRouter();
@@ -29,8 +34,7 @@ export const RegisterPageForm = () => {
 		<Form>
 			<Box
 				backgroundColor='transparent'
-				// @ts-ignore
-				borderRadius={"$2"}
+				borderRadius={"$lg"}
 				padding={"$8"}
 				height={"$full"}
 				gap={"$6"}
@@ -70,10 +74,17 @@ export const RegisterPageForm = () => {
 				</Box>
 			</Box>
 
+			{(reasons?.length ?? 0) > 0 && (
+				<View marginBottom={"$5"} alignItems='center'>
+					{reasons?.map((error) => <MustContain message={error} />) ?? null}
+				</View>
+			)}
+
 			<Box
+				flexDirection='column'
 				sx={{
 					"@md": {
-						flexDirection: "row",
+						flexDirection: "reverse-row",
 						justifyContent: "space-between",
 						maxWidth: 750,
 						marginRight: "auto",

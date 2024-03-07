@@ -35,3 +35,13 @@ export const getSensitivityScore = ({ truePositiveCount, falseNegativeCount }: C
 
 	return roundedSensitivityScore;
 };
+
+export const getSpecificityScore = ({ trueNegativeCount, falsePositiveCount }: ClassificationsRecordedCounts) => {
+	const [TN, FP] = [trueNegativeCount, falsePositiveCount];
+
+	const sensitivityScore = TN / (FP + TN);
+
+	const roundedSensitivityScore = getRoundedScore(sensitivityScore);
+
+	return roundedSensitivityScore;
+};

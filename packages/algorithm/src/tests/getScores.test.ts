@@ -1,5 +1,6 @@
-import { getAccuracyScore, getSensitivityScore } from "..";
+import { getAccuracyScore, getSensitivityScore, getSpecificityScore } from "..";
 
+// test data here has been provided by Laura at RoMS (email 5 Mar 2024, 14:47)
 describe("Get correct `accuracy`, `sensitivity` and `specificity` scores", () => {
 	test("T1", () => {
 		const scores = {
@@ -14,6 +15,9 @@ describe("Get correct `accuracy`, `sensitivity` and `specificity` scores", () =>
 
 		const sensitivity = getSensitivityScore(scores);
 		expect(sensitivity).toBe(0.94);
+
+		const specificity = getSpecificityScore(scores);
+		expect(specificity).toBe(0.8);
 	});
 
 	test("T2", () => {
@@ -29,7 +33,12 @@ describe("Get correct `accuracy`, `sensitivity` and `specificity` scores", () =>
 
 		const sensitivity = getSensitivityScore(scores);
 		expect(sensitivity).toBe(0.44);
+
+		const specificity = getSpecificityScore(scores);
+		expect(specificity).toBe(0.97);
 	});
+
+	// T3 is missing from Laura's data
 
 	test("T4", () => {
 		const scores = {
@@ -44,6 +53,9 @@ describe("Get correct `accuracy`, `sensitivity` and `specificity` scores", () =>
 
 		const sensitivity = getSensitivityScore(scores);
 		expect(sensitivity).toBe(0.79);
+
+		const specificity = getSpecificityScore(scores);
+		expect(specificity).toBe(0.74);
 	});
 
 	test("T5", () => {
@@ -59,6 +71,9 @@ describe("Get correct `accuracy`, `sensitivity` and `specificity` scores", () =>
 
 		const sensitivity = getSensitivityScore(scores);
 		expect(sensitivity).toBe(0.86);
+
+		const specificity = getSpecificityScore(scores);
+		expect(specificity).toBe(0.85);
 	});
 
 	test("T6", () => {
@@ -74,5 +89,8 @@ describe("Get correct `accuracy`, `sensitivity` and `specificity` scores", () =>
 
 		const sensitivity = getSensitivityScore(scores);
 		expect(sensitivity).toBe(0.87);
+
+		const specificity = getSpecificityScore(scores);
+		expect(specificity).toBe(0.86);
 	});
 });

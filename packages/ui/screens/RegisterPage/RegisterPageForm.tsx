@@ -36,7 +36,12 @@ export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) =
 		<Form>
 			<Box
 				backgroundColor='transparent'
+<<<<<<< HEAD
 				borderRadius={"$lg"}
+=======
+				// @ts-ignore
+				borderRadius={"$2"}
+>>>>>>> main
 				padding={"$8"}
 				height={"$full"}
 				gap={"$6"}

@@ -1,6 +1,6 @@
 import { get } from "@vercel/edge-config";
 import { sendErrorResponse } from "../errorResponse";
-import { PrismaClient, Question } from "@prisma/client";
+import { PrismaClient, Question } from "database";
 import { VideoData } from "@/types";
 import { NextResponse } from "next/server";
 import { string } from "zod";

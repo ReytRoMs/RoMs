@@ -2,7 +2,7 @@ import { nativeEnum, object, string } from "zod";
 import { sendErrorResponse } from "../errorResponse";
 import { PrismaClient, AnswerOption } from "database";
 
-import { getScoreToBeIncremented } from "algorithm";
+import { getClassificationToBeIncremented } from "algorithm";
 
 const prisma = new PrismaClient();
 
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
 			return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 500 });
 		}
 
-		const scoreToIncrement = getScoreToBeIncremented({
+		const scoreToIncrement = getClassificationToBeIncremented({
 			usersAnswer: validatedAnswer.usersAnswer,
 			correctAnswer: existingQuestion.CorrectAnswer
 		});

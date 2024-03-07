@@ -1,2 +1,2 @@
-export * from "./getScoreToBeIncremented";
+export * from "./getClassificationToBeIncremented";
 export * from "./mapAnswerToOutcome";

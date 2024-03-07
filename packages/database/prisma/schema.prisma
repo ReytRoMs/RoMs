@@ -24,6 +24,11 @@ model SessionUser {
   UsersPrimaryRole       UsersPrimaryRole
   Questions              Question[]
 
+  false_negative Int @default(0)
+  false_positive Int @default(0)
+  true_negative  Int @default(0)
+  true_positive  Int @default(0)
+
   created_at DateTime @default(now())
 }
 

@@ -8,18 +8,23 @@ import { Button, Dropdown, RadioButtons } from "../../components";
 import { ButtonVariant } from "@repo/types";
 import { MustContain } from "../../components/Inputs/shared";
 import { IErrorResponse } from "../shared/types";
+import { UsersPrimaryRole } from "database";
 
-// TODO: Swap out values to read from the prisma client
 const roles = [
-	{ id: "FARMER", label: "Farmer", value: "FARMER", disabled: false },
-	{ id: "SPECIALIST_SCORER", label: "Specialist scorer", value: "SPECIALIST_SCORER", disabled: false },
-	{ id: "AUDITOR", label: "Auditor", value: "AUDITOR", disabled: false },
-	{ id: "RESEARCHER", label: "Researcher", value: "RESEARCHER", disabled: false },
-	{ id: "HOOF_TRIMMER", label: "Hoof trimmer", value: "HOOF_TRIMMER", disabled: false },
+	{ id: UsersPrimaryRole.FARMER, label: "Farmer", value: UsersPrimaryRole.FARMER, disabled: false },
 	{
-		id: "CONSULTANT_OR_NUTRITIONIST",
+		id: UsersPrimaryRole.SPECIALIST_SCORER,
+		label: "Specialist scorer",
+		value: UsersPrimaryRole.SPECIALIST_SCORER,
+		disabled: false
+	},
+	{ id: UsersPrimaryRole.AUDITOR, label: "Auditor", value: UsersPrimaryRole.AUDITOR, disabled: false },
+	{ id: UsersPrimaryRole.RESEARCHER, label: "Researcher", value: UsersPrimaryRole.RESEARCHER, disabled: false },
+	{ id: UsersPrimaryRole.HOOF_TRIMMER, label: "Hoof trimmer", value: UsersPrimaryRole.HOOF_TRIMMER, disabled: false },
+	{
+		id: UsersPrimaryRole.CONSULTANT_OR_NUTRITIONIST,
 		label: "Consultant/nutritionist",
-		value: "CONSULTANT_OR_NUTRITIONIST",
+		value: UsersPrimaryRole.CONSULTANT_OR_NUTRITIONIST,
 		disabled: false
 	},
 	{ id: "OTHER", label: "Other", value: "OTHER", disabled: false }
@@ -84,7 +89,7 @@ export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) =
 				flexDirection='column'
 				sx={{
 					"@md": {
-						flexDirection: "reverse-row",
+						flexDirection: "row-reverse",
 						justifyContent: "space-between",
 						maxWidth: 750,
 						marginRight: "auto",

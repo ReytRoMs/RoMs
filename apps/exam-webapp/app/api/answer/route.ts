@@ -1,6 +1,6 @@
 import { nativeEnum, object, string } from "zod";
 import { sendErrorResponse } from "../errorResponse";
-import { PrismaClient, AnswerOption } from "@prisma/client";
+import { PrismaClient, AnswerOption } from "database";
 
 const prisma = new PrismaClient();
 

@@ -29,6 +29,7 @@ export const RegisterPageForm = () => {
 		<Form>
 			<Box
 				backgroundColor='transparent'
+				// @ts-ignore
 				borderRadius={"$2"}
 				padding={"$8"}
 				height={"$full"}

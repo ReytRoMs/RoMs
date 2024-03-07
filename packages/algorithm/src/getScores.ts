@@ -25,3 +25,13 @@ export const getAccuracyScore = ({
 
 	return roundedAccuracyScore;
 };
+
+export const getSensitivityScore = ({ truePositiveCount, falseNegativeCount }: ClassificationsRecordedCounts) => {
+	const [TP, FN] = [truePositiveCount, falseNegativeCount];
+
+	const sensitivityScore = TP / (TP + FN);
+
+	const roundedSensitivityScore = getRoundedScore(sensitivityScore);
+
+	return roundedSensitivityScore;
+};

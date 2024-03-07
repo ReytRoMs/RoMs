@@ -4,7 +4,7 @@ import { PrismaClient, Question } from "database";
 import { VideoData } from "@/types";
 import { NextResponse } from "next/server";
 import { string } from "zod";
-import { ClassificationsRecordedCounts, getAccuracyScore, getSensitivityScore, getSpecificityScore } from "algorithm";
+import { ClassificationsRecordedCounts, getScores } from "algorithm";
 
 const prisma = new PrismaClient();
 
@@ -26,18 +26,6 @@ const getAnswersPerQuestion = ({
 	});
 
 	return questionAnswers;
-};
-
-const getResultsSummary = ({
-	userClassificationScores
-}: {
-	userClassificationScores: ClassificationsRecordedCounts;
-}) => {
-	const accuracy = getAccuracyScore(userClassificationScores);
-	const sensitivity = getSensitivityScore(userClassificationScores);
-	const specificity = getSpecificityScore(userClassificationScores);
-
-	return { accuracy, sensitivity, specificity };
 };
 
 const sessionUserIdSchema = string().uuid({ message: "Invalid session user ID" });
@@ -94,7 +82,7 @@ export const GET = async (request: Request) => {
 			truePositiveCount: sessionUser.true_positive
 		};
 
-		const resultsSummary = getResultsSummary({ userClassificationScores });
+		const resultsSummary = getScores(userClassificationScores);
 
 		const questionAnswers = getAnswersPerQuestion({ usersAnsweredQuestions, videoData });
 

@@ -11,31 +11,27 @@ const getRoundedScore = (score: number) => {
 	return Number(score.toFixed(DECIMAL_PLACES));
 };
 
-export const getAccuracyScore = ({
+export const getScores = ({
 	truePositiveCount,
 	trueNegativeCount,
 	falsePositiveCount,
 	falseNegativeCount
 }: ClassificationsRecordedCounts) => {
+	// mapped values to variables and calculations specified by the client's R code
 	const [TP, TN, FP, FN] = [truePositiveCount, trueNegativeCount, falsePositiveCount, falseNegativeCount];
 
 	const accuracyScore = (TP + TN) / (TP + TN + FP + FN);
 	const roundedAccuracyScore = getRoundedScore(accuracyScore);
-	return roundedAccuracyScore;
-};
-
-export const getSensitivityScore = ({ truePositiveCount, falseNegativeCount }: ClassificationsRecordedCounts) => {
-	const [TP, FN] = [truePositiveCount, falseNegativeCount];
 
 	const sensitivityScore = TP / (TP + FN);
 	const roundedSensitivityScore = getRoundedScore(sensitivityScore);
-	return roundedSensitivityScore;
-};
-
-export const getSpecificityScore = ({ trueNegativeCount, falsePositiveCount }: ClassificationsRecordedCounts) => {
-	const [TN, FP] = [trueNegativeCount, falsePositiveCount];
 
 	const specificityScore = TN / (FP + TN);
 	const roundedSpecificityScore = getRoundedScore(specificityScore);
-	return roundedSpecificityScore;
+
+	return {
+		accuracy: roundedAccuracyScore,
+		sensitivity: roundedSensitivityScore,
+		specificity: roundedSpecificityScore
+	};
 };

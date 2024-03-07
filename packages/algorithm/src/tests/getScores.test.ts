@@ -1,4 +1,4 @@
-import { getAccuracyScore, getSensitivityScore, getSpecificityScore } from "..";
+import { getScores } from "..";
 
 // test data here has been provided by Laura at RoMS (email 5 Mar 2024, 14:47)
 describe("Get correct `accuracy`, `sensitivity` and `specificity` scores", () => {
@@ -10,18 +10,16 @@ describe("Get correct `accuracy`, `sensitivity` and `specificity` scores", () =>
 			truePositiveCount: 90
 		};
 
+		const { accuracy, sensitivity, specificity } = getScores(scores);
 		test("get correct `accuracy` score", () => {
-			const accuracy = getAccuracyScore(scores);
 			expect(accuracy).toBe(0.86);
 		});
 
 		test("get correct `sensitivity` score", () => {
-			const sensitivity = getSensitivityScore(scores);
 			expect(sensitivity).toBe(0.94);
 		});
 
 		test("get correct `specificity` score", () => {
-			const specificity = getSpecificityScore(scores);
 			expect(specificity).toBe(0.8);
 		});
 	});
@@ -34,18 +32,16 @@ describe("Get correct `accuracy`, `sensitivity` and `specificity` scores", () =>
 			truePositiveCount: 44
 		};
 
+		const { accuracy, sensitivity, specificity } = getScores(scores);
 		test("get correct `accuracy` score", () => {
-			const accuracy = getAccuracyScore(scores);
 			expect(accuracy).toBe(0.73);
 		});
 
 		test("get correct `sensitivity` score", () => {
-			const sensitivity = getSensitivityScore(scores);
 			expect(sensitivity).toBe(0.44);
 		});
 
 		test("get correct `specificity` score", () => {
-			const specificity = getSpecificityScore(scores);
 			expect(specificity).toBe(0.97);
 		});
 	});
@@ -60,18 +56,16 @@ describe("Get correct `accuracy`, `sensitivity` and `specificity` scores", () =>
 			truePositiveCount: 78
 		};
 
+		const { accuracy, sensitivity, specificity } = getScores(scores);
 		test("get correct `accuracy` score", () => {
-			const accuracy = getAccuracyScore(scores);
 			expect(accuracy).toBe(0.76);
 		});
 
 		test("get correct `sensitivity` score", () => {
-			const sensitivity = getSensitivityScore(scores);
 			expect(sensitivity).toBe(0.79);
 		});
 
 		test("get correct `specificity` score", () => {
-			const specificity = getSpecificityScore(scores);
 			expect(specificity).toBe(0.74);
 		});
 	});
@@ -84,18 +78,16 @@ describe("Get correct `accuracy`, `sensitivity` and `specificity` scores", () =>
 			truePositiveCount: 85
 		};
 
+		const { accuracy, sensitivity, specificity } = getScores(scores);
 		test("get correct `accuracy` score", () => {
-			const accuracy = getAccuracyScore(scores);
 			expect(accuracy).toBe(0.85);
 		});
 
 		test("get correct `sensitivity` score", () => {
-			const sensitivity = getSensitivityScore(scores);
 			expect(sensitivity).toBe(0.86);
 		});
 
 		test("get correct `specificity` score", () => {
-			const specificity = getSpecificityScore(scores);
 			expect(specificity).toBe(0.85);
 		});
 	});
@@ -108,18 +100,16 @@ describe("Get correct `accuracy`, `sensitivity` and `specificity` scores", () =>
 			truePositiveCount: 86
 		};
 
+		const { accuracy, sensitivity, specificity } = getScores(scores);
 		test("get correct `accuracy` score", () => {
-			const accuracy = getAccuracyScore(scores);
 			expect(accuracy).toBe(0.86);
 		});
 
 		test("get correct `sensitivity` score", () => {
-			const sensitivity = getSensitivityScore(scores);
 			expect(sensitivity).toBe(0.87);
 		});
 
 		test("get correct `specificity` score", () => {
-			const specificity = getSpecificityScore(scores);
 			expect(specificity).toBe(0.86);
 		});
 	});

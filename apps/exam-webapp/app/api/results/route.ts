@@ -82,11 +82,11 @@ export const GET = async (request: Request) => {
 			truePositiveCount: sessionUser.true_positive
 		};
 
-		const resultsSummary = getScores(userClassificationScores);
+		const scores = getScores(userClassificationScores);
 
 		const questionAnswers = getAnswersPerQuestion({ usersAnsweredQuestions, videoData });
 
-		return NextResponse.json({ resultsSummary, questionAnswers });
+		return NextResponse.json({ scores, questionAnswers });
 	} catch (err) {
 		const errorReasons = [err.message];
 

@@ -60,10 +60,17 @@ export async function POST(request: Request) {
 			correctAnswer: existingQuestion.CorrectAnswer
 		});
 
-		await prisma.sessionUser.update({
+		const userWithUpdatedScores = await prisma.sessionUser.update({
 			where: { id: createdAnswer.session_user_id },
 			data: { [keyForClassificationToIncrement]: { increment: 1 } }
 		});
+
+		if (!userWithUpdatedScores) {
+			const errorReasons = [
+				`Failed to increment the user's score for ${keyForClassificationToIncrement} - user: ${createdAnswer.session_user_id}`
+			];
+			return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 500 });
+		}
 
 		// 204 not implemented yet for NextResponse
 		return new Response(null, { status: 204 });

@@ -81,7 +81,7 @@ export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) =
 
 			{(reasons?.length ?? 0) > 0 && (
 				<View marginBottom={"$5"} alignItems='center'>
-					{reasons?.map((error) => <MustContain message={error} />) ?? null}
+					{reasons?.map((error) => <MustContain message={error} key={error} />) ?? null}
 				</View>
 			)}
 

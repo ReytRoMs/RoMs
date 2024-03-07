@@ -16,12 +16,10 @@ export const validateSignUpFormData = (formData: SignUpFormData) => {
 
 		// Map the Zod errors to Formik errors shape
 		response.error.errors.map((value) => {
-			if (value?.path?.length > 0) {
-				errors = {
-					...errors,
-					[value.path[0]]: value.message
-				};
-			}
+			errors = {
+				...errors,
+				[value.path[0]]: value.message
+			};
 		});
 
 		return errors;

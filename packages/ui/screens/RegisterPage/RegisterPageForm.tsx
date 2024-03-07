@@ -1,14 +1,11 @@
 "use client";
 
 import { Form, useFormikContext } from "formik";
-
 import { Box, View } from "@gluestack-ui/themed";
-import React from "react";
 import { useRouter } from "next/navigation";
 
 import { Button, Dropdown, RadioButtons } from "../../components";
-import { ButtonVariant } from "@repo/types";
-import { IErrorResponse } from "../shared/types";
+import { ButtonVariant, IErrorResponse } from "@repo/types";
 import { MustContain } from "../../components/Inputs/shared";
 
 // TODO: Swap out values to read from the prisma client
@@ -27,7 +24,7 @@ const roles = [
 	{ id: "OTHER", label: "Other", value: "OTHER", disabled: false }
 ];
 
-export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) => {
+export const RegisterPageForm = ({ errorReasons }: Pick<IErrorResponse, "errorReasons">) => {
 	const { handleSubmit } = useFormikContext();
 
 	const router = useRouter();
@@ -76,9 +73,9 @@ export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) =
 				</Box>
 			</Box>
 
-			{reasons?.length > 0 && (
+			{(errorReasons?.length ?? 0) > 0 && (
 				<View marginBottom={"$5"} alignItems='center'>
-					{reasons?.map((error) => <MustContain message={error} />) ?? null}
+					{errorReasons?.map((error) => <MustContain message={error} />) ?? null}
 				</View>
 			)}
 

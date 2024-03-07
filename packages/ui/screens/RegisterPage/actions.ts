@@ -1,7 +1,5 @@
-// Shared types, these are types which will be used across all pages
-import { IError, IErrorResponse } from "../shared/types";
-
 // Local types specifically for this file
+import { IClientError, IErrorResponse } from "@repo/types";
 import { SignUpFormData, UserSessionResponse } from "./types";
 
 export const createUserSessionAction = async (url: string, { arg }: { arg: SignUpFormData }) => {
@@ -18,7 +16,7 @@ export const createUserSessionAction = async (url: string, { arg }: { arg: SignU
 		if (response.headers.get("content-type") === "application/json") {
 			const errorResponse = (await response.json()) as IErrorResponse;
 
-			const error: IError = {
+			const error: IClientError = {
 				...new Error("Unexpected server error whilst creating a user"),
 				info: errorResponse
 			};

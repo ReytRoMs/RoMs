@@ -10,7 +10,7 @@ import { validateSignUpFormData } from "./validateForm";
 import { RegisterPageForm } from "./RegisterPageForm";
 import { UserSessionResponse, SignUpFormData } from "./types";
 import { createUserSessionAction } from "./actions";
-import { IError } from "../shared/types";
+import { IClientError } from "@repo/types";
 
 export const RegisterPage = () => {
 	const [initialValues] = useState<SignUpFormData>({
@@ -22,7 +22,7 @@ export const RegisterPage = () => {
 
 	const { trigger: createUserSession, error: createUserSessionError } = useSWRMutation<
 		UserSessionResponse,
-		IError,
+		IClientError,
 		string,
 		SignUpFormData
 	>("/api/user", createUserSessionAction, {
@@ -46,7 +46,7 @@ export const RegisterPage = () => {
 				validateOnBlur
 				validateOnChange={false}
 			>
-				<RegisterPageForm reasons={createUserSessionError?.info?.reasons ?? []} />
+				<RegisterPageForm errorReasons={createUserSessionError?.info?.errorReasons ?? []} />
 			</Formik>
 		</PageLayout>
 	);

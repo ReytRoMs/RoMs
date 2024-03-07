@@ -87,7 +87,6 @@ export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) =
 
 			<Box
 				flexDirection='column'
-				flexDirection='column'
 				sx={{
 					"@md": {
 						flexDirection: "row-reverse",

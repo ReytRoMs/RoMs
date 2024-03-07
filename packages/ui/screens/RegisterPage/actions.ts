@@ -2,16 +2,6 @@ import { IClientError, IErrorResponse } from "../shared/types";
 import { SignUpFormData, UserSessionResponse } from "./types";
 
 export const createUserSessionAction = async (url: string, { arg }: { arg: SignUpFormData }) => {
-	const error: IClientError = {
-		...new Error("Unexpected server error whilst creating a user"),
-		info: {
-			message: "Error creating user",
-			reasons: ["Unexpected end of JSON input"]
-		}
-	};
-
-	throw error;
-
 	const response = await fetch(url, {
 		method: "POST",
 		body: JSON.stringify({

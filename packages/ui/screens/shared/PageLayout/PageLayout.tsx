@@ -14,7 +14,7 @@ interface IPageLayout {
 	>;
 }
 
-export const PageLayout = ({ children, contentDirection = "column" }: IPageLayout) => {
+export const PageLayout = ({ children, contentDirection = "column", contentStyling }: IPageLayout) => {
 	return (
 		<main>
 			{/* @ts-ignore */}
@@ -38,7 +38,14 @@ export const PageLayout = ({ children, contentDirection = "column" }: IPageLayou
 					gap={40}
 					flexDirection={"column"}
 					width={"$full"}
-					sx={{ "@lg": { flexDirection: contentDirection, paddingHorizontal: "$16" } }}
+					sx={{
+						"@lg": {
+							flexDirection: contentDirection,
+							paddingHorizontal: "$16",
+							paddingVertical: "unset",
+							...contentStyling
+						}
+					}}
 				>
 					{children}
 				</Box>

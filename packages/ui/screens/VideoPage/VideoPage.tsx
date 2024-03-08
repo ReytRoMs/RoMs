@@ -83,7 +83,7 @@ export const VideosPage = () => {
 
 					<Box justifyContent='center' alignItems='center'>
 						<Text variant='header' fontWeight='$bold'>
-							{question?.order ?? 0 + 1} of {question?.total}
+							{(question?.order ?? 0) + 1 ?? 0} of {question?.total}
 						</Text>
 					</Box>
 				</Box>

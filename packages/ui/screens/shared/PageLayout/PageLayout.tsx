@@ -8,6 +8,10 @@ import { ComponentProps } from "react";
 interface IPageLayout {
 	children: React.ReactNode;
 	contentDirection?: ComponentProps<typeof Box>["flexDirection"];
+	contentStyling?: Omit<
+		ComponentProps<typeof Box>,
+		"padding" | "marginTop" | "marginBottom" | "gap" | "flexDirection" | "width" | "sx"
+	>;
 }
 
 export const PageLayout = ({ children, contentDirection = "column" }: IPageLayout) => {
@@ -21,19 +25,20 @@ export const PageLayout = ({ children, contentDirection = "column" }: IPageLayou
 				margin='auto'
 				paddingBottom={175}
 				sx={{
-					"@md": {
+					"@lg": {
 						paddingBottom: 294
 					}
 				}}
 			>
 				<Box
-					padding={"$6"}
+					paddingHorizontal={"$6"}
+					paddingVertical={"$12"}
 					marginTop={"auto"}
 					marginBottom={"auto"}
 					gap={40}
 					flexDirection={"column"}
 					width={"$full"}
-					sx={{ "@md": { flexDirection: contentDirection, padding: "$16" } }}
+					sx={{ "@lg": { flexDirection: contentDirection, paddingHorizontal: "$16" } }}
 				>
 					{children}
 				</Box>

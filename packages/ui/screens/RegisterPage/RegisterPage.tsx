@@ -27,12 +27,12 @@ export const RegisterPage = () => {
 		SignUpFormData
 	>("/api/user", createUserSessionAction, {
 		onSuccess: () => {
-			router.push("/videos");
+			router.push("/video");
 		}
 	});
 
 	return (
-		<PageLayout flipLayout={false}>
+		<PageLayout contentDirection='column'>
 			<CompanyLogo />
 
 			<Formik

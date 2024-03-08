@@ -60,7 +60,8 @@ export const GET = async () => {
 			const allQuestionsAreAnswered = answeredQuestionCount === totalQuestionsCount;
 			if (allQuestionsAreAnswered) {
 				// handle redirect to results page
-				return NextResponse.json({ allQuestionsAreAnswered: true });
+				return NextResponse.redirect("/video/results");
+				// return NextResponse.json({ allQuestionsAreAnswered: true });
 			} else {
 				const errorReasons = [`No question found for session user: ${sessionUserId}`];
 				return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 403 });

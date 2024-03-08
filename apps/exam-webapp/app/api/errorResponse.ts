@@ -1,7 +1,12 @@
-import { IErrorResponse } from "@repo/types";
 import { NextResponse } from "next/server";
 
-export const sendErrorResponse = ({ errorMessage, errorReasons, statusCode }: IErrorResponse) => {
+type ErrorData = {
+	errorMessage: string;
+	errorReasons?: string[];
+	statusCode: number;
+};
+
+export const sendErrorResponse = ({ errorMessage, errorReasons, statusCode }: ErrorData) => {
 	console.error({ message: errorMessage, reasons: errorReasons, status: statusCode });
 	return NextResponse.json({ message: errorMessage, reasons: errorReasons }, { status: statusCode });
 };

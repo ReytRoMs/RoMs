@@ -44,7 +44,7 @@ export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) =
 				height={"$full"}
 				gap={"$6"}
 				sx={{
-					"@md": {
+					"@lg": {
 						flexDirection: "row",
 						gap: "$8",
 						justifyContent: "center",
@@ -57,7 +57,7 @@ export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) =
 					gap={"$6"}
 					width={"$full"}
 					sx={{
-						"@md": {
+						"@lg": {
 							width: 500
 						}
 					}}
@@ -88,7 +88,7 @@ export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) =
 			<Box
 				flexDirection='column'
 				sx={{
-					"@md": {
+					"@lg": {
 						flexDirection: "row-reverse",
 						justifyContent: "space-between",
 						maxWidth: 750,
@@ -104,7 +104,7 @@ export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) =
 						handleSubmit();
 					}}
 					sx={{
-						"@md": {
+						"@lg": {
 							maxWidth: 200
 						}
 					}}
@@ -114,7 +114,7 @@ export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) =
 					variant={ButtonVariant.SECONDARY}
 					buttonText='Cancel'
 					sx={{
-						"@md": {
+						"@lg": {
 							maxWidth: 200
 						}
 					}}

@@ -1,9 +1,10 @@
 iframe {
-	height: 300px;
+	height: 500px;
+	border-width: 0;
 }
 
 /* useBreakPointValue hook isn't working reliably enough on larger screens, plain old vanilla css work's perfectly */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
 	iframe {
 		flex: 1;
 		height: 560px;

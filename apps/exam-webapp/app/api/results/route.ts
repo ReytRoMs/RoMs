@@ -1,11 +1,12 @@
 import { get } from "@vercel/edge-config";
 import { sendErrorResponse } from "../errorResponse";
-import { Question, prisma } from "database";
+import { Question } from "database";
 import { VideoData } from "@/types";
 import { NextResponse } from "next/server";
 import { string } from "zod";
 import { cookies } from "next/headers";
 import { USER_SESSION_ID_KEY_NAME } from "../constants";
+import { prisma } from "../prismaClient";
 
 const scoreUsersAnswers = ({
 	usersAnsweredQuestions,

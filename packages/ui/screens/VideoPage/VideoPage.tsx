@@ -15,7 +15,6 @@ const initialFormData: AnswerFormData = { answer: undefined };
 
 export const VideosPage = () => {
 	const { question, questionError, isFetchingQuestion } = useQuestionLoader();
-
 	const { postVideoAnswer, postVideoAnswerError, isPostingVideoAnswer } = useQuestionAction();
 
 	// Handles any question loading errors
@@ -44,7 +43,7 @@ export const VideosPage = () => {
 		<PageLayout contentDirection='row'>
 			<>
 				<iframe
-					src={`https://www.youtube.com/embed/${question?.youtubeId}?showinfo=0`}
+					src={`https://www.youtube.com/embed/${question?.youtubeId}?autoplay=1&mute=1`}
 					title='YouTube video player'
 					allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
 					allowFullScreen

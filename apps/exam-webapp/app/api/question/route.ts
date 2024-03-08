@@ -3,7 +3,7 @@ import { sendErrorResponse } from "../errorResponse";
 import { string } from "zod";
 import { cookies } from "next/headers";
 import { USER_SESSION_ID_KEY_NAME } from "../constants";
-import { prisma } from "database";
+import { prisma } from "../prismaClient";
 
 const sessionUserIdSchema = string().uuid({ message: "Invalid session user ID" });
 
@@ -58,6 +58,7 @@ export const GET = async () => {
 			const allQuestionsAreAnswered = answeredQuestionCount === totalQuestionsCount;
 			if (allQuestionsAreAnswered) {
 				// handle redirect to results page
+				// return NextResponse.redirect(new URL("/video/results", "http://localhost:3000"), { status: 308 });
 				return NextResponse.json({ allQuestionsAreAnswered: true });
 			} else {
 				const errorReasons = [`No question found for session user: ${sessionUserId}`];
@@ -72,6 +73,8 @@ export const GET = async () => {
 			order: foundNextQuestion?.order,
 			total: totalQuestionsCount
 		};
+
+		console.log("current question", formattedNextQuestion);
 
 		return NextResponse.json(formattedNextQuestion);
 	} catch (err) {

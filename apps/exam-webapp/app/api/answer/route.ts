@@ -1,6 +1,7 @@
 import { nativeEnum, object, string } from "zod";
 import { sendErrorResponse } from "../errorResponse";
-import { AnswerOption, prisma } from "database";
+import { AnswerOption } from "database";
+import { prisma } from "../prismaClient";
 
 const questionAnswerSchema = object({
 	questionId: string({ required_error: "Question ID is required" }).uuid({ message: "Invalid question ID" }),

@@ -48,8 +48,6 @@ export const GET = async () => {
 			orderBy: { order: "asc" }
 		});
 
-		console.log(foundNextQuestion);
-
 		if (!foundNextQuestion) {
 			const answeredQuestionCount = await prisma.question.count({
 				where: {
@@ -77,8 +75,6 @@ export const GET = async () => {
 			order: foundNextQuestion?.order,
 			total: totalQuestionsCount
 		};
-
-		console.log("current question", formattedNextQuestion);
 
 		return NextResponse.json(formattedNextQuestion);
 	} catch (err) {

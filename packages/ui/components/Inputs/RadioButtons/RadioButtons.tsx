@@ -38,7 +38,7 @@ export const RadioButtons = ({
 			<View gap={16}>
 				{label && (
 					<Box flexDirection='row' alignItems='center' justifyContent='center'>
-						<Text variant='header' fontWeight='$bold'>
+						<Text variant='header' fontWeight='$bold' opacity={isDisabled ? "$20" : "$100"}>
 							{label}
 						</Text>
 					</Box>

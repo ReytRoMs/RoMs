@@ -11,26 +11,30 @@ import { IErrorResponse } from "../shared/types";
 import { UsersPrimaryRole } from "database";
 
 const roles = [
-	{ id: UsersPrimaryRole.FARMER, label: "Farmer", value: UsersPrimaryRole.FARMER, disabled: false },
+	{ id: UsersPrimaryRole.FARMER, label: "Farmer", value: UsersPrimaryRole.FARMER, isDisabled: false },
 	{
 		id: UsersPrimaryRole.SPECIALIST_SCORER,
 		label: "Specialist scorer",
 		value: UsersPrimaryRole.SPECIALIST_SCORER,
-		disabled: false
+		isDisabled: false
 	},
-	{ id: UsersPrimaryRole.AUDITOR, label: "Auditor", value: UsersPrimaryRole.AUDITOR, disabled: false },
-	{ id: UsersPrimaryRole.RESEARCHER, label: "Researcher", value: UsersPrimaryRole.RESEARCHER, disabled: false },
-	{ id: UsersPrimaryRole.HOOF_TRIMMER, label: "Hoof trimmer", value: UsersPrimaryRole.HOOF_TRIMMER, disabled: false },
+	{ id: UsersPrimaryRole.AUDITOR, label: "Auditor", value: UsersPrimaryRole.AUDITOR, isDisabled: false },
+	{ id: UsersPrimaryRole.RESEARCHER, label: "Researcher", value: UsersPrimaryRole.RESEARCHER, isDisabled: false },
+	{ id: UsersPrimaryRole.HOOF_TRIMMER, label: "Hoof trimmer", value: UsersPrimaryRole.HOOF_TRIMMER, isDisabled: false },
 	{
 		id: UsersPrimaryRole.CONSULTANT_OR_NUTRITIONIST,
 		label: "Consultant/nutritionist",
 		value: UsersPrimaryRole.CONSULTANT_OR_NUTRITIONIST,
-		disabled: false
+		isDisabled: false
 	},
-	{ id: "OTHER", label: "Other", value: "OTHER", disabled: false }
+	{ id: "OTHER", label: "Other", value: "OTHER", isDisabled: false }
 ];
 
-export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) => {
+interface IRegisterPageForm extends Pick<IErrorResponse, "reasons"> {
+	isFormSubmitting: boolean;
+}
+
+export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageForm) => {
 	const { handleSubmit } = useFormikContext();
 
 	const router = useRouter();
@@ -72,9 +76,15 @@ export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) =
 							width={100}
 							direction='row'
 							label='Are you current RoMS member?'
+							isDisabled={isFormSubmitting === true}
 						/>
 
-						<Dropdown name='role' options={roles} label={"What is your primary role?"} />
+						<Dropdown
+							name='role'
+							options={roles}
+							label={"What is your primary role?"}
+							isDisabled={isFormSubmitting === true}
+						/>
 					</Box>
 				</Box>
 			</Box>
@@ -103,6 +113,7 @@ export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) =
 					onPress={() => {
 						handleSubmit();
 					}}
+					isDisabled={isFormSubmitting === true}
 					sx={{
 						"@lg": {
 							maxWidth: 200
@@ -118,6 +129,7 @@ export const RegisterPageForm = ({ reasons }: Pick<IErrorResponse, "reasons">) =
 							maxWidth: 200
 						}
 					}}
+					isDisabled={isFormSubmitting === true}
 					onPress={() => {
 						router.push("/");
 					}}

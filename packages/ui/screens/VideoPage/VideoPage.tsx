@@ -1,67 +1,29 @@
 "use client";
 
 import { Box, Spinner, Text, View } from "@gluestack-ui/themed";
-import { Form, Formik } from "formik";
-import useSWRMutation from "swr/mutation";
-import useSWR, { useSWRConfig } from "swr";
+import { Formik } from "formik";
 
-import { RadioButtons } from "ui";
-import "./VideoPage.css";
-import { AnswerOption } from "database";
 import { PageLayout } from "../shared";
-import { IClientError } from "../shared/types";
-import { postVideoAnswerAction } from "./actions";
-import { AnswerFormData, AnswerRoutePayload, IQuestion } from "./types";
-import { getVideoLoader } from "./loader";
 import { MustContain } from "../../components/Inputs/shared";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 
-const answerOptions = [
-	{ label: "0. Good mobility ", value: AnswerOption.GOOD, isDisabled: false },
-	{ label: "1. Imperfect mobility ", value: AnswerOption.IMPERFECT, isDisabled: false },
-	{ label: "2. Impaired mobility ", value: AnswerOption.IMPAIRED, isDisabled: false },
-	{ label: "3. Severely impaired mobility", value: AnswerOption.SEVERELY_IMPAIRED, isDisabled: false }
-];
+import "./VideoPage.css";
+import { AnswerFormData } from "./types";
+import { useQuestionAction, useQuestionLoader } from "./hooks";
+import { VideoPageForm } from "./VideoPageForm";
 
 const initialFormData: AnswerFormData = { answer: undefined };
 
 export const VideosPage = () => {
-	const swrConfig = useSWRConfig();
+	const { question, questionError, isFetchingQuestion } = useQuestionLoader();
 
-	const router = useRouter();
+	const { postVideoAnswer, postVideoAnswerError, isPostingVideoAnswer } = useQuestionAction();
 
-	const {
-		data: question,
-		error: questionErrorMessage,
-		isLoading: isFetchingQuestion
-	} = useSWR<IQuestion, IClientError>("/api/question", getVideoLoader, {
-		keepPreviousData: true,
-		revalidateOnFocus: false
-	});
-
-	useEffect(() => {
-		if (isFetchingQuestion === false && question?.allQuestionsAreAnswered === true) {
-			router.replace("/video/results");
-		}
-	}, [isFetchingQuestion, router, question?.allQuestionsAreAnswered]);
-
-	const { trigger: postVideoAnswer, error: postVideoAnswerError } = useSWRMutation<
-		null,
-		IClientError,
-		string,
-		AnswerRoutePayload
-	>("/api/answer", postVideoAnswerAction, {
-		onSuccess: () => {
-			swrConfig.mutate("/api/question");
-		}
-	});
-
-	if ((questionErrorMessage?.info?.reasons?.length ?? 0) > 0) {
+	// Handles any question loading errors
+	if ((questionError?.info?.reasons?.length ?? 0) > 0) {
 		return (
 			<PageLayout contentDirection='row' contentStyling={{ justifyContent: "center" }}>
 				<View marginBottom={"$5"} alignItems='center' width={"$full"}>
-					{questionErrorMessage?.info?.reasons?.map((error) => {
+					{questionError?.info?.reasons?.map((error) => {
 						return <MustContain message={error} key={error} />;
 					}) ?? null}
 				</View>
@@ -69,6 +31,7 @@ export const VideosPage = () => {
 		);
 	}
 
+	// Handles loading of the initial question
 	if (isFetchingQuestion) {
 		return (
 			<PageLayout contentDirection='row' contentStyling={{ justifyContent: "center" }}>
@@ -105,31 +68,22 @@ export const VideosPage = () => {
 							});
 						}}
 						enableReinitialize
-						key={question?.questionId}
+						key={question?.questionId} // Every time the question id changes reset the form values back to the original values
 					>
 						{({ handleSubmit }) => (
-							<Form style={{ marginBottom: "auto" }}>
-								<RadioButtons
-									options={answerOptions}
-									name='answer'
-									onChange={() => {
-										handleSubmit();
-									}}
-								/>
-
-								{(postVideoAnswerError?.info?.reasons?.length ?? 0) > 0 && (
-									<View marginBottom={"$5"} alignItems='center'>
-										{postVideoAnswerError?.info?.reasons?.map((error) => <MustContain message={error} key={error} />) ??
-											null}
-									</View>
-								)}
-							</Form>
+							<VideoPageForm
+								isSubmitting={isPostingVideoAnswer}
+								onSubmit={() => {
+									handleSubmit();
+								}}
+								reasons={postVideoAnswerError?.info?.reasons ?? []}
+							/>
 						)}
 					</Formik>
 
 					<Box justifyContent='center' alignItems='center'>
 						<Text variant='header' fontWeight='$bold'>
-							1 of 20
+							{question?.order ?? 0 + 1} of {question?.total}
 						</Text>
 					</Box>
 				</Box>

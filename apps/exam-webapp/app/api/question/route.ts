@@ -48,6 +48,8 @@ export const GET = async () => {
 			orderBy: { order: "asc" }
 		});
 
+		console.log(foundNextQuestion);
+
 		if (!foundNextQuestion) {
 			const answeredQuestionCount = await prisma.question.count({
 				where: {
@@ -60,8 +62,8 @@ export const GET = async () => {
 			const allQuestionsAreAnswered = answeredQuestionCount === totalQuestionsCount;
 			if (allQuestionsAreAnswered) {
 				// handle redirect to results page
-				return NextResponse.redirect("/video/results");
-				// return NextResponse.json({ allQuestionsAreAnswered: true });
+				// return NextResponse.redirect(new URL("/video/results", "http://localhost:3000"), { status: 308 });
+				return NextResponse.json({ allQuestionsAreAnswered: true });
 			} else {
 				const errorReasons = [`No question found for session user: ${sessionUserId}`];
 				return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 403 });
@@ -75,6 +77,8 @@ export const GET = async () => {
 			order: foundNextQuestion?.order,
 			total: totalQuestionsCount
 		};
+
+		console.log("current question", formattedNextQuestion);
 
 		return NextResponse.json(formattedNextQuestion);
 	} catch (err) {

@@ -6,7 +6,7 @@ import useSWRMutation from "swr/mutation";
 import useSWR, { useSWRConfig } from "swr";
 
 import { RadioButtons } from "ui";
-import "VideoPage.css";
+import "./VideoPage.css";
 import { AnswerOption } from "database";
 import { PageLayout } from "../shared";
 import { IClientError } from "../shared/types";
@@ -14,6 +14,8 @@ import { postVideoAnswerAction } from "./actions";
 import { AnswerFormData, AnswerRoutePayload, IQuestion } from "./types";
 import { getVideoLoader } from "./loader";
 import { MustContain } from "../../components/Inputs/shared";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const answerOptions = [
 	{ label: "0. Good mobility ", value: AnswerOption.GOOD, isDisabled: false },
@@ -27,6 +29,8 @@ const initialFormData: AnswerFormData = { answer: undefined };
 export const VideosPage = () => {
 	const swrConfig = useSWRConfig();
 
+	const router = useRouter();
+
 	const {
 		data: question,
 		error: questionErrorMessage,
@@ -35,6 +39,12 @@ export const VideosPage = () => {
 		keepPreviousData: true,
 		revalidateOnFocus: false
 	});
+
+	useEffect(() => {
+		if (isFetchingQuestion === false && question?.allQuestionsAreAnswered === true) {
+			router.replace("/video/results");
+		}
+	}, [isFetchingQuestion, router, question?.allQuestionsAreAnswered]);
 
 	const { trigger: postVideoAnswer, error: postVideoAnswerError } = useSWRMutation<
 		null,

@@ -7,6 +7,7 @@ import { string } from "zod";
 import { cookies } from "next/headers";
 import { USER_SESSION_ID_KEY_NAME } from "../constants";
 import { prisma } from "../prismaClient";
+import { IResultsTableData } from "@repo/types";
 
 const scoreUsersAnswers = ({
 	usersAnsweredQuestions,
@@ -73,9 +74,22 @@ export const GET = async () => {
 			return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 503 });
 		}
 
-		const usersResults = scoreUsersAnswers({ usersAnsweredQuestions, videoData });
+		// Get the results table data
+		const results = scoreUsersAnswers({ usersAnsweredQuestions, videoData });
 
-		return NextResponse.json(usersResults);
+		// Get the count of all the questions that the user answer correctly
+		const numberOfCorrectAnswers = results?.filter(
+			(question) => question.correctAnswer === question.usersAnswer
+		)?.length;
+
+		const data: IResultsTableData = {
+			results,
+			totalNumberOfQuestions: usersQuestionsCount,
+			totalNumberOfCorrectAnswers: numberOfCorrectAnswers,
+			percentageCorrect: Math.round(100 - ((usersQuestionsCount - numberOfCorrectAnswers) / usersQuestionsCount) * 100) // 100 - ((20 - 18) / 20) * 100 = 90%
+		};
+
+		return NextResponse.json(data);
 	} catch (err) {
 		const errorReasons = [err.message];
 

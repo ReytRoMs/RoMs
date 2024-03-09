@@ -31,7 +31,7 @@ table tbody tr:not(:first-child) {
 
 /* Table body row individual cells, padding can't be applied directly to the row  */
 table tbody tr td {
-	padding: var(--space-2) var(--space) var(--space-2) var(--borderWidths-0);
+	padding: var(--space-2) var(--space-1) var(--space-2) var(--borderWidths-0);
 	word-break: break-all;
 	font-size: var(--fontSizes-md);
 	line-height: var(--lineHeights-lg);
@@ -43,7 +43,7 @@ table tbody tr td {
 }
 
 /* useBreakPointValue hook isn't working reliably enough on larger screens, plain old vanilla css work's perfectly */
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 768px) {
 	#correct-answer-column {
 		display: table-cell;
 	}

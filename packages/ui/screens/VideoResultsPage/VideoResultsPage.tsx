@@ -7,8 +7,11 @@ import { Button, ResultsTable } from "../..";
 import { useQuestionResultsLoader } from "./hooks";
 import { ButtonVariant } from "@repo/types";
 import { MustContain } from "../../components/Inputs/shared";
+import { useRouter } from "next/navigation";
 
 export const VideoResultsPage = () => {
+	const router = useRouter();
+
 	const { isFetchingQuestionResults, questionResults, questionResultsError } = useQuestionResultsLoader();
 
 	// Handles any question loading errors
@@ -69,7 +72,13 @@ export const VideoResultsPage = () => {
 					</Box>
 
 					<Box>
-						<Button variant={ButtonVariant.PRIMARY} buttonText='Start Again' onPress={() => null} />
+						<Button
+							variant={ButtonVariant.PRIMARY}
+							buttonText='Start Again'
+							onPress={() => {
+								router.push("/register");
+							}}
+						/>
 					</Box>
 				</Box>
 

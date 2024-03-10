@@ -1,6 +1,6 @@
 import { get } from "@vercel/edge-config";
 import { sendErrorResponse } from "../errorResponse";
-import { AnswerOption, Question } from "database";
+import { Question } from "database";
 import { VideoData } from "@/types";
 import { NextResponse } from "next/server";
 import { string } from "zod";
@@ -9,30 +9,7 @@ import { USER_SESSION_ID_KEY_NAME } from "../constants";
 import { cookies } from "next/headers";
 import { prisma } from "../prismaClient";
 import { IResultsTableData } from "@repo/types";
-
-const mapAnswerToFriendlyLabel = (answer: AnswerOption | null) => {
-	switch (answer) {
-		case "GOOD": {
-			return "0. Good mobility";
-		}
-
-		case "IMPERFECT": {
-			return "1. Imperfect mobility ";
-		}
-
-		case "IMPAIRED": {
-			return "2. Impaired mobility";
-		}
-
-		case "SEVERELY_IMPAIRED": {
-			return "3. Severely impaired mobility";
-		}
-
-		default: {
-			return null;
-		}
-	}
-};
+import { mapAnswerToFriendlyLabel } from "@repo/utilities";
 
 const getAnswersPerQuestion = ({
 	usersAnsweredQuestions,

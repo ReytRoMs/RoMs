@@ -34,7 +34,8 @@
 		"react-youtube": "^10.1.0",
 		"swr": "^2.2.5",
 		"zod": "^3.22.4",
-		"algorithm": "*"
+		"algorithm": "*",
+		"@repo/utilities": "*"
 	},
 	"devDependencies": {
 		"@types/node": "20.11.20",

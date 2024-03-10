@@ -4,6 +4,7 @@ import { string } from "zod";
 import { cookies } from "next/headers";
 import { USER_SESSION_ID_KEY_NAME } from "../constants";
 import { prisma } from "../prismaClient";
+import { IQuestion } from "@repo/types";
 
 const sessionUserIdSchema = string().uuid({ message: "Invalid session user ID" });
 
@@ -66,15 +67,13 @@ export const GET = async () => {
 			}
 		}
 
-		const formattedNextQuestion = {
+		const formattedNextQuestion: IQuestion = {
 			questionId: foundNextQuestion?.id,
 			youtubeId: foundNextQuestion?.youtube_id,
 			allQuestionsAreAnswered: false,
 			order: foundNextQuestion?.order,
 			total: totalQuestionsCount
 		};
-
-		console.log("current question", formattedNextQuestion);
 
 		return NextResponse.json(formattedNextQuestion);
 	} catch (err) {

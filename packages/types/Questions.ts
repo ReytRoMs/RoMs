@@ -1,9 +1,7 @@
-import { AnswerOption } from "database";
-
 export interface QuestionResult {
 	youtubeId: string;
-	usersAnswer: AnswerOption | null;
-	correctAnswer: AnswerOption | undefined;
+	usersAnswer: string | null;
+	correctAnswer: string | null;
 }
 
 export interface IResultsTableData {
@@ -11,4 +9,17 @@ export interface IResultsTableData {
 	totalNumberOfQuestions: number;
 	totalNumberOfCorrectAnswers: number;
 	percentageCorrect: number;
+	scores: {
+		accuracy: number;
+		sensitivity: number;
+		specificity: number;
+	};
+}
+
+export interface IQuestion {
+	questionId: string;
+	youtubeId: string;
+	allQuestionsAreAnswered: boolean;
+	order: number;
+	total: number;
 }

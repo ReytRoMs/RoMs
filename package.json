@@ -1,28 +1,29 @@
 {
-  "name": "roms-monorepo",
-  "private": true,
-  "scripts": {
-    "prepare": "husky install",
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "yarn format && turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "validate-typescript": "turbo validate-typescript"
-  },
-  "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
-    "husky": "^9.0.10",
-    "prettier": "^3.1.1",
-    "turbo": "latest"
-  },
-  "engines": {
-    "node": ">=18"
-  },
-  "packageManager": "yarn@1.22.19",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "dependencies": {}
+	"name": "roms-monorepo",
+	"private": true,
+	"scripts": {
+		"prepare": "husky install",
+		"build": "turbo build",
+		"dev": "turbo dev",
+		"lint": "yarn format && turbo lint",
+		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+		"validate-typescript": "turbo validate-typescript",
+		"test": "turbo test"
+	},
+	"devDependencies": {
+		"@repo/eslint-config": "*",
+		"@repo/typescript-config": "*",
+		"husky": "^9.0.10",
+		"prettier": "^3.1.1",
+		"turbo": "latest"
+	},
+	"engines": {
+		"node": ">=18"
+	},
+	"packageManager": "yarn@1.22.19",
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"dependencies": {}
 }

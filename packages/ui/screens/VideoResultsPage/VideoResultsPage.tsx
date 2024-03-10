@@ -92,7 +92,7 @@ export const VideoResultsPage = () => {
 								<Text variant='body'>The number of correct answers</Text>
 							</Box>
 							<Box alignItems='center'>
-								<Text variant='header2'>18</Text>
+								<Text variant='header2'>{questionResults?.scores?.accuracy ?? 0}</Text>
 							</Box>
 						</Box>
 
@@ -102,7 +102,7 @@ export const VideoResultsPage = () => {
 								<Text variant='body'>Ability to identify score 2 or 3 cows</Text>
 							</Box>
 							<Box alignItems='center'>
-								<Text variant='header2'>18</Text>
+								<Text variant='header2'>{questionResults?.scores?.sensitivity ?? 0}</Text>
 							</Box>
 						</Box>
 
@@ -112,7 +112,7 @@ export const VideoResultsPage = () => {
 								<Text variant='body'>Ability to identify score 0 or 1 cows</Text>
 							</Box>
 							<Box alignItems='center'>
-								<Text variant='header2'>18</Text>
+								<Text variant='header2'>{questionResults?.scores?.specificity ?? 0}</Text>
 							</Box>
 						</Box>
 					</Box>

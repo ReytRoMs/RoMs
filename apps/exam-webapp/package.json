@@ -33,7 +33,8 @@
 		"react-native-web": "^0.19.10",
 		"react-youtube": "^10.1.0",
 		"swr": "^2.2.5",
-		"zod": "^3.22.4"
+		"zod": "^3.22.4",
+		"algorithm": "*"
 	},
 	"devDependencies": {
 		"@types/node": "20.11.20",

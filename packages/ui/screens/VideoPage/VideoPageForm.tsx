@@ -13,7 +13,7 @@ interface IVideoPageForm {
 }
 
 const answerOptions: IInputOption[] = [
-	{ label: "0. Good mobility ", value: AnswerOption.GOOD, isDisabled: false },
+	{ label: "0. Good mobility", value: AnswerOption.GOOD, isDisabled: false },
 	{ label: "1. Imperfect mobility ", value: AnswerOption.IMPERFECT, isDisabled: false },
 	{ label: "2. Impaired mobility ", value: AnswerOption.IMPAIRED, isDisabled: false },
 	{ label: "3. Severely impaired mobility", value: AnswerOption.SEVERELY_IMPAIRED, isDisabled: false }

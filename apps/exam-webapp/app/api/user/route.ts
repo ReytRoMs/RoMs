@@ -82,7 +82,9 @@ export const POST = async (request: Request) => {
 			sessionUserId: createdUser.id
 		};
 
-		cookies().set(USER_SESSION_ID_KEY_NAME, formattedUser.sessionUserId);
+		cookies().set(USER_SESSION_ID_KEY_NAME, formattedUser.sessionUserId, {
+			sameSite: true
+		});
 
 		return NextResponse.json(formattedUser, { status: 201 });
 	} catch (err) {

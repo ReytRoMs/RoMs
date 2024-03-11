@@ -7,7 +7,7 @@ import { TextLink } from "solito/link";
 const Score = ({
 	label,
 	description,
-	href = '"https://roms.org.uk/contact-us/"',
+	href = "https://roms.org.uk/contact-us/",
 	score = 0
 }: {
 	label: string;
@@ -16,7 +16,7 @@ const Score = ({
 	score?: number;
 }) => {
 	return (
-		<Box gap={"$8"}>
+		<Box gap={"$4"}>
 			<Box alignItems='center'>
 				<Text variant='body'>{label}</Text>
 
@@ -29,14 +29,16 @@ const Score = ({
 							lineHeight: config.tokens.lineHeights["sm"]
 						}
 					}}
-					href={href} // TODO: Add correct link when available
+					href={href}
 					target='_blank'
 				>
-					{description}
+					<Text>{description}</Text>
 				</TextLink>
 			</Box>
 			<Box alignItems='center'>
-				<Text variant='header2'>{score ?? 0}</Text>
+				<Text variant='header2' fontWeight='$bold'>
+					{score ?? 0}
+				</Text>
 			</Box>
 		</Box>
 	);
@@ -60,19 +62,12 @@ export const VideoResultsScores = ({
 				}
 			}}
 		>
-			<Score label='Accuracy' description='The number of correct answers' score={accuracy} href={undefined} />
-			<Score
-				label='Sensitivity'
-				description='Ability to identify score 2 or 3 cows'
-				score={sensitivity}
-				href={undefined}
-			/>
-			<Score
-				label='Specificity'
-				description='Ability to identify score 0 or 1 cows'
-				score={specificity}
-				href={undefined}
-			/>
+			{/* TODO: Add correct link when available */}
+			<Score label='Accuracy' description='The number of correct answers' score={accuracy} />
+
+			<Score label='Sensitivity' description='Ability to identify score 2 or 3 cows' score={sensitivity} />
+
+			<Score label='Specificity' description='Ability to identify score 0 or 1 cows' score={specificity} />
 		</Box>
 	);
 };

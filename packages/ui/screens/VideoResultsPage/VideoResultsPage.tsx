@@ -29,7 +29,7 @@ export const VideoResultsPage = () => {
 	if (isFetchingQuestionResults) {
 		return (
 			<PageLayout contentDirection='row' contentStyling={{ justifyContent: "center" }}>
-				<Spinner size={"large"} />
+				<Spinner size={"large"} color={"$validError"} />
 			</PageLayout>
 		);
 	}

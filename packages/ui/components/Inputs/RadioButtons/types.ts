@@ -2,7 +2,7 @@ import { Pressable } from "@gluestack-ui/themed";
 import { IInputOption } from "@repo/types";
 import { ComponentProps } from "react";
 
-export interface IRadioButton extends Pick<ComponentProps<typeof Pressable>, "width" | "maxHeight"> {
+export interface IRadioButton extends Pick<ComponentProps<typeof Pressable>, "width" | "height"> {
 	label: string;
 	value: string;
 	onChange: (value: string) => void;
@@ -11,7 +11,7 @@ export interface IRadioButton extends Pick<ComponentProps<typeof Pressable>, "wi
 	isDisabled?: boolean;
 }
 
-export interface IRadioButtons extends Pick<ComponentProps<typeof Pressable>, "width" | "maxHeight"> {
+export interface IRadioButtons extends Pick<ComponentProps<typeof Pressable>, "width" | "height"> {
 	options: IInputOption[];
 	name: string;
 	isDisabled?: boolean;

@@ -14,6 +14,7 @@ export const RadioButtons = ({
 	errorMessage = "",
 	direction = "column",
 	label = undefined,
+	onChange = null,
 	...props
 }: IRadioButtons) => {
 	// Reads the data from the closest Formik provider, this hook manages and reads any data from that
@@ -37,7 +38,7 @@ export const RadioButtons = ({
 			<View gap={16}>
 				{label && (
 					<Box flexDirection='row' alignItems='center' justifyContent='center'>
-						<Text variant='header' fontWeight='$bold'>
+						<Text variant='header' fontWeight='$bold' opacity={isDisabled ? "$20" : "$100"}>
 							{label}
 						</Text>
 					</Box>
@@ -50,6 +51,10 @@ export const RadioButtons = ({
 								key={optionIndex}
 								label={option.label}
 								onChange={(value) => {
+									if (onChange) {
+										onChange(value);
+									}
+
 									helpers.setValue(value, validateOnBlur);
 								}}
 								value={option.value}
@@ -65,7 +70,7 @@ export const RadioButtons = ({
 
 			{errorMessages?.length > 0 && (
 				<View marginBottom={"$5"} alignItems='center'>
-					{errorMessages?.map((error) => <MustContain message={error} />) ?? null}
+					{errorMessages?.map((error) => <MustContain message={error} key={error} />) ?? null}
 				</View>
 			)}
 		</View>

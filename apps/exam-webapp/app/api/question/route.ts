@@ -1,19 +1,17 @@
 import { NextResponse } from "next/server";
 import { sendErrorResponse } from "../errorResponse";
-import { PrismaClient } from "database";
 import { string } from "zod";
-
-const prisma = new PrismaClient();
+import { cookies } from "next/headers";
+import { USER_SESSION_ID_KEY_NAME } from "../constants";
+import { prisma } from "database";
 
 const sessionUserIdSchema = string().uuid({ message: "Invalid session user ID" });
 
-export const GET = async (request: Request) => {
+export const GET = async () => {
 	const ERROR_MESSAGE = "Error getting question";
 
 	try {
-		const url = new URL(request.url);
-		const params = new URLSearchParams(url.search);
-		const sessionUserId = params.get("sessionUserId");
+		const sessionUserId = cookies().get(USER_SESSION_ID_KEY_NAME)?.value;
 
 		if (!sessionUserId) {
 			const errorReasons = ["No session user ID"];

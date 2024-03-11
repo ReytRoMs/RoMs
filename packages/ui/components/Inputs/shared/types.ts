@@ -21,13 +21,13 @@ export type UseFieldPropsWithEnhancedErrorMessaging<InputType> = [
 	HelperProps<InputType>
 ];
 
-export type FieldOption = { id: string; label: string; disabled?: boolean; value: string };
+export type FieldOption = { id: string; label: string; isDisabled?: boolean; value: string };
 
 export type BaseInputProps = {
 	label?: string | null;
 	placeholder?: string;
 	name: string;
-	disabled?: boolean;
+	isDisabled?: boolean;
 	errorMessage?: FieldErrorMessage;
 	onBlur?: null | (() => void);
 	onFocus?: null | (() => void);

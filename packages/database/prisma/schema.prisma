@@ -24,6 +24,11 @@ model SessionUser {
   UsersPrimaryRole       UsersPrimaryRole
   Questions              Question[]
 
+  false_negative Int @default(0)
+  false_positive Int @default(0)
+  true_negative  Int @default(0)
+  true_positive  Int @default(0)
+
   created_at DateTime @default(now())
 }
 
@@ -35,10 +40,11 @@ enum AnswerOption {
 }
 
 model Question {
-  id          String        @id @default(uuid()) @db.Uuid
-  order       Int
-  youtube_id  String        @db.String(11)
-  UsersAnswer AnswerOption?
+  id            String        @id @default(uuid()) @db.Uuid
+  order         Int
+  youtube_id    String        @db.String(11)
+  UsersAnswer   AnswerOption?
+  CorrectAnswer AnswerOption
 
   SessionUser     SessionUser @relation(fields: [session_user_id], references: [id])
   session_user_id String      @db.Uuid

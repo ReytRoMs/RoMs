@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { PrismaClient, UsersPrimaryRole } from "database";
 import { get } from "@vercel/edge-config";
-import { sendErrorResponse } from "../errorResponse";
 import { boolean, object, nativeEnum } from "zod";
-import { VideoData } from "@/types";
 
-const prisma = new PrismaClient();
+import { sendErrorResponse } from "../errorResponse";
+import { UsersPrimaryRole, prisma } from "database";
+import { cookies } from "next/headers";
+import { VideoData } from "@/types";
+import { USER_SESSION_ID_KEY_NAME } from "../constants";
 
 const newUserSchema = object({
 	isCurrentRomsMember: boolean({
@@ -51,12 +52,17 @@ export const POST = async (request: Request) => {
 
 		const numberOfVideosToTake = 20;
 		const randomVideos = videoData
-			.map((video) => ({ youtube_id: video.youtube_id, randomSortOrder: Math.random() }))
+			.map((video) => ({
+				youtubeId: video.youtube_id,
+				correctAnswer: video.correct_answer,
+				randomSortOrder: Math.random()
+			}))
 			.sort((a, b) => a.randomSortOrder - b.randomSortOrder)
 			.slice(0, numberOfVideosToTake)
 			.map((video, index) => ({
 				order: index,
-				youtube_id: video.youtube_id
+				youtube_id: video.youtubeId,
+				CorrectAnswer: video.correctAnswer
 			}));
 
 		const createdUser = await prisma.sessionUser.create({
@@ -74,6 +80,8 @@ export const POST = async (request: Request) => {
 		const formattedUser = {
 			sessionUserId: createdUser.id
 		};
+
+		cookies().set(USER_SESSION_ID_KEY_NAME, formattedUser.sessionUserId);
 
 		return NextResponse.json(formattedUser, { status: 201 });
 	} catch (err) {

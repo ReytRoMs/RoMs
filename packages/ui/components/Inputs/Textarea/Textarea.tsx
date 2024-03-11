@@ -19,12 +19,12 @@ interface ITextarea {
 	label?: string;
 	placeholder?: string;
 	name: string;
-	disabled?: boolean;
+	isDisabled?: boolean;
 	errorMessage?: string;
 }
 
 export const Textarea = React.memo(
-	({ label, placeholder = "", name, disabled = false, errorMessage = "", ...props }: ITextarea) => {
+	({ label, placeholder = "", name, isDisabled = false, errorMessage = "", ...props }: ITextarea) => {
 		const [isFocussed, setIsFocussed] = React.useState(false);
 
 		// Reads the data from the closest Formik provider, this hook manages and reads any data from that
@@ -52,8 +52,8 @@ export const Textarea = React.memo(
 					borderWidth={1}
 					borderStyle='solid'
 					borderColor={errorMessages?.length > 0 ? "$validError" : "$white"}
-					opacity={disabled === true ? 0.2 : 1}
-					isDisabled={disabled}
+					opacity={isDisabled === true ? 0.2 : 1}
+					isDisabled={isDisabled}
 					isInvalid={(errorMessages?.length ?? 0) > 0}
 					marginBottom={10}
 					gap={"$2"}

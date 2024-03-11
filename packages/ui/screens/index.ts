@@ -1,3 +1,4 @@
 export * from "./StartPage";
-export * from "./RegisterPage";
-export * from "./VideosPage";
+export * from "./RegisterPage/RegisterPage";
+export * from "./VideoPage/VideoPage";
+export * from "./VideoResultsPage/VideoResultsPage";

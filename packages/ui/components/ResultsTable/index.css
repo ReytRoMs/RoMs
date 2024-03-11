@@ -43,7 +43,7 @@ table tbody tr td {
 }
 
 /* useBreakPointValue hook isn't working reliably enough on larger screens, plain old vanilla css work's perfectly */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
 	#correct-answer-column {
 		display: table-cell;
 	}

@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
 import { sendErrorResponse } from "../errorResponse";
-import { PrismaClient } from "database";
 import { string } from "zod";
 import { cookies } from "next/headers";
 import { USER_SESSION_ID_KEY_NAME } from "../constants";
-
-const prisma = new PrismaClient();
+import { prisma } from "database";
 
 const sessionUserIdSchema = string().uuid({ message: "Invalid session user ID" });
 

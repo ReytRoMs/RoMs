@@ -20,7 +20,8 @@ import * as React from "react";
 import { getErrorMessages, MustContain } from "../shared";
 import { DropdownMenu } from "./DropdownMenu";
 
-interface IDropdownProps extends Pick<BaseInputProps, "name" | "errorMessage" | "disabled" | "label" | "placeholder"> {
+interface IDropdownProps
+	extends Pick<BaseInputProps, "name" | "errorMessage" | "isDisabled" | "label" | "placeholder"> {
 	options: FieldOption[];
 }
 
@@ -28,7 +29,7 @@ export const Dropdown = ({
 	name,
 	options,
 	errorMessage = "",
-	disabled = false,
+	isDisabled = false,
 	label = "",
 	placeholder = "Select an option"
 }: IDropdownProps) => {
@@ -51,7 +52,7 @@ export const Dropdown = ({
 	return (
 		<FormControl
 			isInvalid={errorMessages.length > 0}
-			isDisabled={disabled}
+			isDisabled={isDisabled}
 			backgroundColor='transparent'
 			borderWidth={0}
 			paddingLeft={0}

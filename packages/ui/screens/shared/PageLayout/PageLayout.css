@@ -4,11 +4,22 @@ footer {
 
 	background-repeat: round;
 	margin-top: auto;
+
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
 	footer {
 		background-image: url("/desktop-footer.png");
 		height: 294px;
 	}
+}
+
+main {
+	position: relative;
+	background: var(--colors-background);
 }

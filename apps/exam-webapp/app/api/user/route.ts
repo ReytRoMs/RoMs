@@ -3,12 +3,10 @@ import { get } from "@vercel/edge-config";
 import { boolean, object, nativeEnum } from "zod";
 
 import { sendErrorResponse } from "../errorResponse";
-import { PrismaClient, UsersPrimaryRole } from "database";
+import { UsersPrimaryRole, prisma } from "database";
 import { cookies } from "next/headers";
 import { VideoData } from "@/types";
 import { USER_SESSION_ID_KEY_NAME } from "../constants";
-
-const prisma = new PrismaClient();
 
 const newUserSchema = object({
 	isCurrentRomsMember: boolean({

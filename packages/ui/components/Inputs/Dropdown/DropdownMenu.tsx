@@ -7,14 +7,9 @@ import {
 	SelectItem,
 	SelectScrollView
 } from "@gluestack-ui/themed";
+import { IInputOption } from "@repo/types";
 
-export const DropdownMenu = ({
-	options,
-	value
-}: {
-	options: { label: string; value: string; disabled?: boolean; id: string }[];
-	value: string;
-}) => {
+export const DropdownMenu = ({ options, value }: { options: IInputOption[]; value: string }) => {
 	return (
 		<SelectContent>
 			<SelectDragIndicatorWrapper bgColor='$textBody' rounded={"$full"} width={"$1/4"} height={4} marginBottom={5}>
@@ -26,9 +21,8 @@ export const DropdownMenu = ({
 						<SelectItem
 							label={option.label}
 							value={option.value}
-							disabled={option?.disabled ?? false}
-							isDisabled={option?.disabled ?? false}
-							key={option.id}
+							isDisabled={option?.isDisabled ?? false}
+							key={option.label}
 							backgroundColor={value === option.value ? "$textBody" : "$white"}
 						/>
 					);

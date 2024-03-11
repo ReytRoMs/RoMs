@@ -21,7 +21,7 @@ export const VideoResultsScore = ({
 
 	const swrConfig = useSWRConfig();
 
-	let resultColor = percentageCorrect >= 75 ? "$green" : percentageCorrect >= 60 ? "$amber" : "$validError";
+	const resultColor = percentageCorrect >= 75 ? "$green" : percentageCorrect >= 60 ? "$amber" : "$validError";
 
 	return (
 		<Box justifyContent='space-between' gap={"$2"} height={560}>

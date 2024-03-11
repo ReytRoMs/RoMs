@@ -9,7 +9,7 @@ import { mapAnswerToFriendlyLabel } from "@repo/utilities";
 
 interface IVideoPageForm {
 	onSubmit: () => void;
-	isSubmitting: boolean;
+	isDisabled: boolean;
 	reasons: IErrorResponse["reasons"];
 }
 
@@ -24,7 +24,7 @@ const answerOptions: IInputOption[] = [
 	}
 ];
 
-export const VideoPageForm = ({ onSubmit, isSubmitting, reasons }: IVideoPageForm) => {
+export const VideoPageForm = ({ onSubmit, isDisabled, reasons }: IVideoPageForm) => {
 	return (
 		<Form style={{ marginBottom: "auto" }}>
 			<RadioButtons
@@ -33,7 +33,7 @@ export const VideoPageForm = ({ onSubmit, isSubmitting, reasons }: IVideoPageFor
 				onChange={() => {
 					onSubmit();
 				}}
-				isDisabled={isSubmitting}
+				isDisabled={isDisabled}
 				height={72}
 			/>
 

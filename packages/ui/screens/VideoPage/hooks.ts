@@ -16,7 +16,7 @@ export const useQuestionLoader = () => {
 		data: question,
 		error: questionError,
 		isLoading: isFetchingQuestion,
-		isValidating
+		isValidating: isValidatingQuestion
 	} = useSWR<IQuestion, IClientError>("/api/question", getQuestionLoader, {
 		revalidateOnMount: true,
 		revalidateOnFocus: true,
@@ -26,7 +26,7 @@ export const useQuestionLoader = () => {
 	// When there is no videos left redirect the user to the results page
 	useEffect(() => {
 		if (
-			isValidating === false &&
+			isValidatingQuestion === false &&
 			isFetchingQuestion === false &&
 			(question?.allQuestionsAreAnswered ?? false) === true
 		) {
@@ -36,12 +36,13 @@ export const useQuestionLoader = () => {
 			// Redirect the user to the results page
 			router.replace("/video/results");
 		}
-	}, [isFetchingQuestion, router, question, isValidating, swrConfig]);
+	}, [isFetchingQuestion, router, question, isValidatingQuestion, swrConfig]);
 
 	return {
 		question,
 		questionError,
-		isFetchingQuestion
+		isFetchingQuestion,
+		isValidatingQuestion
 	};
 };
 

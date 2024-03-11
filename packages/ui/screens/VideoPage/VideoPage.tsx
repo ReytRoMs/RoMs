@@ -14,7 +14,7 @@ import { VideoPageForm } from "./VideoPageForm";
 const initialFormData: AnswerFormData = { answer: undefined };
 
 export const VideosPage = () => {
-	const { question, questionError, isFetchingQuestion } = useQuestionLoader();
+	const { question, questionError, isFetchingQuestion, isValidatingQuestion } = useQuestionLoader();
 	const { postVideoAnswer, postVideoAnswerError, isPostingVideoAnswer } = useQuestionAction();
 
 	// Handles any question loading errors
@@ -31,7 +31,7 @@ export const VideosPage = () => {
 	}
 
 	// Handles loading of the initial question
-	if (isFetchingQuestion) {
+	if (isFetchingQuestion || question?.allQuestionsAreAnswered === true) {
 		return (
 			<PageLayout contentDirection='row' contentStyling={{ justifyContent: "center" }}>
 				<Spinner size={"large"} color={"$validError"} />
@@ -71,7 +71,7 @@ export const VideosPage = () => {
 					>
 						{({ handleSubmit }) => (
 							<VideoPageForm
-								isSubmitting={isPostingVideoAnswer}
+								isDisabled={isPostingVideoAnswer || isValidatingQuestion}
 								onSubmit={() => {
 									handleSubmit();
 								}}

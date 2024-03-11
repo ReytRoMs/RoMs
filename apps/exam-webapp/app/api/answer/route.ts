@@ -2,6 +2,8 @@ import { nativeEnum, object, string } from "zod";
 import { sendErrorResponse } from "../errorResponse";
 import { AnswerOption, prisma } from "database";
 
+import { getClassificationToBeIncremented } from "algorithm";
+
 const questionAnswerSchema = object({
 	questionId: string({ required_error: "Question ID is required" }).uuid({ message: "Invalid question ID" }),
 	usersAnswer: nativeEnum(AnswerOption, {
@@ -15,39 +17,6 @@ const questionAnswerSchema = object({
 		}
 	})
 });
-
-enum Outcome {
-	SOUND,
-	LAME
-}
-
-const mapScoreToOutcome = (score: AnswerOption): Outcome => {
-	if (score === AnswerOption.GOOD || score === AnswerOption.IMPERFECT) {
-		return Outcome.SOUND;
-	}
-
-	return Outcome.LAME;
-};
-
-const getScoreToIncrement = ({
-	usersAnswer,
-	correctAnswer
-}: {
-	usersAnswer: AnswerOption;
-	correctAnswer: AnswerOption;
-}) => {
-	const usersAnswerOutcome = mapScoreToOutcome(usersAnswer);
-	console.log("usersAnswerOutcome", usersAnswerOutcome);
-
-	const correctAnswerOutcome = mapScoreToOutcome(correctAnswer);
-	console.log("correctAnswerOutcome", correctAnswerOutcome);
-
-	if (correctAnswerOutcome === Outcome.LAME && usersAnswerOutcome === Outcome.LAME) return "true_positive";
-	if (correctAnswerOutcome === Outcome.LAME && usersAnswerOutcome === Outcome.SOUND) return "false_negative";
-	if (correctAnswerOutcome === Outcome.SOUND && usersAnswerOutcome === Outcome.LAME) return "false_positive";
-	if (correctAnswerOutcome === Outcome.SOUND && usersAnswerOutcome === Outcome.SOUND) return "true_negative";
-	return "true_negative";
-};
 
 export async function POST(request: Request) {
 	const ERROR_MESSAGE = "Error saving answer";
@@ -84,16 +53,22 @@ export async function POST(request: Request) {
 			return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 500 });
 		}
 
-		const scoreToIncrement = getScoreToIncrement({
+		const keyForClassificationToIncrement = getClassificationToBeIncremented({
 			usersAnswer: validatedAnswer.usersAnswer,
 			correctAnswer: existingQuestion.CorrectAnswer
 		});
-		console.log("scoreToIncrement", scoreToIncrement);
 
-		await prisma.sessionUser.update({
+		const userWithUpdatedScores = await prisma.sessionUser.update({
 			where: { id: createdAnswer.session_user_id },
-			data: { [scoreToIncrement]: { increment: 1 } }
+			data: { [keyForClassificationToIncrement]: { increment: 1 } }
 		});
+
+		if (!userWithUpdatedScores) {
+			const errorReasons = [
+				`Failed to increment the user's score for ${keyForClassificationToIncrement} - user: ${createdAnswer.session_user_id}`
+			];
+			return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 500 });
+		}
 
 		// 204 not implemented yet for NextResponse
 		return new Response(null, { status: 204 });

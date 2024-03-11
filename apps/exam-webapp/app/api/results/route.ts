@@ -4,17 +4,18 @@ import { Question, prisma } from "database";
 import { VideoData } from "@/types";
 import { NextResponse } from "next/server";
 import { string } from "zod";
+import { ClassificationsRecordedCounts, getScores } from "algorithm";
 import { cookies } from "next/headers";
 import { USER_SESSION_ID_KEY_NAME } from "../constants";
 
-const scoreUsersAnswers = ({
+const getAnswersPerQuestion = ({
 	usersAnsweredQuestions,
 	videoData
 }: {
 	usersAnsweredQuestions: Question[];
 	videoData: readonly VideoData[];
 }) => {
-	const usersResults = usersAnsweredQuestions.map((usersQuestion) => {
+	const questionAnswers = usersAnsweredQuestions.map((usersQuestion) => {
 		const correctAnswer = videoData.find((video) => usersQuestion.youtube_id === video.youtube_id)?.correct_answer;
 
 		return {
@@ -24,7 +25,7 @@ const scoreUsersAnswers = ({
 		};
 	});
 
-	return usersResults;
+	return questionAnswers;
 };
 
 const sessionUserIdSchema = string().uuid({ message: "Invalid session user ID" });
@@ -45,7 +46,7 @@ export const GET = async () => {
 			return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 403 });
 		}
 
-		await prisma.sessionUser.findUniqueOrThrow({ where: { id: sessionUserId } });
+		const sessionUser = await prisma.sessionUser.findUniqueOrThrow({ where: { id: sessionUserId } });
 
 		const usersQuestionsCount = await prisma.question.count({
 			where: { session_user_id: sessionUserId }
@@ -72,9 +73,18 @@ export const GET = async () => {
 			return sendErrorResponse({ errorMessage: ERROR_MESSAGE, errorReasons, statusCode: 503 });
 		}
 
-		const usersResults = scoreUsersAnswers({ usersAnsweredQuestions, videoData });
+		const userClassificationScores: ClassificationsRecordedCounts = {
+			falseNegativeCount: sessionUser.false_negative,
+			falsePositiveCount: sessionUser.false_positive,
+			trueNegativeCount: sessionUser.true_negative,
+			truePositiveCount: sessionUser.true_positive
+		};
 
-		return NextResponse.json(usersResults);
+		const scores = getScores(userClassificationScores);
+
+		const questionAnswers = getAnswersPerQuestion({ usersAnsweredQuestions, videoData });
+
+		return NextResponse.json({ scores, questionAnswers });
 	} catch (err) {
 		const errorReasons = [err.message];
 

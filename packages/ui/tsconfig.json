@@ -1,6 +1,6 @@
 {
 	"extends": "@repo/typescript-config/react-library.json",
-	"include": ["components", "config", "screens/shared/PageLayout"],
+	"include": ["components", "config"],
 	"exclude": ["node_modules", "dist"],
 	"compilerOptions": {
 		"jsx": "react-jsx"

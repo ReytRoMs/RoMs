@@ -4,6 +4,8 @@ import { PrismaClient, Question } from "database";
 import { VideoData } from "@/types";
 import { NextResponse } from "next/server";
 import { string } from "zod";
+import { cookies } from "next/headers";
+import { USER_SESSION_ID_KEY_NAME } from "../constants";
 
 const prisma = new PrismaClient();
 
@@ -29,12 +31,10 @@ const scoreUsersAnswers = ({
 
 const sessionUserIdSchema = string().uuid({ message: "Invalid session user ID" });
 
-export const GET = async (request: Request) => {
+export const GET = async () => {
 	const ERROR_MESSAGE = "Error getting results";
 	try {
-		const url = new URL(request.url);
-		const params = new URLSearchParams(url.search);
-		const sessionUserId = params.get("sessionUserId");
+		const sessionUserId = cookies().get(USER_SESSION_ID_KEY_NAME)?.value;
 
 		if (!sessionUserId) {
 			const errorReasons = ["No session user ID"];

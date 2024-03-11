@@ -1,6 +1,5 @@
 import { z } from "zod";
-
-export type SignUpFormData = { areYouACurrentRoMsMember?: "yes" | "no"; role?: string };
+import { SignUpFormData } from "./types";
 
 export const validateSignUpFormData = (formData: SignUpFormData) => {
 	const schema = z.object({

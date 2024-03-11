@@ -65,7 +65,7 @@ export const RadioButtons = ({
 
 			{errorMessages?.length > 0 && (
 				<View marginBottom={"$5"} alignItems='center'>
-					{errorMessages?.map((error) => <MustContain message={error} />) ?? null}
+					{errorMessages?.map((error) => <MustContain message={error} key={error} />) ?? null}
 				</View>
 			)}
 		</View>

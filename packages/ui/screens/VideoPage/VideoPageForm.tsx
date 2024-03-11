@@ -34,6 +34,7 @@ export const VideoPageForm = ({ onSubmit, isSubmitting, reasons }: IVideoPageFor
 					onSubmit();
 				}}
 				isDisabled={isSubmitting}
+				maxHeight={72}
 			/>
 
 			{(reasons?.length ?? 0) > 0 && (

@@ -1,17 +1,15 @@
 "use client";
 
-import { Box, Spinner, Text, View } from "@gluestack-ui/themed";
+import { Box, Spinner, View } from "@gluestack-ui/themed";
 
 import { PageLayout } from "../shared";
-import { Button, ResultsTable } from "../..";
+import { ResultsTable } from "../..";
 import { useQuestionResultsLoader } from "./hooks";
-import { ButtonVariant } from "@repo/types";
 import { MustContain } from "../../components/Inputs/shared";
-import { useRouter } from "next/navigation";
+import { VideoResultsScore } from "./VideoResultsScore";
+import { VideoResultsScores } from "./VideoResultsScores";
 
 export const VideoResultsPage = () => {
-	const router = useRouter();
-
 	const { isFetchingQuestionResults, questionResults, questionResultsError } = useQuestionResultsLoader();
 
 	// Handles any question loading errors
@@ -38,97 +36,21 @@ export const VideoResultsPage = () => {
 
 	return (
 		<PageLayout contentDirection='row' contentStyling={{ paddingTop: "$16" }}>
-			<>
-				<Box justifyContent='space-between' gap={"$2"} height={560}>
-					<Box
-						position='relative'
-						justifyContent='center'
-						alignItems='center'
-						sx={{
-							"@md": {
-								justifyContent: "flex-start",
-								alignItems: "flex-start"
-							}
-						}}
-					>
-						<Box width={272} height={272} backgroundColor='$green' borderRadius={"$full"}>
-							<Box justifyContent='center' alignItems='center' flex={1}>
-								<Text variant='extraLargeHeader' fontWeight='$extrabold' lineHeight={"$6xl"}>
-									{questionResults?.percentageCorrect}%
-								</Text>
-								<Text variant='body' fontWeight='$extrabold' color='$white' lineHeight={"$lg"}>
-									Pass
-								</Text>
-							</Box>
-						</Box>
-					</Box>
+			<VideoResultsScore
+				percentageCorrect={questionResults?.percentageCorrect ?? 0}
+				totalNumberOfCorrectAnswers={questionResults?.totalNumberOfCorrectAnswers ?? 0}
+				totalNumberOfQuestions={questionResults?.totalNumberOfQuestions ?? 0}
+			/>
 
-					<Box alignItems='center' justifyContent='center' gap={"$4"}>
-						<Text variant='body'>You scored</Text>
+			<Box flex={1}>
+				<VideoResultsScores
+					accuracy={questionResults?.scores?.accuracy ?? 0}
+					sensitivity={questionResults?.scores?.sensitivity ?? 0}
+					specificity={questionResults?.scores?.sensitivity ?? 0}
+				/>
 
-						<Text variant='header2' fontWeight='$bold'>
-							{questionResults?.totalNumberOfCorrectAnswers} out of {questionResults?.totalNumberOfQuestions}
-						</Text>
-					</Box>
-
-					<Box>
-						<Button
-							variant={ButtonVariant.PRIMARY}
-							buttonText='Start Again'
-							onPress={() => {
-								router.push("/register");
-							}}
-						/>
-					</Box>
-				</Box>
-
-				<Box flex={1}>
-					<Box
-						flexDirection='row'
-						justifyContent='center'
-						paddingBottom={"$16"}
-						gap={20}
-						flexWrap='wrap'
-						sx={{
-							"@md": {
-								justifyContent: "space-between"
-							}
-						}}
-					>
-						<Box gap={"$8"}>
-							<Box alignItems='center'>
-								<Text variant='small'>Accuracy</Text>
-								<Text variant='body'>The number of correct answers</Text>
-							</Box>
-							<Box alignItems='center'>
-								<Text variant='header2'>{questionResults?.scores?.accuracy ?? 0}</Text>
-							</Box>
-						</Box>
-
-						<Box gap={"$8"}>
-							<Box alignItems='center'>
-								<Text variant='small'>Sensitivity</Text>
-								<Text variant='body'>Ability to identify score 2 or 3 cows</Text>
-							</Box>
-							<Box alignItems='center'>
-								<Text variant='header2'>{questionResults?.scores?.sensitivity ?? 0}</Text>
-							</Box>
-						</Box>
-
-						<Box gap={"$8"}>
-							<Box alignItems='center'>
-								<Text variant='small'>Specificity</Text>
-								<Text variant='body'>Ability to identify score 0 or 1 cows</Text>
-							</Box>
-							<Box alignItems='center'>
-								<Text variant='header2'>{questionResults?.scores?.specificity ?? 0}</Text>
-							</Box>
-						</Box>
-					</Box>
-
-					<ResultsTable results={questionResults?.results ?? []} />
-				</Box>
-			</>
+				<ResultsTable results={questionResults?.results ?? []} />
+			</Box>
 		</PageLayout>
 	);
 };

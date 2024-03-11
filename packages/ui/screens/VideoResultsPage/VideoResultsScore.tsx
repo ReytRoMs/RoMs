@@ -21,8 +21,7 @@ export const VideoResultsScore = ({
 
 	const swrConfig = useSWRConfig();
 
-	// TODO: Update with the correct percentage once we know what it is.
-	const didPass = (percentageCorrect ?? 0) >= 75;
+	let resultColor = percentageCorrect >= 75 ? "$green" : percentageCorrect >= 60 ? "$amber" : "$validError";
 
 	return (
 		<Box justifyContent='space-between' gap={"$2"} height={560}>
@@ -37,13 +36,10 @@ export const VideoResultsScore = ({
 					}
 				}}
 			>
-				<Box width={272} height={272} backgroundColor={didPass ? "$green" : "$validError"} borderRadius={"$full"}>
+				<Box width={272} height={272} backgroundColor={resultColor} borderRadius={"$full"}>
 					<Box justifyContent='center' alignItems='center' flex={1} gap={"$2"} flexDirection='column'>
 						<Text variant='extraLargeHeader' fontWeight='$extrabold' lineHeight={"$6xl"} paddingBottom={"$2"}>
 							{percentageCorrect}%
-						</Text>
-						<Text variant='body' fontWeight='$extrabold' color='$white' lineHeight={"$lg"} fontSize={24}>
-							{didPass ? "PASS" : "FAIL"}
 						</Text>
 					</Box>
 				</Box>

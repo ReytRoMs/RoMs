@@ -7,13 +7,10 @@ import { Check } from "../Icons";
 import { X } from "../Icons/X";
 
 import "./index.css";
+import { QuestionResult } from "@repo/types";
 
 interface IResultsTable {
-	results: {
-		videoId: string;
-		yourAnswer: string;
-		correctAnswer: string;
-	}[];
+	results: QuestionResult[];
 }
 
 export const ResultsTable = ({ results }: IResultsTable) => {
@@ -36,13 +33,13 @@ export const ResultsTable = ({ results }: IResultsTable) => {
 
 			<tbody>
 				{results?.map((result) => (
-					<tr key={result.videoId}>
+					<tr key={result.youtubeId}>
 						<td id='video-column'>
-							<Link href={`https://www.youtube.com/watch?v=${result.videoId}`} target='_blank'>
+							<Link href={`https://www.youtube.com/watch?v=${result.youtubeId}`} target='_blank'>
 								<SolitoImage
-									alt={`Video placeholder for video ${result.videoId}`}
+									alt={`Video placeholder for video ${result.youtubeId}`}
 									src={{
-										src: `https://img.youtube.com/vi/${result.videoId}/hqdefault.jpg`,
+										src: `https://img.youtube.com/vi/${result.youtubeId}/hqdefault.jpg`,
 										width: 72,
 										height: 40
 									}}
@@ -53,10 +50,10 @@ export const ResultsTable = ({ results }: IResultsTable) => {
 								/>
 							</Link>
 						</td>
-						<td id='your-answer-column'>{result.yourAnswer}</td>
+						<td id='your-answer-column'>{result.usersAnswer}</td>
 						<td id='correct-answer-column'>{result.correctAnswer}</td>
 						<td id='your-answer-icon-column'>
-							{result.yourAnswer === result.correctAnswer ? <Check colour='$green' /> : <X colour='$validError' />}
+							{result.usersAnswer === result.correctAnswer ? <Check colour='$green' /> : <X colour='$validError' />}
 						</td>
 					</tr>
 				))}

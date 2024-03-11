@@ -25,7 +25,8 @@
 		"react-native-svg": "14.1.0",
 		"solito": "^4.2.1",
 		"typescript": "^5.3.3",
-		"database": "*"
+		"database": "*",
+		"@repo/utilities": "*"
 	},
 	"dependencies": {
 		"formik": "^2.4.5",

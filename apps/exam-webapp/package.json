@@ -32,12 +32,11 @@
 		"react-dom": "18.2.0",
 		"react-native-svg": "^14.1.0",
 		"react-native-web": "^0.19.10",
+		"react-youtube": "^10.1.0",
 		"swr": "^2.2.5",
 		"zod": "^3.22.4",
-		"formik": "^2.4.5",
-		"database": "*",
 		"algorithm": "*",
-		"@repo/types": "*"
+		"@repo/utilities": "*"
 	},
 	"devDependencies": {
 		"@types/node": "20.11.20",

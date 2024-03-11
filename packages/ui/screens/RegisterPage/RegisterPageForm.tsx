@@ -48,7 +48,7 @@ export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageFor
 				height={"$full"}
 				gap={"$6"}
 				sx={{
-					"@lg": {
+					"@md": {
 						flexDirection: "row",
 						gap: "$8",
 						justifyContent: "center",
@@ -61,7 +61,7 @@ export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageFor
 					gap={"$6"}
 					width={"$full"}
 					sx={{
-						"@lg": {
+						"@md": {
 							width: 500
 						}
 					}}
@@ -74,6 +74,7 @@ export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageFor
 							]}
 							name='areYouACurrentRoMsMember'
 							width={100}
+							height={100}
 							direction='row'
 							label='Are you current RoMS member?'
 							isDisabled={isFormSubmitting === true}
@@ -98,7 +99,7 @@ export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageFor
 			<Box
 				flexDirection='column'
 				sx={{
-					"@lg": {
+					"@md": {
 						flexDirection: "row-reverse",
 						justifyContent: "space-between",
 						maxWidth: 750,
@@ -115,7 +116,7 @@ export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageFor
 					}}
 					isDisabled={isFormSubmitting === true}
 					sx={{
-						"@lg": {
+						"@md": {
 							maxWidth: 200
 						}
 					}}
@@ -125,7 +126,7 @@ export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageFor
 					variant={ButtonVariant.SECONDARY}
 					buttonText='Cancel'
 					sx={{
-						"@lg": {
+						"@md": {
 							maxWidth: 200
 						}
 					}}

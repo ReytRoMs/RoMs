@@ -25,7 +25,7 @@ export const PageLayout = ({ children, contentDirection = "column", contentStyli
 				margin='auto'
 				paddingBottom={175}
 				sx={{
-					"@lg": {
+					"@md": {
 						paddingBottom: 294
 					}
 				}}
@@ -39,7 +39,7 @@ export const PageLayout = ({ children, contentDirection = "column", contentStyli
 					flexDirection={"column"}
 					width={"$full"}
 					sx={{
-						"@lg": {
+						"@md": {
 							flexDirection: contentDirection,
 							paddingHorizontal: "$16",
 							paddingVertical: "unset",

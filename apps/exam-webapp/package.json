@@ -22,17 +22,18 @@
 		"@gluestack-ui/themed": "latest",
 		"@gluestack/ui-next-adapter": "latest",
 		"@legendapp/motion": "latest",
+		"@repo/types": "*",
+		"@sentry/nextjs": "^7.105.0",
 		"@vercel/edge-config": "^1.1.0",
+		"database": "*",
+		"formik": "^2.4.5",
 		"next": "^14.1.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-native-svg": "^14.1.0",
 		"react-native-web": "^0.19.10",
 		"swr": "^2.2.5",
-		"zod": "^3.22.4",
-		"formik": "^2.4.5",
-		"database": "*",
-		"@repo/types": "*"
+		"zod": "^3.22.4"
 	},
 	"devDependencies": {
 		"@types/node": "20.11.20",

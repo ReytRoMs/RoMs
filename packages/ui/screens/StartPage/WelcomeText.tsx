@@ -32,19 +32,22 @@ export const WelcomeText = () => {
 				once you are finished.
 			</Text>
 
-			<TextLink
-				textProps={{
-					style: {
-						color: config.tokens.colors.white,
-						fontFamily: config.tokens.fonts.body,
-						fontSize: 16,
-						lineHeight: 24
-					}
-				}}
-				href='https://roms.org.uk/contact-us/'
-			>
-				If you have questions about RoMS or this website, <Text color='$validError'>please click here</Text>
-			</TextLink>
+			<Text variant='body'>
+				If you have questions about RoMS or this website,{" "}
+				<TextLink
+					textProps={{
+						style: {
+							color: config.tokens.colors.validError,
+							fontFamily: config.tokens.fonts.body,
+							fontSize: 16,
+							lineHeight: 24
+						}
+					}}
+					href='https://roms.org.uk/contact-us/'
+				>
+					please click here
+				</TextLink>
+			</Text>
 		</Box>
 	);
 };

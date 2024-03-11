@@ -1,31 +1,30 @@
 "use client";
 
 import { Formik } from "formik";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 import { CompanyLogo, PageLayout } from "../shared";
-import { SignUpFormData, validateSignUpFormData } from "./validateForm";
+
+import { validateSignUpFormData } from "./validateForm";
 import { RegisterPageForm } from "./RegisterPageForm";
+import { SignUpFormData } from "./types";
+import { useRegisterAction } from "./hooks";
+
+const initialFormData: SignUpFormData = {
+	areYouACurrentRoMsMember: undefined,
+	role: undefined
+};
 
 export const RegisterPage = () => {
-	const [initialValues] = useState<SignUpFormData>({
-		areYouACurrentRoMsMember: undefined,
-		role: undefined
-	});
-
-	const router = useRouter();
+	const { createUserSession, createUserSessionError, isSubmittingUserSessionDetails } = useRegisterAction();
 
 	return (
-		<PageLayout>
+		<PageLayout contentDirection='column'>
 			<CompanyLogo />
 
 			<Formik
-				initialValues={initialValues}
-				onSubmit={() => {
-					// TODO: Call api and get the next video
-
-					router.push("/videos");
+				initialValues={initialFormData}
+				onSubmit={(values) => {
+					createUserSession(values);
 				}}
 				validate={(values) => {
 					return validateSignUpFormData(values);
@@ -33,7 +32,10 @@ export const RegisterPage = () => {
 				validateOnBlur
 				validateOnChange={false}
 			>
-				<RegisterPageForm />
+				<RegisterPageForm
+					reasons={createUserSessionError?.info?.reasons ?? []}
+					isFormSubmitting={isSubmittingUserSessionDetails}
+				/>
 			</Formik>
 		</PageLayout>
 	);

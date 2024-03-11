@@ -13,7 +13,7 @@ export const WelcomeText = () => {
 				"@base": {
 					width: "$full"
 				},
-				"@md": {
+				"@lg": {
 					width: 430
 				}
 			}}

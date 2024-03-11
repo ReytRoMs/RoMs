@@ -8,7 +8,7 @@ import { StartButton } from "./StartButton";
 
 export const StartPage = () => {
 	return (
-		<PageLayout>
+		<PageLayout contentDirection='column'>
 			<CompanyLogo />
 
 			<Box
@@ -18,7 +18,7 @@ export const StartPage = () => {
 				height={"$full"}
 				gap={20}
 				sx={{
-					"@md": {
+					"@lg": {
 						height: 376,
 						flexDirection: "row",
 						gap: "$8",

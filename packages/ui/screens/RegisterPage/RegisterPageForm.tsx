@@ -1,26 +1,40 @@
 "use client";
 
 import { Form, useFormikContext } from "formik";
-
-import { Box } from "@gluestack-ui/themed";
-import React from "react";
+import { Box, View } from "@gluestack-ui/themed";
 import { useRouter } from "next/navigation";
 
 import { Button, Dropdown, RadioButtons } from "../../components";
 import { ButtonVariant } from "@repo/types";
+import { MustContain } from "../../components/Inputs/shared";
+import { IErrorResponse } from "../shared/types";
+import { UsersPrimaryRole } from "database";
 
-// TODO: Set the "value" property to the correct api va
 const roles = [
-	{ id: "1", label: "Farmer", value: "1", disabled: false },
-	{ id: "2", label: "Specialist scorer", value: "2", disabled: false },
-	{ id: "3", label: "Auditor", value: "3", disabled: false },
-	{ id: "4", label: "Researcher", value: "4", disabled: false },
-	{ id: "5", label: "Hoof trimmer", value: "5", disabled: false },
-	{ id: "6", label: "Consultant/nutritionist", value: "5", disabled: false },
-	{ id: "7", label: "Other", value: "6", disabled: false }
+	{ id: UsersPrimaryRole.FARMER, label: "Farmer", value: UsersPrimaryRole.FARMER, isDisabled: false },
+	{
+		id: UsersPrimaryRole.SPECIALIST_SCORER,
+		label: "Specialist scorer",
+		value: UsersPrimaryRole.SPECIALIST_SCORER,
+		isDisabled: false
+	},
+	{ id: UsersPrimaryRole.AUDITOR, label: "Auditor", value: UsersPrimaryRole.AUDITOR, isDisabled: false },
+	{ id: UsersPrimaryRole.RESEARCHER, label: "Researcher", value: UsersPrimaryRole.RESEARCHER, isDisabled: false },
+	{ id: UsersPrimaryRole.HOOF_TRIMMER, label: "Hoof trimmer", value: UsersPrimaryRole.HOOF_TRIMMER, isDisabled: false },
+	{
+		id: UsersPrimaryRole.CONSULTANT_OR_NUTRITIONIST,
+		label: "Consultant/nutritionist",
+		value: UsersPrimaryRole.CONSULTANT_OR_NUTRITIONIST,
+		isDisabled: false
+	},
+	{ id: "OTHER", label: "Other", value: "OTHER", isDisabled: false }
 ];
 
-export const RegisterPageForm = () => {
+interface IRegisterPageForm extends Pick<IErrorResponse, "reasons"> {
+	isFormSubmitting: boolean;
+}
+
+export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageForm) => {
 	const { handleSubmit } = useFormikContext();
 
 	const router = useRouter();
@@ -29,13 +43,12 @@ export const RegisterPageForm = () => {
 		<Form>
 			<Box
 				backgroundColor='transparent'
-				// @ts-ignore
-				borderRadius={"$2"}
+				borderRadius={"$lg"}
 				padding={"$8"}
 				height={"$full"}
 				gap={"$6"}
 				sx={{
-					"@md": {
+					"@lg": {
 						flexDirection: "row",
 						gap: "$8",
 						justifyContent: "center",
@@ -48,7 +61,7 @@ export const RegisterPageForm = () => {
 					gap={"$6"}
 					width={"$full"}
 					sx={{
-						"@md": {
+						"@lg": {
 							width: 500
 						}
 					}}
@@ -63,17 +76,30 @@ export const RegisterPageForm = () => {
 							width={100}
 							direction='row'
 							label='Are you current RoMS member?'
+							isDisabled={isFormSubmitting === true}
 						/>
 
-						<Dropdown name='role' options={roles} label={"What is your primary role?"} />
+						<Dropdown
+							name='role'
+							options={roles}
+							label={"What is your primary role?"}
+							isDisabled={isFormSubmitting === true}
+						/>
 					</Box>
 				</Box>
 			</Box>
 
+			{(reasons?.length ?? 0) > 0 && (
+				<View marginBottom={"$5"} alignItems='center'>
+					{reasons?.map((error) => <MustContain message={error} key={error} />) ?? null}
+				</View>
+			)}
+
 			<Box
+				flexDirection='column'
 				sx={{
-					"@md": {
-						flexDirection: "row",
+					"@lg": {
+						flexDirection: "row-reverse",
 						justifyContent: "space-between",
 						maxWidth: 750,
 						marginRight: "auto",
@@ -87,8 +113,9 @@ export const RegisterPageForm = () => {
 					onPress={() => {
 						handleSubmit();
 					}}
+					isDisabled={isFormSubmitting === true}
 					sx={{
-						"@md": {
+						"@lg": {
 							maxWidth: 200
 						}
 					}}
@@ -98,10 +125,11 @@ export const RegisterPageForm = () => {
 					variant={ButtonVariant.SECONDARY}
 					buttonText='Cancel'
 					sx={{
-						"@md": {
+						"@lg": {
 							maxWidth: 200
 						}
 					}}
+					isDisabled={isFormSubmitting === true}
 					onPress={() => {
 						router.push("/");
 					}}

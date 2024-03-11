@@ -23,6 +23,7 @@
 		"@gluestack/ui-next-adapter": "latest",
 		"@legendapp/motion": "latest",
 		"@repo/types": "*",
+		"@sentry/nextjs": "^7.105.0",
 		"@vercel/edge-config": "^1.1.0",
 		"database": "*",
 		"formik": "^2.4.5",

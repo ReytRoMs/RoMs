@@ -1,5 +1,6 @@
 "use client";
 
+import { NUMBER_OF_VIDEOS } from "@/app/lib/constants";
 import { Box, Text } from "@gluestack-ui/themed";
 import { TextLink } from "solito/link";
 
@@ -28,8 +29,8 @@ export const WelcomeText = () => {
 			</Text>
 
 			<Text variant='body'>
-				You will be given the chance to score 50 video clips of cows walking and will receive feedback on your scores
-				once you are finished.
+				You will be given the chance to score {NUMBER_OF_VIDEOS} video clips of cows walking and will receive feedback
+				on your scores once you are finished.
 			</Text>
 
 			<Text variant='body'>

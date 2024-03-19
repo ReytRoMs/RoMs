@@ -235,12 +235,8 @@ export const GET = async () => {
 	// Attempt to send the email to a specified user
 	try {
 		await sgMail.send({
-			// TODO: Swap out before going live
 			to: process.env.SEND_GRID_TO_EMAIL_ADDRESS,
-
-			// TODO: Swap out a verified send email address
 			from: process.env.SEND_GRID_FROM_EMAIL_ADDRESS,
-
 			subject: `Weekly export for ROM's examination results`,
 			html: `Attached in this email are the examination results for ${gte.format("DD-MM-YYYY")} to ${lte.format("DD-MM-YYYY")}`,
 			attachments: [

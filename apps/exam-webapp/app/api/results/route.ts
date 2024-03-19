@@ -98,7 +98,7 @@ export const GET = async () => {
 			scores,
 			totalNumberOfQuestions: usersQuestionsCount,
 			totalNumberOfCorrectAnswers: numberOfCorrectAnswers,
-			percentageCorrect: Math.round(100 - ((usersQuestionsCount - numberOfCorrectAnswers) / usersQuestionsCount) * 100) // 100 - ((20 - 18) / 20) * 100 = 90%
+			percentageCorrect: Math.round((numberOfCorrectAnswers / usersQuestionsCount) * 100)
 		};
 
 		return NextResponse.json(data);

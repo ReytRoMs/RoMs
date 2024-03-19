@@ -22,12 +22,12 @@ import { DropdownMenu } from "./DropdownMenu";
 
 interface IDropdownProps
 	extends Pick<BaseInputProps, "name" | "errorMessage" | "isDisabled" | "label" | "placeholder"> {
-	options: FieldOption[];
+	options?: FieldOption[];
 }
 
 export const Dropdown = ({
 	name,
-	options,
+	options = [],
 	errorMessage = "",
 	isDisabled = false,
 	label = "",

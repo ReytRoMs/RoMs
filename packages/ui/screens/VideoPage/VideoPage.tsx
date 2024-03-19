@@ -54,7 +54,7 @@ export const VideosPage = () => {
 					gap={40}
 					sx={{
 						"@md": {
-							maxWidth: 272
+							maxWidth: 325
 						}
 					}}
 				>

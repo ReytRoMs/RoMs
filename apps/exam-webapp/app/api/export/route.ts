@@ -1,3 +1,4 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 import dayjs from "dayjs";
 import { prisma } from "../prismaClient";
 import { NextResponse } from "next/server";
@@ -33,11 +34,11 @@ const getUserWorksheetColumnTitle = (key: keyof SessionUser) => {
 		}
 
 		case "is_current_roms_member": {
-			return "Is ROMs current member";
+			return "Is RoMS current member";
 		}
 
 		case "UsersPrimaryRole": {
-			return "Users Primary Role";
+			return "User's Primary Role";
 		}
 
 		case "false_negative":
@@ -60,7 +61,7 @@ const getQuestionsWorksheetColumnTitle = (key: keyof Question) => {
 		}
 
 		case "UsersAnswer": {
-			return "User Answer";
+			return "User's Answer";
 		}
 
 		case "created_at":
@@ -120,51 +121,79 @@ export const GET = async () => {
 	const gte = dayjs(lastWeek).startOf("isoWeek");
 	const lte = dayjs(lastWeek).endOf("isoWeek");
 
-	const usersCreatedInThePreviousWeek = await prisma.sessionUser.findMany({
-		where: {
-			created_at: {
-				gte: gte.toDate(), // Start of date range
-				lte: lte.toDate() // End of date range
-			}
-		}
-	});
+	let usersCreatedInThePreviousWeek: SessionUser[] = [];
+	let questionsInThePreviousWeek: Question[] = [];
 
-	const questionsInThePreviousWeek = await prisma.question.findMany({
-		where: {
-			created_at: {
-				gte: gte.toDate(), // Start of date range
-				lte: lte.toDate() // End of date range
+	try {
+		usersCreatedInThePreviousWeek = await prisma.sessionUser.findMany({
+			where: {
+				created_at: {
+					gte: gte.toDate(), // Start of date range
+					lte: lte.toDate() // End of date range
+				}
+			},
+			orderBy: {
+				created_at: "asc"
 			}
-		}
-	});
+		});
+	} catch {
+		return sendErrorResponse({
+			errorMessage: `Failed to fetch the users created in the previous week`,
+			statusCode: 500
+		});
+	}
 
-	// Create a new Excel workbook and any "worksheets"
+	try {
+		questionsInThePreviousWeek = await prisma.question.findMany({
+			where: {
+				created_at: {
+					gte: gte.toDate(), // Start of date range
+					lte: lte.toDate() // End of date range
+				}
+			},
+			orderBy: {
+				order: "asc"
+			}
+		});
+	} catch {
+		return sendErrorResponse({
+			errorMessage: `Failed to fetch the questions created in the previous week`,
+			statusCode: 500
+		});
+	}
+
+	// Create a new Excel Workbook document
 	const workbook = new Excel.Workbook();
-	const questionsWorksheet = workbook.addWorksheet("Users", {});
-	const answersWorksheet = workbook.addWorksheet("Questions", {});
 
+	// Users worksheet
+	const usersWorksheet = workbook.addWorksheet("User's", {});
+	const usersWorksheetColumns: Partial<Excel.Column>[] = [];
+
+	// Questions worksheet
+	const questionsWorksheet = workbook.addWorksheet("Questions", {});
 	const questionsWorksheetColumns: Partial<Excel.Column>[] = [];
-	const answersWorksheetColumns: Partial<Excel.Column>[] = [];
 
 	// For each SessionUser model property add a column e.g. [{header: "Example header", key: "example_property"}]
+	// NOTE: The key value must correspond to the model property so it can correctly map the data
 	getObjectKeys(prisma.sessionUser.fields).forEach((sessionUserModelKey) => {
-		questionsWorksheetColumns.push({
+		usersWorksheetColumns.push({
 			header: getUserWorksheetColumnTitle(sessionUserModelKey),
 			key: sessionUserModelKey
 		});
 	});
 
 	// For each SessionUser model property add a column e.g. [{header: "Example header", key: "example_property"}]
+	// NOTE: The key value must correspond to the model property so it can correctly map the data
 	getObjectKeys(prisma.question.fields).forEach((questionModelKey) => {
-		answersWorksheetColumns.push({
+		questionsWorksheetColumns.push({
 			header: getQuestionsWorksheetColumnTitle(questionModelKey),
 			key: questionModelKey
 		});
 	});
 
 	// Append the questions related data to the "Questions" worksheet
-	questionsWorksheet.columns = questionsWorksheetColumns;
-	questionsWorksheet.addRows(
+	usersWorksheet.columns = usersWorksheetColumns;
+	usersWorksheet.addRows(
 		usersCreatedInThePreviousWeek?.map((value) => ({
 			...value,
 			UsersPrimaryRole: mapRoleToFriendlyDisplayLabel(value.UsersPrimaryRole)
@@ -172,19 +201,19 @@ export const GET = async () => {
 	);
 
 	// Append the questions related data to the "Answers" worksheet
-	answersWorksheet.columns = answersWorksheetColumns;
-	answersWorksheet.addRows(
-		questionsInThePreviousWeek?.map((question) => getQuestionRow(question))?.sort((a, b) => a.order - b.order)
-	);
+	questionsWorksheet.columns = questionsWorksheetColumns;
+	questionsWorksheet.addRows(questionsInThePreviousWeek?.map((question) => getQuestionRow(question)));
 
-	const fileName = `weekly-roms-report-for-${lte.format("DD-MM-YYYY")}.xlsx`;
+	// File name e.g. weekly-RoMS-report-for-18-03-2024.xlsx
+	const fileName = `weekly-RoMS-report-for-${lte.format("DD-MM-YYYY")}.xlsx`;
+
+	// Will store the file attach that will go with the email
 	let fileAttachment = null;
 
 	// Attempt to write the Excel document to storage
 	try {
 		await workbook.xlsx.writeFile(fileName);
 	} catch (err: unknown) {
-		console.log("err", err);
 		return sendErrorResponse({ errorMessage: `Failed to save ${fileName}`, statusCode: 500 });
 	}
 
@@ -207,14 +236,13 @@ export const GET = async () => {
 	try {
 		await sgMail.send({
 			// TODO: Swap out before going live
-			to: "alex.machin@reyt.co.uk",
+			to: process.env.SEND_GRID_TO_EMAIL_ADDRESS,
 
 			// TODO: Swap out a verified send email address
-			from: "roms@reyt.co.uk",
+			from: process.env.SEND_GRID_FROM_EMAIL_ADDRESS,
 
-			subject: `Weekly `,
-			text: "and easy to do anywhere, even with Node.js",
-			html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+			subject: `Weekly export for ROM's examination results`,
+			html: `Attached in this email are the examination results for ${gte.format("DD-MM-YYYY")} to ${lte.format("DD-MM-YYYY")}`,
 			attachments: [
 				{
 					filename: fileName,
@@ -224,6 +252,8 @@ export const GET = async () => {
 				}
 			]
 		});
+
+		console.log("Email success sent");
 	} catch {
 		return sendErrorResponse({
 			errorMessage: "Something went wrong sending the email",

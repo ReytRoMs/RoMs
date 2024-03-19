@@ -252,10 +252,6 @@ export const GET = async () => {
 				}
 			]
 		});
-
-		console.log(
-			"Weekly export for ROM's examination results successfully sent, should be arriving in your inbox very soon."
-		);
 	} catch {
 		return sendErrorResponse({
 			errorMessage: "Something went wrong sending the email",

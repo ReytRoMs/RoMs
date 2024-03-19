@@ -166,7 +166,7 @@ export const GET = async () => {
 	const workbook = new Excel.Workbook();
 
 	// Users worksheet
-	const usersWorksheet = workbook.addWorksheet("User's", {});
+	const usersWorksheet = workbook.addWorksheet("Users", {});
 	const usersWorksheetColumns: Partial<Excel.Column>[] = [];
 
 	// Questions worksheet

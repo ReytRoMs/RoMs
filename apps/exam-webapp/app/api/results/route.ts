@@ -11,20 +11,12 @@ import { prisma } from "../prismaClient";
 import { IResultsTableData } from "@repo/types";
 import { mapAnswerToFriendlyLabel } from "@repo/utilities";
 
-const getAnswersPerQuestion = ({
-	usersAnsweredQuestions,
-	videoData
-}: {
-	usersAnsweredQuestions: Question[];
-	videoData: readonly VideoData[];
-}) => {
+const getAnswersPerQuestion = ({ usersAnsweredQuestions }: { usersAnsweredQuestions: Question[] }) => {
 	const questionAnswers = usersAnsweredQuestions.map((usersQuestion) => {
-		const correctAnswer = videoData.find((video) => usersQuestion.youtube_id === video.youtube_id)?.correct_answer;
-
 		return {
 			youtubeId: usersQuestion.youtube_id,
 			usersAnswer: mapAnswerToFriendlyLabel(usersQuestion?.UsersAnswer ?? null),
-			correctAnswer: mapAnswerToFriendlyLabel(correctAnswer ?? null)
+			correctAnswer: mapAnswerToFriendlyLabel(usersQuestion?.CorrectAnswer ?? null)
 		};
 	});
 
@@ -59,7 +51,8 @@ export const GET = async () => {
 			where: {
 				session_user_id: sessionUserId,
 				UsersAnswer: { not: null }
-			}
+			},
+			orderBy: { order: "asc" }
 		});
 
 		if (usersAnsweredQuestions.length !== usersQuestionsCount) {
@@ -86,7 +79,7 @@ export const GET = async () => {
 		const scores = getScores(userClassificationScores);
 
 		// Get the results table data
-		const questionAnswers = getAnswersPerQuestion({ usersAnsweredQuestions, videoData });
+		const questionAnswers = getAnswersPerQuestion({ usersAnsweredQuestions });
 
 		// Get the count of all the questions that the user answer correctly
 		const numberOfCorrectAnswers = questionAnswers?.filter(
@@ -98,7 +91,7 @@ export const GET = async () => {
 			scores,
 			totalNumberOfQuestions: usersQuestionsCount,
 			totalNumberOfCorrectAnswers: numberOfCorrectAnswers,
-			percentageCorrect: Math.round(100 - ((usersQuestionsCount - numberOfCorrectAnswers) / usersQuestionsCount) * 100) // 100 - ((20 - 18) / 20) * 100 = 90%
+			percentageCorrect: Math.round((numberOfCorrectAnswers / usersQuestionsCount) * 100)
 		};
 
 		return NextResponse.json(data);

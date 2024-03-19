@@ -7,7 +7,7 @@ export const CompanyLogo = () => {
 	return (
 		<Box justifyContent='center' alignItems='center'>
 			<SolitoImage
-				alt={`ROM's company logo `}
+				alt={`RoMS company logo `}
 				src={{
 					src: `/logo.png`,
 					width: 216,

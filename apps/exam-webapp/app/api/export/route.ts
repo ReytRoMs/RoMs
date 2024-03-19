@@ -237,7 +237,7 @@ export const GET = async () => {
 		await sgMail.send({
 			to: process.env.SEND_GRID_TO_EMAIL_ADDRESS,
 			from: process.env.SEND_GRID_FROM_EMAIL_ADDRESS,
-			subject: `Weekly export for ROM's examination results`,
+			subject: `Weekly export for RoMS examination results`,
 			html: `Attached in this email are the examination results for ${gte.format("DD-MM-YYYY")} to ${lte.format("DD-MM-YYYY")}`,
 			attachments: [
 				{

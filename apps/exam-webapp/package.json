@@ -1,6 +1,6 @@
 {
 	"name": "exam-webapp",
-	"description": "A webapp for taking mock examinations for ROMs.",
+	"description": "A webapp for taking mock examinations for RoMS.",
 	"version": "1.0.0",
 	"private": true,
 	"repository": {

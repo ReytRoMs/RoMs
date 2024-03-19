@@ -46,7 +46,7 @@ export const VideoResultsPage = () => {
 				<VideoResultsScores
 					accuracy={questionResults?.scores?.accuracy ?? 0}
 					sensitivity={questionResults?.scores?.sensitivity ?? 0}
-					specificity={questionResults?.scores?.sensitivity ?? 0}
+					specificity={questionResults?.scores?.specificity ?? 0}
 				/>
 
 				<ResultsTable results={questionResults?.results ?? []} />

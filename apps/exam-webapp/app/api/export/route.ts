@@ -220,6 +220,7 @@ export const GET = async () => {
 
 		console.log("Successfully wrote the file");
 	} catch (err: unknown) {
+		console.log("failed to save", err);
 		return sendErrorResponse({ errorMessage: `Failed to save ${fileName}`, statusCode: 500 });
 	}
 

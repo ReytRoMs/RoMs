@@ -16,9 +16,11 @@ const Score = ({
 	score?: number;
 }) => {
 	return (
-		<Box gap={"$4"}>
+		<Box gap={"$3"}>
 			<Box alignItems='center'>
-				<Text variant='body'>{label}</Text>
+				<Text variant='body' color={config.tokens.colors.white}>
+					{label}
+				</Text>
 
 				<TextLink
 					textProps={{
@@ -50,24 +52,32 @@ export const VideoResultsScores = ({
 	specificity
 }: Pick<IResultsTableData, "scores">["scores"]) => {
 	return (
-		<Box
-			flexDirection='row'
-			justifyContent='center'
-			paddingBottom={"$16"}
-			gap={20}
-			flexWrap='wrap'
-			sx={{
-				"@md": {
-					justifyContent: "space-between"
-				}
-			}}
-		>
-			{/* TODO: Add correct link when available */}
-			<Score label='Accuracy' description='The number of correct answers' score={accuracy} />
+		<Box backgroundColor='$dark' borderRadius={"$lg"} padding={32} marginBottom={32}>
+			<Text variant='header' fontWeight='800' marginBottom={0} textAlign='center'>
+				Scoring Performance
+			</Text>
+			<Text variant='body' marginTop={0} textAlign='center'>
+				How well do you identify score 2 & 3 versus 0 & 1 cows
+			</Text>
+			<Box
+				flexDirection='row'
+				justifyContent='center'
+				gap={20}
+				marginTop={24}
+				flexWrap='wrap'
+				sx={{
+					"@md": {
+						justifyContent: "space-between"
+					}
+				}}
+			>
+				{/* TODO: Add correct link when available */}
+				<Score label='Accuracy' description='Proportion of correct classifications' score={accuracy} />
 
-			<Score label='Sensitivity' description='Ability to identify score 2 or 3 cows' score={sensitivity} />
+				<Score label='Sensitivity' description='Ability to identify score 2 & 3 cows' score={sensitivity} />
 
-			<Score label='Specificity' description='Ability to identify score 0 or 1 cows' score={specificity} />
+				<Score label='Specificity' description='Ability to identify score 0 & 1 cows' score={specificity} />
+			</Box>
 		</Box>
 	);
 };

@@ -2,14 +2,12 @@
 import dayjs from "dayjs";
 import { prisma } from "../prismaClient";
 import { NextResponse } from "next/server";
-import Excel from "exceljs";
 
 import sgMail from "@sendgrid/mail";
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 sgMail.setApiKey(process?.env?.SEND_GRID_API_KEY ?? "");
 
-import { readFile, unlink } from "fs/promises";
 import { Question, SessionUser } from "database";
 import { sendErrorResponse } from "../errorResponse";
 
@@ -20,7 +18,13 @@ import {
 	mapAnswerToFriendlyLabel,
 	mapRoleToFriendlyDisplayLabel
 } from "@repo/utilities";
-import { existsSync, mkdirSync } from "fs";
+
+// Override the Correct and Users Answer fields, the types don't match up we want it to be a string whereas in the db it's an eum
+type QuestionWithoutCorrectAnswerOrUserAnswer = Pick<Question, "id" | "order" | "youtube_id" | "session_user_id"> & {
+	CorrectAnswer: string | null;
+	UsersAnswer: string | null;
+	created_at: string;
+};
 
 dayjs.extend(isoWeek);
 
@@ -83,17 +87,12 @@ const getQuestionsWorksheetColumnTitle = (key: keyof Question) => {
 };
 
 const getQuestionRow = (incomingQuestion: Question) => {
-	// Override the Correct and Users Answer fields, the types don't match up we want it to be a string whereas in the db it's an eum
-	type QuestionWithoutCorrectAnswerOrUserAnswer = Pick<
-		Question,
-		"id" | "order" | "youtube_id" | "session_user_id" | "created_at"
-	> & {
-		CorrectAnswer?: string | null;
-		UsersAnswer?: string | null;
-	};
-
 	let question: QuestionWithoutCorrectAnswerOrUserAnswer = {
-		...incomingQuestion,
+		id: incomingQuestion.id,
+		order: incomingQuestion.order,
+		session_user_id: incomingQuestion.session_user_id,
+		youtube_id: incomingQuestion.youtube_id,
+		created_at: dayjs(incomingQuestion.created_at).format("DD/MM/YYYY"),
 		UsersAnswer: null,
 		CorrectAnswer: null
 	};
@@ -115,6 +114,29 @@ const getQuestionRow = (incomingQuestion: Question) => {
 	}
 
 	return question;
+};
+
+const getUserRow = (incomingUser: SessionUser) => {
+	const user: Omit<SessionUser, "created_at" | "UsersPrimaryRole"> & { created_at: string; UsersPrimaryRole: string } =
+		{
+			...incomingUser,
+			created_at: dayjs(incomingUser?.created_at).format("DD/MM/YYYY"),
+			UsersPrimaryRole: mapRoleToFriendlyDisplayLabel(incomingUser.UsersPrimaryRole)
+		};
+
+	return user;
+};
+
+const convertToCSV = (data: Array<Array<unknown>>) => {
+	const csvRows = [];
+	for (const row of data) {
+		const csvColumns = [];
+		for (const column of row) {
+			csvColumns.push(`"${column}"`);
+		}
+		csvRows.push(csvColumns.join(","));
+	}
+	return csvRows.join("\n");
 };
 
 export const revalidate = 0;
@@ -167,117 +189,81 @@ export const GET = async () => {
 		});
 	}
 
-	// Create a new Excel Workbook document
-	const workbook = new Excel.Workbook();
-
 	// Users worksheet
-	const usersWorksheet = workbook.addWorksheet("Users", {});
-	const usersWorksheetColumns: Partial<Excel.Column>[] = [];
+	const usersWorksheetColumns: string[] = [];
+	const usersWorksheetRows: Array<string | null | number | boolean>[] = [];
 
 	// Questions worksheet
-	const questionsWorksheet = workbook.addWorksheet("Questions", {});
-	const questionsWorksheetColumns: Partial<Excel.Column>[] = [];
+	const questionsWorksheetColumns: string[] = [];
+	const questionsWorksheetRows: Array<string | null | number>[] = [];
 
-	// For each SessionUser model property add a column e.g. [{header: "Example header", key: "example_property"}]
-	// NOTE: The key value must correspond to the model property so it can correctly map the data
+	// Create the columns for the csv files
+
 	getObjectKeys(prisma.sessionUser.fields).forEach((sessionUserModelKey) => {
-		usersWorksheetColumns.push({
-			header: getUserWorksheetColumnTitle(sessionUserModelKey),
-			key: sessionUserModelKey
-		});
+		usersWorksheetColumns.push(getUserWorksheetColumnTitle(sessionUserModelKey));
 	});
 
-	// For each SessionUser model property add a column e.g. [{header: "Example header", key: "example_property"}]
-	// NOTE: The key value must correspond to the model property so it can correctly map the data
 	getObjectKeys(prisma.question.fields).forEach((questionModelKey) => {
-		questionsWorksheetColumns.push({
-			header: getQuestionsWorksheetColumnTitle(questionModelKey),
-			key: questionModelKey
-		});
+		questionsWorksheetColumns.push(getQuestionsWorksheetColumnTitle(questionModelKey));
 	});
 
-	// Append the questions related data to the "Questions" worksheet
-	usersWorksheet.columns = usersWorksheetColumns;
-	usersWorksheet.addRows(
-		usersCreatedInThePreviousWeek?.map((value) => ({
-			...value,
-			UsersPrimaryRole: mapRoleToFriendlyDisplayLabel(value.UsersPrimaryRole)
-		}))
-	);
+	// For each object property add
 
-	// Append the questions related data to the "Answers" worksheet
-	questionsWorksheet.columns = questionsWorksheetColumns;
-	questionsWorksheet.addRows(questionsInThePreviousWeek?.map((question) => getQuestionRow(question)));
+	usersCreatedInThePreviousWeek?.forEach((userCreatedInThePreviousWeek) => {
+		// Transform the question into a readable format
+		const row = getUserRow(userCreatedInThePreviousWeek);
 
-	try {
-		if (!existsSync("/tmp")) {
-			mkdirSync("/tmp");
-		}
-	} catch (err) {
-		console.error(err);
-	}
+		// Get all the available keys for the object
+		const keys = getObjectKeys(row);
 
-	// File name e.g. weekly-RoMS-report-for-18-03-2024.xlsx
-	const fileName = `tmp/weekly-RoMS-report-for-${lte.format("DD-MM-YYYY")}.xlsx`;
+		const csvRow: Array<string | null | number | boolean> = [];
 
-	// Will store the file attach that will go with the email
-	let fileAttachment = null;
-
-	// Attempt to write the Excel document to storage
-	try {
-		const writtenFile = await workbook.xlsx.writeFile(fileName);
-
-		console.log("Successfully wrote the file", writtenFile);
-	} catch (err: unknown) {
-		console.log("failed to save", err);
-		return sendErrorResponse({ errorMessage: `Failed to save ${fileName}`, statusCode: 500 });
-	}
-
-	// Attempt to read the Excel document, the format is base64 as that what attachments should be for the send-grid api
-	try {
-		fileAttachment = await readFile(fileName, "base64");
-
-		console.log("Successfully read the file");
-	} catch {
-		return sendErrorResponse({ errorMessage: `Failed to read ${fileName}`, statusCode: 500 });
-	}
-
-	// Make sure the fileAttachment has been re-assigned with contents of an actual file
-	if (fileAttachment === null) {
-		return sendErrorResponse({
-			errorMessage: "Attachments can't be empty, looks like something went wrong",
-			statusCode: 500
+		// Loop through all the keys and add them to the csvRow e.g. [['Alex', 'Machin']]
+		keys?.forEach((key) => {
+			csvRow.push(row[key]);
 		});
-	}
+
+		// Append the row to the csv rows variable
+		usersWorksheetRows.push(csvRow);
+	});
+
+	questionsInThePreviousWeek?.forEach((questionInThePreviousWeek) => {
+		// Transform the question into a readable format
+		const row = getQuestionRow(questionInThePreviousWeek);
+
+		// Get all the available keys for the object
+		const keys = getObjectKeys(row);
+
+		const csvRow: Array<string | null | number> = [];
+
+		// Loop through all the keys and add them to the csvRow e.g. [['Alex', 'Machin']]
+		keys?.forEach((key) => {
+			csvRow.push(row[key]);
+		});
+
+		// Append the row to the csv rows variable
+		questionsWorksheetRows.push(csvRow);
+	});
 
 	// Attempt to send the email to a specified user
 	try {
 		await sgMail.send({
 			to: process.env.SEND_GRID_TO_EMAIL_ADDRESS,
 			from: process.env.SEND_GRID_FROM_EMAIL_ADDRESS,
-			subject: `Weekly export for RoMS examination results`,
+			subject: `Weekly exports for RoMS examination results`,
 			html: `Attached in this email are the examination results for ${gte.format("DD-MM-YYYY")} to ${lte.format("DD-MM-YYYY")}`,
 			attachments: [
 				{
-					filename: fileName,
-					content: fileAttachment,
+					content: btoa(convertToCSV([usersWorksheetColumns, ...(usersWorksheetRows ?? [])])),
+					filename: `weekly-users-RoMS-report-for-${lte.format("DD-MM-YYYY")}.csv`,
 					disposition: "attachment",
-					type: "text/html"
-				}
-			]
-		});
-
-		console.log("Send grid sent the email successfully", {
-			to: process.env.SEND_GRID_TO_EMAIL_ADDRESS,
-			from: process.env.SEND_GRID_FROM_EMAIL_ADDRESS,
-			subject: `Weekly export for RoMS examination results`,
-			html: `Attached in this email are the examination results for ${gte.format("DD-MM-YYYY")} to ${lte.format("DD-MM-YYYY")}`,
-			attachments: [
+					type: "application/csv"
+				},
 				{
-					filename: fileName,
-					content: fileAttachment,
+					content: btoa(convertToCSV([questionsWorksheetColumns, ...(questionsWorksheetRows ?? [])])),
+					filename: `weekly-questions-RoMS-report-for-${lte.format("DD-MM-YYYY")}.csv`,
 					disposition: "attachment",
-					type: "text/html"
+					type: "application/csv"
 				}
 			]
 		});
@@ -288,19 +274,19 @@ export const GET = async () => {
 		});
 	}
 
-	// Attempt to remove the old file as it's no longer needed
-	try {
-		await unlink(fileName);
+	// // Attempt to remove the old file as it's no longer needed
+	// try {
+	// 	await unlink(fileName);
 
-		console.log("Successfully deleted the file");
-	} catch {
-		return sendErrorResponse({
-			errorMessage: "Failed to cleanup the existing file",
-			statusCode: 500
-		});
-	}
+	// 	console.log("Successfully deleted the file");
+	// } catch {
+	// 	return sendErrorResponse({
+	// 		errorMessage: "Failed to cleanup the existing file",
+	// 		statusCode: 500
+	// 	});
+	// }
 
 	return NextResponse.json({
-		message: `Successfully generated the report named ${fileName}`
+		message: `Successfully generated the report named`
 	});
 };

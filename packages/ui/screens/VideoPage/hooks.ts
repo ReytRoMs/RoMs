@@ -10,27 +10,39 @@ import { postVideoAnswerAction } from "./actions";
 
 export const useQuestionLoader = () => {
 	const router = useRouter();
+	const swrConfig = useSWRConfig();
 
 	const {
 		data: question,
 		error: questionError,
-		isLoading: isFetchingQuestion
+		isLoading: isFetchingQuestion,
+		isValidating: isValidatingQuestion
 	} = useSWR<IQuestion, IClientError>("/api/question", getQuestionLoader, {
-		keepPreviousData: true,
-		revalidateOnFocus: false
+		revalidateOnMount: true,
+		revalidateOnFocus: true,
+		revalidateOnReconnect: true
 	});
 
 	// When there is no videos left redirect the user to the results page
 	useEffect(() => {
-		if (isFetchingQuestion === false && question?.allQuestionsAreAnswered === true) {
+		if (
+			isValidatingQuestion === false &&
+			isFetchingQuestion === false &&
+			(question?.allQuestionsAreAnswered ?? false) === true
+		) {
+			// Before redirecting delete any data currently assigned to /api/question cache entry (Doesn't seem to update even if a new response is found, to get a round it for now delete the data manually ugh)
+			swrConfig.cache.delete("/api/question");
+
+			// Redirect the user to the results page
 			router.replace("/video/results");
 		}
-	}, [isFetchingQuestion, router, question?.allQuestionsAreAnswered]);
+	}, [isFetchingQuestion, router, question, isValidatingQuestion, swrConfig]);
 
 	return {
 		question,
 		questionError,
-		isFetchingQuestion
+		isFetchingQuestion,
+		isValidatingQuestion
 	};
 };
 

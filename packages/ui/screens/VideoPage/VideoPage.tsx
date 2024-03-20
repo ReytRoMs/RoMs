@@ -14,8 +14,7 @@ import { VideoPageForm } from "./VideoPageForm";
 const initialFormData: AnswerFormData = { answer: undefined };
 
 export const VideosPage = () => {
-	const { question, questionError, isFetchingQuestion } = useQuestionLoader();
-
+	const { question, questionError, isFetchingQuestion, isValidatingQuestion } = useQuestionLoader();
 	const { postVideoAnswer, postVideoAnswerError, isPostingVideoAnswer } = useQuestionAction();
 
 	// Handles any question loading errors
@@ -32,10 +31,10 @@ export const VideosPage = () => {
 	}
 
 	// Handles loading of the initial question
-	if (isFetchingQuestion) {
+	if (isFetchingQuestion || question?.allQuestionsAreAnswered === true) {
 		return (
 			<PageLayout contentDirection='row' contentStyling={{ justifyContent: "center" }}>
-				<Spinner size={"large"} />
+				<Spinner size={"large"} color={"$validError"} />
 			</PageLayout>
 		);
 	}
@@ -44,7 +43,7 @@ export const VideosPage = () => {
 		<PageLayout contentDirection='row'>
 			<>
 				<iframe
-					src={`https://www.youtube.com/embed/${question?.youtubeId}?showinfo=0`}
+					src={`https://www.youtube.com/embed/${question?.youtubeId}?autoplay=1&mute=1`}
 					title='YouTube video player'
 					allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
 					allowFullScreen
@@ -54,8 +53,8 @@ export const VideosPage = () => {
 					flex={0.5}
 					gap={40}
 					sx={{
-						"@lg": {
-							maxWidth: 272
+						"@md": {
+							maxWidth: 325
 						}
 					}}
 				>
@@ -72,7 +71,7 @@ export const VideosPage = () => {
 					>
 						{({ handleSubmit }) => (
 							<VideoPageForm
-								isSubmitting={isPostingVideoAnswer}
+								isDisabled={isPostingVideoAnswer || isValidatingQuestion}
 								onSubmit={() => {
 									handleSubmit();
 								}}

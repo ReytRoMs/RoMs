@@ -9,25 +9,51 @@ import { ButtonVariant } from "@repo/types";
 import { MustContain } from "../../components/Inputs/shared";
 import { IErrorResponse } from "../shared/types";
 import { UsersPrimaryRole } from "database";
+import { mapRoleToFriendlyDisplayLabel } from "@repo/utilities";
 
 const roles = [
-	{ id: UsersPrimaryRole.FARMER, label: "Farmer", value: UsersPrimaryRole.FARMER, isDisabled: false },
+	{
+		id: UsersPrimaryRole.FARMER,
+		label: mapRoleToFriendlyDisplayLabel(UsersPrimaryRole.FARMER),
+		value: UsersPrimaryRole.FARMER,
+		isDisabled: false
+	},
 	{
 		id: UsersPrimaryRole.SPECIALIST_SCORER,
-		label: "Specialist scorer",
+		label: mapRoleToFriendlyDisplayLabel(UsersPrimaryRole.SPECIALIST_SCORER),
 		value: UsersPrimaryRole.SPECIALIST_SCORER,
 		isDisabled: false
 	},
-	{ id: UsersPrimaryRole.AUDITOR, label: "Auditor", value: UsersPrimaryRole.AUDITOR, isDisabled: false },
-	{ id: UsersPrimaryRole.RESEARCHER, label: "Researcher", value: UsersPrimaryRole.RESEARCHER, isDisabled: false },
-	{ id: UsersPrimaryRole.HOOF_TRIMMER, label: "Hoof trimmer", value: UsersPrimaryRole.HOOF_TRIMMER, isDisabled: false },
+	{
+		id: UsersPrimaryRole.AUDITOR,
+		label: mapRoleToFriendlyDisplayLabel(UsersPrimaryRole.AUDITOR),
+		value: UsersPrimaryRole.AUDITOR,
+		isDisabled: false
+	},
+	{
+		id: UsersPrimaryRole.RESEARCHER,
+		label: mapRoleToFriendlyDisplayLabel(UsersPrimaryRole.RESEARCHER),
+		isDisabled: false,
+		value: UsersPrimaryRole.RESEARCHER
+	},
+	{
+		id: UsersPrimaryRole.HOOF_TRIMMER,
+		label: mapRoleToFriendlyDisplayLabel(UsersPrimaryRole.HOOF_TRIMMER),
+		value: UsersPrimaryRole.HOOF_TRIMMER,
+		isDisabled: false
+	},
 	{
 		id: UsersPrimaryRole.CONSULTANT_OR_NUTRITIONIST,
-		label: "Consultant/nutritionist",
+		label: mapRoleToFriendlyDisplayLabel(UsersPrimaryRole.CONSULTANT_OR_NUTRITIONIST),
 		value: UsersPrimaryRole.CONSULTANT_OR_NUTRITIONIST,
 		isDisabled: false
 	},
-	{ id: "OTHER", label: "Other", value: "OTHER", isDisabled: false }
+	{
+		id: UsersPrimaryRole.OTHER,
+		label: mapRoleToFriendlyDisplayLabel(UsersPrimaryRole.OTHER),
+		value: UsersPrimaryRole.OTHER,
+		isDisabled: false
+	}
 ];
 
 interface IRegisterPageForm extends Pick<IErrorResponse, "reasons"> {
@@ -48,7 +74,7 @@ export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageFor
 				height={"$full"}
 				gap={"$6"}
 				sx={{
-					"@lg": {
+					"@md": {
 						flexDirection: "row",
 						gap: "$8",
 						justifyContent: "center",
@@ -61,7 +87,7 @@ export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageFor
 					gap={"$6"}
 					width={"$full"}
 					sx={{
-						"@lg": {
+						"@md": {
 							width: 500
 						}
 					}}
@@ -74,6 +100,7 @@ export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageFor
 							]}
 							name='areYouACurrentRoMsMember'
 							width={100}
+							height={100}
 							direction='row'
 							label='Are you current RoMS member?'
 							isDisabled={isFormSubmitting === true}
@@ -98,7 +125,7 @@ export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageFor
 			<Box
 				flexDirection='column'
 				sx={{
-					"@lg": {
+					"@md": {
 						flexDirection: "row-reverse",
 						justifyContent: "space-between",
 						maxWidth: 750,
@@ -115,7 +142,7 @@ export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageFor
 					}}
 					isDisabled={isFormSubmitting === true}
 					sx={{
-						"@lg": {
+						"@md": {
 							maxWidth: 200
 						}
 					}}
@@ -125,7 +152,7 @@ export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageFor
 					variant={ButtonVariant.SECONDARY}
 					buttonText='Cancel'
 					sx={{
-						"@lg": {
+						"@md": {
 							maxWidth: 200
 						}
 					}}

@@ -1,5 +1,6 @@
 "use client";
 
+import { NUMBER_OF_VIDEOS } from "@/app/lib/constants";
 import { Box, Text } from "@gluestack-ui/themed";
 import { TextLink } from "solito/link";
 
@@ -13,7 +14,7 @@ export const WelcomeText = () => {
 				"@base": {
 					width: "$full"
 				},
-				"@lg": {
+				"@md": {
 					width: 430
 				}
 			}}
@@ -28,23 +29,26 @@ export const WelcomeText = () => {
 			</Text>
 
 			<Text variant='body'>
-				You will be given the chance to score 50 video clips of cows walking and will receive feedback on your scores
-				once you are finished.
+				You will be given the chance to score {NUMBER_OF_VIDEOS} video clips of cows walking and will receive feedback
+				on your scores once you are finished.
 			</Text>
 
-			<TextLink
-				textProps={{
-					style: {
-						color: config.tokens.colors.white,
-						fontFamily: config.tokens.fonts.body,
-						fontSize: 16,
-						lineHeight: 24
-					}
-				}}
-				href='https://roms.org.uk/contact-us/'
-			>
-				If you have questions about RoMS or this website, <Text color='$validError'>please click here</Text>
-			</TextLink>
+			<Text variant='body'>
+				If you have questions about RoMS or this website,{" "}
+				<TextLink
+					textProps={{
+						style: {
+							color: config.tokens.colors.validError,
+							fontFamily: config.tokens.fonts.body,
+							fontSize: 16,
+							lineHeight: 24
+						}
+					}}
+					href='https://roms.org.uk/contact-us/'
+				>
+					please click here
+				</TextLink>
+			</Text>
 		</Box>
 	);
 };

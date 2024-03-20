@@ -18,7 +18,7 @@ export const StartPage = () => {
 				height={"$full"}
 				gap={20}
 				sx={{
-					"@lg": {
+					"@md": {
 						height: 376,
 						flexDirection: "row",
 						gap: "$8",

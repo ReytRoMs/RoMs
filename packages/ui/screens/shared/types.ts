@@ -6,3 +6,8 @@ export interface IErrorResponse {
 export interface IClientError extends Error {
 	info: IErrorResponse;
 }
+
+export interface AnswerRoutePayload {
+	answer?: string;
+	questionId: string;
+}

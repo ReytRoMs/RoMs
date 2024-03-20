@@ -34,6 +34,7 @@ export const gluestackUIConfig = createConfig({
 			// general
 			primary: "#E91212",
 			secondary: "#999999",
+			amber: "#E99312",
 
 			// text
 			textHeader: "#FFFFFF",

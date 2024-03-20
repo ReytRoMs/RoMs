@@ -216,9 +216,9 @@ export const GET = async () => {
 
 	// Attempt to write the Excel document to storage
 	try {
-		await workbook.xlsx.writeFile(fileName);
+		const writtenFile = await workbook.xlsx.writeFile(fileName);
 
-		console.log("Successfully wrote the file");
+		console.log("Successfully wrote the file", writtenFile);
 	} catch (err: unknown) {
 		console.log("failed to save", err);
 		return sendErrorResponse({ errorMessage: `Failed to save ${fileName}`, statusCode: 500 });

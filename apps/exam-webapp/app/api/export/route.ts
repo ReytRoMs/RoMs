@@ -26,6 +26,11 @@ type QuestionWithoutCorrectAnswerOrUserAnswer = Pick<Question, "id" | "order" | 
 	created_at: string;
 };
 
+type UserWithoutCreatedAtOrUsersPrimaryRole = Omit<SessionUser, "created_at" | "UsersPrimaryRole"> & {
+	created_at: string;
+	UsersPrimaryRole: string;
+};
+
 dayjs.extend(isoWeek);
 
 const getObjectKeys = <Obj extends object>(obj: Obj): (keyof Obj)[] => {
@@ -87,14 +92,15 @@ const getQuestionsWorksheetColumnTitle = (key: keyof Question) => {
 };
 
 const getQuestionRow = (incomingQuestion: Question) => {
+	// VERY IMPORTANT NOTE: The order of the object properties must match the order the columns are defined in
 	let question: QuestionWithoutCorrectAnswerOrUserAnswer = {
 		id: incomingQuestion.id,
 		order: incomingQuestion.order,
-		session_user_id: incomingQuestion.session_user_id,
 		youtube_id: incomingQuestion.youtube_id,
-		created_at: dayjs(incomingQuestion.created_at).format("DD/MM/YYYY"),
 		UsersAnswer: null,
-		CorrectAnswer: null
+		CorrectAnswer: null,
+		session_user_id: incomingQuestion.session_user_id,
+		created_at: dayjs(incomingQuestion.created_at).format("DD/MM/YYYY")
 	};
 
 	// If the users answer is available map the value to a friendly label output
@@ -117,12 +123,12 @@ const getQuestionRow = (incomingQuestion: Question) => {
 };
 
 const getUserRow = (incomingUser: SessionUser) => {
-	const user: Omit<SessionUser, "created_at" | "UsersPrimaryRole"> & { created_at: string; UsersPrimaryRole: string } =
-		{
-			...incomingUser,
-			created_at: dayjs(incomingUser?.created_at).format("DD/MM/YYYY"),
-			UsersPrimaryRole: mapRoleToFriendlyDisplayLabel(incomingUser.UsersPrimaryRole)
-		};
+	// VERY IMPORTANT NOTE: The order of the object properties must match the order the columns are defined in
+	const user: UserWithoutCreatedAtOrUsersPrimaryRole = {
+		...incomingUser,
+		created_at: dayjs(incomingUser?.created_at).format("DD/MM/YYYY"),
+		UsersPrimaryRole: mapRoleToFriendlyDisplayLabel(incomingUser.UsersPrimaryRole)
+	};
 
 	return user;
 };
@@ -142,8 +148,6 @@ const convertToCSV = (data: Array<Array<unknown>>) => {
 export const revalidate = 0;
 
 export const GET = async () => {
-	console.log("Running /api/export endpoint.......");
-
 	const lastWeek = dayjs().subtract(7, "days");
 	const gte = dayjs(lastWeek).startOf("isoWeek");
 	const lte = dayjs(lastWeek).endOf("isoWeek");
@@ -245,6 +249,8 @@ export const GET = async () => {
 		questionsWorksheetRows.push(csvRow);
 	});
 
+	console.log("Finished preparing the reports data");
+
 	// Attempt to send the email to a specified user
 	try {
 		await sgMail.send({
@@ -267,6 +273,10 @@ export const GET = async () => {
 				}
 			]
 		});
+
+		console.log(
+			"The weekly export email will be arriving in the specified persons inbox very soon or it might already be available"
+		);
 	} catch {
 		return sendErrorResponse({
 			errorMessage: "Something went wrong sending the email",
@@ -274,19 +284,9 @@ export const GET = async () => {
 		});
 	}
 
-	// // Attempt to remove the old file as it's no longer needed
-	// try {
-	// 	await unlink(fileName);
-
-	// 	console.log("Successfully deleted the file");
-	// } catch {
-	// 	return sendErrorResponse({
-	// 		errorMessage: "Failed to cleanup the existing file",
-	// 		statusCode: 500
-	// 	});
-	// }
+	console.log("Finished to run the export");
 
 	return NextResponse.json({
-		message: `Successfully generated the report named`
+		message: `Successfully generated the reports for the previous week`
 	});
 };

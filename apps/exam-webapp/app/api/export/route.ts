@@ -210,8 +210,8 @@ export const GET = async () => {
 	questionsWorksheet.addRows(questionsInThePreviousWeek?.map((question) => getQuestionRow(question)));
 
 	try {
-		if (!existsSync("tmp")) {
-			mkdirSync("tmp");
+		if (!existsSync("/tmp")) {
+			mkdirSync("/tmp");
 		}
 	} catch (err) {
 		console.error(err);

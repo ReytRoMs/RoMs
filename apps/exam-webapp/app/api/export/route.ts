@@ -117,6 +117,8 @@ const getQuestionRow = (incomingQuestion: Question) => {
 };
 
 export const GET = async () => {
+	console.log("Running /api/export endpoint.......");
+
 	const lastWeek = dayjs().subtract(7, "days");
 	const gte = dayjs(lastWeek).startOf("isoWeek");
 	const lte = dayjs(lastWeek).endOf("isoWeek");
@@ -213,6 +215,8 @@ export const GET = async () => {
 	// Attempt to write the Excel document to storage
 	try {
 		await workbook.xlsx.writeFile(fileName);
+
+		console.log("Successfully wrote the file");
 	} catch (err: unknown) {
 		return sendErrorResponse({ errorMessage: `Failed to save ${fileName}`, statusCode: 500 });
 	}
@@ -220,6 +224,8 @@ export const GET = async () => {
 	// Attempt to read the Excel document, the format is base64 as that what attachments should be for the send-grid api
 	try {
 		fileAttachment = await readFile(fileName, "base64");
+
+		console.log("Successfully read the file");
 	} catch {
 		return sendErrorResponse({ errorMessage: `Failed to read ${fileName}`, statusCode: 500 });
 	}
@@ -248,6 +254,21 @@ export const GET = async () => {
 				}
 			]
 		});
+
+		console.log("Send grid sent the email successfully", {
+			to: process.env.SEND_GRID_TO_EMAIL_ADDRESS,
+			from: process.env.SEND_GRID_FROM_EMAIL_ADDRESS,
+			subject: `Weekly export for RoMS examination results`,
+			html: `Attached in this email are the examination results for ${gte.format("DD-MM-YYYY")} to ${lte.format("DD-MM-YYYY")}`,
+			attachments: [
+				{
+					filename: fileName,
+					content: fileAttachment,
+					disposition: "attachment",
+					type: "text/html"
+				}
+			]
+		});
 	} catch {
 		return sendErrorResponse({
 			errorMessage: "Something went wrong sending the email",
@@ -258,6 +279,8 @@ export const GET = async () => {
 	// Attempt to remove the old file as it's no longer needed
 	try {
 		await unlink(fileName);
+
+		console.log("Successfully deleted the file");
 	} catch {
 		return sendErrorResponse({
 			errorMessage: "Failed to cleanup the existing file",

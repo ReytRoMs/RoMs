@@ -209,7 +209,7 @@ export const GET = async () => {
 	questionsWorksheet.addRows(questionsInThePreviousWeek?.map((question) => getQuestionRow(question)));
 
 	// File name e.g. weekly-RoMS-report-for-18-03-2024.xlsx
-	const fileName = `public/weekly-RoMS-report-for-${lte.format("DD-MM-YYYY")}.xlsx`;
+	const fileName = `tmp/weekly-RoMS-report-for-${lte.format("DD-MM-YYYY")}.xlsx`;
 
 	// Will store the file attach that will go with the email
 	let fileAttachment = null;

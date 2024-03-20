@@ -20,6 +20,7 @@ import {
 	mapAnswerToFriendlyLabel,
 	mapRoleToFriendlyDisplayLabel
 } from "@repo/utilities";
+import { existsSync, mkdirSync } from "fs";
 
 dayjs.extend(isoWeek);
 
@@ -207,6 +208,14 @@ export const GET = async () => {
 	// Append the questions related data to the "Answers" worksheet
 	questionsWorksheet.columns = questionsWorksheetColumns;
 	questionsWorksheet.addRows(questionsInThePreviousWeek?.map((question) => getQuestionRow(question)));
+
+	try {
+		if (!existsSync("tmp")) {
+			mkdirSync("tmp");
+		}
+	} catch (err) {
+		console.error(err);
+	}
 
 	// File name e.g. weekly-RoMS-report-for-18-03-2024.xlsx
 	const fileName = `tmp/weekly-RoMS-report-for-${lte.format("DD-MM-YYYY")}.xlsx`;

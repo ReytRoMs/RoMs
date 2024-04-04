@@ -104,11 +104,11 @@ export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageFor
 								{ label: "Yes", value: "yes", isDisabled: false },
 								{ label: "No", value: "no", isDisabled: false }
 							]}
-							name='areYouACurrentRoMsMember'
+							name='areYouACurrentRoMSMember'
 							width={100}
 							height={100}
 							direction='row'
-							label='Are you a RoMs member?'
+							label='Are you a RoMS member?'
 							isDisabled={isFormSubmitting === true}
 						/>
 

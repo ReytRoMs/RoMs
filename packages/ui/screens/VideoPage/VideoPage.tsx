@@ -40,7 +40,7 @@ export const VideosPage = () => {
 	}
 
 	return (
-		<PageLayout contentDirection='row'>
+		<PageLayout contentDirection='row' contentStyling={{ paddingTop: "$16" }}>
 			<>
 				<iframe
 					src={`https://www.youtube.com/embed/${question?.youtubeId}?autoplay=1&mute=1&rel=0`}

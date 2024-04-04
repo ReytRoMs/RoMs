@@ -49,6 +49,12 @@ const roles = [
 		isDisabled: false
 	},
 	{
+		id: UsersPrimaryRole.VET,
+		label: mapRoleToFriendlyDisplayLabel(UsersPrimaryRole.VET),
+		value: UsersPrimaryRole.VET,
+		isDisabled: false
+	},
+	{
 		id: UsersPrimaryRole.OTHER,
 		label: mapRoleToFriendlyDisplayLabel(UsersPrimaryRole.OTHER),
 		value: UsersPrimaryRole.OTHER,
@@ -98,11 +104,11 @@ export const RegisterPageForm = ({ reasons, isFormSubmitting }: IRegisterPageFor
 								{ label: "Yes", value: "yes", isDisabled: false },
 								{ label: "No", value: "no", isDisabled: false }
 							]}
-							name='areYouACurrentRoMsMember'
+							name='areYouACurrentRoMSMember'
 							width={100}
 							height={100}
 							direction='row'
-							label='Are you current RoMS member?'
+							label='Are you a RoMS member?'
 							isDisabled={isFormSubmitting === true}
 						/>
 

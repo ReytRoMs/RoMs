@@ -2,12 +2,10 @@ import { Box, Text } from "@gluestack-ui/themed";
 
 import { IResultsTableData } from "@repo/types";
 import { config } from "../../config/gluestack-ui.config";
-import { TextLink } from "solito/link";
 
 const Score = ({
 	label,
 	description,
-	href = "https://roms.org.uk/contact-us/",
 	score = 0
 }: {
 	label: string;
@@ -22,20 +20,7 @@ const Score = ({
 					{label}
 				</Text>
 
-				<TextLink
-					textProps={{
-						style: {
-							color: config.tokens.colors.textBody,
-							fontFamily: config.tokens.fonts.body,
-							fontSize: config.tokens.fontSizes["xs"],
-							lineHeight: config.tokens.lineHeights["sm"]
-						}
-					}}
-					href={href}
-					target='_blank'
-				>
-					<Text>{description}</Text>
-				</TextLink>
+				<Text>{description}</Text>
 			</Box>
 			<Box alignItems='center'>
 				<Text variant='header2' fontWeight='$bold'>
@@ -53,12 +38,14 @@ export const VideoResultsScores = ({
 }: Pick<IResultsTableData, "scores">["scores"]) => {
 	return (
 		<Box backgroundColor='$dark' borderRadius={"$lg"} padding={32} marginBottom={32}>
-			<Text variant='header' fontWeight='800' marginBottom={0} textAlign='center'>
-				Scoring Performance
-			</Text>
-			<Text variant='body' marginTop={0} textAlign='center'>
-				How well do you identify score 2 & 3 versus 0 & 1 cows
-			</Text>
+			<Box flexDirection='column' justifyContent='center'>
+				<Text variant='header' fontWeight='800' marginBottom={10} textAlign='center'>
+					Scoring Performance
+				</Text>
+				<a className='link-primary' href='https://roms.org.uk/newsletter-resources/' target='_blank'>
+					How well do you identify score 2 & 3 versus 0 & 1 cows
+				</a>
+			</Box>
 			<Box
 				flexDirection='row'
 				justifyContent='center'

@@ -3,3 +3,21 @@
 a:hover {
 	text-decoration: underline;
 }
+
+.link-primary {
+	background-color: var(--colors-primary);
+	text-align: center;
+	padding: 8px;
+	border-radius: 4px;
+	text-decoration: none;
+	font-size: 0.75rem;
+	color: #fff;
+	max-width: 350px;
+	margin: auto;
+	font-family: "montserrat";
+}
+
+.link-primary:hover {
+	box-shadow: 0 0 16px #ffffff33;
+	text-decoration: none;
+}

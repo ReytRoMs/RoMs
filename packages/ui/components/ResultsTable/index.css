@@ -52,3 +52,7 @@ table tbody tr td {
 		max-width: 150px;
 	}
 }
+
+.link-primary {
+	background-color: red;
+}

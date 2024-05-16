@@ -249,8 +249,6 @@ export const GET = async () => {
 		questionsWorksheetRows.push(csvRow);
 	});
 
-	console.log("Finished preparing the reports data");
-
 	// Attempt to send the email to a specified user
 	try {
 		await sgMail.send({

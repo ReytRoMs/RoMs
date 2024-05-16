@@ -34,7 +34,7 @@ export const ResultsTable = ({ results }: IResultsTable) => {
 			<tbody>
 				{results?.map((result) => (
 					<tr key={result.youtubeId}>
-						<td id='video-column'>
+						<td id='video-column' className='video-overlay'>
 							<Link href={`https://www.youtube.com/watch?v=${result.youtubeId}`} target='_blank'>
 								<SolitoImage
 									alt={`Video placeholder for video ${result.youtubeId}`}

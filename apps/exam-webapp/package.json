@@ -22,6 +22,7 @@
 		"@gluestack-ui/themed": "latest",
 		"@gluestack/ui-next-adapter": "latest",
 		"@legendapp/motion": "latest",
+		"@next/third-parties": "^14.2.3",
 		"@repo/types": "*",
 		"@repo/utilities": "*",
 		"@sendgrid/mail": "^8.1.1",

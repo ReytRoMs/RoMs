@@ -1,6 +1,5 @@
 "use client";
 
-import { NUMBER_OF_VIDEOS } from "@/app/lib/constants";
 import { Box, Text } from "@gluestack-ui/themed";
 import { TextLink } from "solito/link";
 
@@ -28,10 +27,7 @@ export const WelcomeText = () => {
 				mobility scoring.
 			</Text>
 
-			<Text variant='body'>
-				You will be given the chance to score {NUMBER_OF_VIDEOS} video clips of cows walking and will receive feedback
-				on your scores once you are finished.
-			</Text>
+			<Text variant='body'>You will be given the chance to score numerous video clips of cows walking.</Text>
 
 			<Text variant='body'>
 				If you have questions about RoMS or this website,{" "}

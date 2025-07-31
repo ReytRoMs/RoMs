@@ -276,10 +276,69 @@ export const GET = async () => {
 			"The weekly export email will be arriving in the specified persons inbox very soon or it might already be available"
 		);
 	} catch (error: unknown) {
-		console.error("Something went wrong sending the email", error);
+		// Log the full error details for debugging
+		console.error("Email sending failed:", {
+			error,
+			timestamp: new Date().toISOString(),
+			context: "Weekly export email sending"
+		});
+
+		// If it's a SendGrid error, it will have a response property with more details
+		if (error && typeof error === "object" && "response" in error) {
+			const sgError = error.response as {
+				statusCode?: number;
+				body?: {
+					errors?: Array<{
+						message?: string;
+						field?: string;
+						help?: string;
+						code?: string;
+					}>;
+					message?: string;
+				};
+				headers?: unknown;
+			};
+
+			// Log the complete SendGrid error details
+			console.error("SendGrid API Error Details:", {
+				statusCode: sgError?.statusCode,
+				message: sgError?.body?.message,
+				errors: sgError?.body?.errors?.map((err) => ({
+					message: err.message,
+					field: err.field,
+					help: err.help,
+					code: err.code
+				})),
+				headers: sgError?.headers
+			});
+
+			// Collect all error messages for the response
+			const errorMessages = [
+				sgError?.body?.message,
+				...(sgError?.body?.errors
+					?.map((err) =>
+						[
+							err.message,
+							err.field ? `Field: ${err.field}` : null,
+							err.help,
+							err.code ? `Error Code: ${err.code}` : null
+						].filter((item): item is string => typeof item === "string")
+					)
+					.flat() ?? [])
+			].filter((item): item is string => typeof item === "string");
+
+			return sendErrorResponse({
+				errorMessage: "Failed to send weekly export email - SendGrid API error",
+				statusCode: sgError?.statusCode ?? 401,
+				errorReasons: errorMessages.length > 0 ? errorMessages : [String(error)]
+			});
+		}
+
+		// For non-SendGrid errors
 		return sendErrorResponse({
-			errorMessage: "Something went wrong sending the email",
-			statusCode: 500
+			errorMessage: "Failed to send weekly export email - Internal error",
+			statusCode: 401,
+			errorReasons: error instanceof Error ? [error.message] : [String(error)]
 		});
 	}
 

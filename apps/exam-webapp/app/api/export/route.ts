@@ -275,7 +275,8 @@ export const GET = async () => {
 		console.log(
 			"The weekly export email will be arriving in the specified persons inbox very soon or it might already be available"
 		);
-	} catch {
+	} catch (error: unknown) {
+		console.error("Something went wrong sending the email", error);
 		return sendErrorResponse({
 			errorMessage: "Something went wrong sending the email",
 			statusCode: 500
